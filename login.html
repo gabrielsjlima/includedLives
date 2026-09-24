@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="styles/style_login.css">
+    
+    <title>Login</title>
+</head>
+<body>
+    <div id="pagina-login">
+        <!-- Card do Candidato -->
+        <div id="login-candidato" class="cards-empresa-candidato">
+        
+            <!-- Nome com Icone -->
+            <div class="nome">
+                <i class="fa-solid fa-user"></i>
+                <h1>Candidato</h1>
+            </div>
+            
+            <form action="" class="formulario-login">
+                <!-- Campo de Usuário/e-mail -->
+                <label for="usuario">Usuario ou E-mail: </label>
+                <input type="text" id="usuario-candidato" name="usuario" required>
+                
+                <!-- Campo da senha -->
+                <label for="senha">Senha: </label>
+                <input type="password" name="senha" id="senha-candidato" required>
+                
+                <!-- Div para Lembrar-me e Esqueci minha senha-->
+                <div class="opcoes">
+                    <label for="">
+                        <input type="checkbox">
+                        <p>Lembrar-me</p>
+                    </label>
+                    <a href="">Esqueci minha senha</a>
+                </div>
+                
+                <!-- Botão de Login -->
+                <button class="botao-login">Entrar</button>
+                
+                <!-- Link para criar a conta -->
+                <a href="" class="criar-conta">Criar conta </a>
+            </form>
+        </div>
+        
+        <!-- Card da nossa marca -->
+        <div id="card">
+            <!-- Logo -->
+            <img src="imagens/logo.png" alt="logo da marca" id="logo">
+            
+            <!-- Frase de slogan da marca -->
+            <h1 id="slogan">
+                INCLUSÃO QUE CONECTA<br>
+                PESSOAS E<br>
+                OPORTUNIDADES!!
+            </h1>
+            
+            <!-- Imagem de inclusão social -->
+            <img src="imagens/img_inclusao.jpg" alt="Imagem de inclusao" width="550px" height="200px">
+        </div>
+        
+        <!-- Card da Empresa -->
+        <div id="login-empresa" class="cards-empresa-candidato">
+        
+            <!-- Nome com Icone -->
+            <div class="nome">
+                <i class="fa-solid fa-building"></i>
+                <h1>Empresa</h1>
+            </div>
+            
+            <form action="" class="formulario-login">
+                <!-- Campo de Usuário/e-mail -->
+                <label for="usuario">Usuario ou E-mail: </label>
+                <input type="text" id="usuario-empresa" name="usuario" required>
+                
+                <!-- Campo da senha -->
+                <label for="senha">Senha: </label>
+                <input type="password" name="senha" id="senha-empresa" required>
+                
+                <!-- Div para Lembrar-me e Esqueci minha senha-->
+                <div class="opcoes">
+                    <label for="">
+                        <input type="checkbox">
+                        <p>Lembrar-me</p>
+                    </label>
+                    <a href="">Esqueci minha senha</a>
+                </div>
+                
+                <!-- Botão de Login -->
+                <button class="botao-login">Entrar</button>
+                
+                <!-- Link para criar a conta -->
+                <a href="" class="criar-conta">Criar conta </a>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

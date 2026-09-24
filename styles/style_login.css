@@ -1,0 +1,95 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+#pagina-login {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+
+.cards-empresa-candidato {
+   background-color: purple;
+   border-radius: 15px;
+   width: 350px;
+   height: 450px;
+   padding: 30px 35px;
+}
+
+.nome {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   color: white;
+   margin-bottom: 30px;
+}
+
+.nome i {
+   font-size: 30px;
+}
+
+.nome h1 {
+   font-size: 35px;
+}
+
+form {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   gap: 5px;
+}
+
+form label {
+   color: white;
+   font-weight: 500;
+   font-size: 16px;
+}
+
+form input {
+   border-radius: 20px;
+   border: none;
+   text-decoration: none;
+   padding: 10px 0px;
+   margin-bottom: 15px;
+}
+
+.opcoes {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   margin-top: 5px;
+}
+
+.opcoes label {
+   display: flex;
+}
+
+.opcoes label input {
+   border: none;
+   text-decoration: none;
+   width: 20px;
+   height: 18px;
+   margin-right: 5px;
+}
+
+.opcoes a {
+   color: white;
+}
+
+#logo {
+   width: 300px;
+   height: 300px;
+}
+
+.cards-empresa-candidato button {
+   border: none;
+   text-decoration: none;
+   padding: 15px 0px;
+   border-radius: 20px;
+   width: 50%;
+   margin: 0 auto;
+   margin-top: 25px;
+}
