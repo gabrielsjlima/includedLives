@@ -12,16 +12,19 @@
 }
 
 .cards-empresa-candidato {
+   position: relative;
+   z-index: 1;
    background-color: purple;
    border-radius: 15px;
    width: 350px;
    height: 450px;
    padding: 30px 35px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .nome {
    display: flex;
-   justify-content: space-around;
+   justify-content: center;
    align-items: center;
    color: white;
    margin-bottom: 30px;
@@ -29,6 +32,7 @@
 
 .nome i {
    font-size: 30px;
+   margin-right: 30px;
 }
 
 .nome h1 {
@@ -79,12 +83,8 @@ form input {
    color: white;
 }
 
-#logo {
-   width: 300px;
-   height: 300px;
-}
-
 .cards-empresa-candidato button {
+   background-color: white;
    border: none;
    text-decoration: none;
    padding: 15px 0px;
@@ -92,4 +92,135 @@ form input {
    width: 50%;
    margin: 0 auto;
    margin-top: 25px;
+   font-size: 16px;
+   text-transform: uppercase;
+   color: purple;
 }
+
+.cards-empresa-candidato button:hover {
+   cursor: pointer;
+}
+
+.criar-conta {
+   color: white;
+   margin: 0 auto;
+   margin-top: 15px;
+   font-weight: 700;
+   text-decoration: none;
+}
+
+#card {
+   background-color: white;
+   position: relative;
+   z-index: 2;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+   border-radius: 15px;
+   width: 530px;
+   height: 630px;
+   padding-top: 0;
+}
+
+#logo {
+   width: 300px;
+   height: 200px;
+   object-fit: cover;
+   object-position: center;
+}
+
+#slogan {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   margin: 25px 0px;
+}
+
+#slogan span {
+   display: block;
+   text-align: center;
+   color: purple;
+   text-shadow: 2px 2px 4px rgba(85, 26, 114, 0.2);
+   white-space: nowrap;
+   overflow: hidden;
+   width: 0;
+}
+
+#slogan span:nth-child(1) {
+   animation: escrever1 8s ease-in-out infinite;
+}
+
+#slogan span:nth-child(2) {
+   animation: escrever2 8s ease-in-out infinite;
+}
+
+#slogan span:nth-child(3) {
+   animation: escrever3 8s ease-in-out infinite;
+}
+
+@keyframes escrever1 {
+   0% {
+      width: 0;
+   }
+
+   15% {
+      width: 100%;
+   }
+
+   60% {
+      width: 100%;
+   }
+
+   100% {
+      width: 0;
+   }
+}
+
+@keyframes escrever2 {
+   0%,
+   15% {
+      width: 0;
+   }
+
+   30% {
+      width: 100%;
+   }
+
+   60% {
+      width: 100%;
+   }
+
+   100% {
+      width: 0;
+   }
+}
+
+@keyframes escrever3 {
+   0%,
+   30% {
+      width: 0;
+   }
+
+   45% {
+      width: 100%;
+   }
+
+   60% {
+      width: 100%;
+   }
+
+   100% {
+      width: 0;
+   }
+}
+
+#img-inclusaoSocial {
+   width: 100%;
+   height: 250px;
+   object-fit: cover;
+   margin-bottom: 15px;
+}
+
+
