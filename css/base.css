@@ -1,0 +1,116 @@
+/* Included Lives — base.css */
+:root {
+    --purple: #852a99;
+    --deep: #21194c;
+    --muted: #69647b;
+    --light: #f5f0fc
+}
+
+* {
+    box-sizing: border-box
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px
+}
+
+body {
+    margin: 0;
+    color: var(--deep);
+    font-family: Inter, Arial, sans-serif;
+    overflow-x: hidden;
+    background: #fff
+}
+
+a {
+    text-decoration: none;
+    color: inherit
+}
+
+button,
+input {
+    font: inherit
+}
+
+button {
+    cursor: pointer
+}
+
+img {
+    max-width: 100%;
+    display: block
+}
+
+.container {
+    width: min(1480px, 92%);
+    margin: auto
+}
+
+.header {
+    height: 112px;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 15px #3a1a4d12
+}
+
+.header-inner {
+    height: 100%;
+    width: min(1340px, 92%);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px
+}
+
+.brand img {
+    width: 190px;
+    max-height: 86px;
+    object-fit: contain
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 3vw, 65px);
+    font-weight: 800;
+    color: #51205c
+}
+
+.nav a {
+    padding: 14px 0
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+    color: var(--purple)
+}
+
+.login-link,
+.btn {
+    background: linear-gradient(110deg, #74248c, #a638b7);
+    color: white;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-weight: 800;
+    box-shadow: 0 10px 20px #66217520
+}
+
+.login-link {
+    padding: 18px 32px;
+    white-space: nowrap
+}
+
+.menu-toggle {
+    display: none;
+    border: 0;
+    background: none;
+    color: var(--purple);
+    font-size: 24px
+}

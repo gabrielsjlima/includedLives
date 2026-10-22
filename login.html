@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf7fd">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/login.css">
+  <script src="js/login.js" defer></script>
+  <title>iLives | Inclusão que conecta</title>
+</head>
+
+<body>
+  <!-- Botão para voltar na página principal -->
+  <a class="back-home" href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar ao início</a>
+  
+  <!-- Corpo do site -->
+  <main class="page">
+    
+    <!-- Div para dar o estilo do circulo em cima e embaixo -->
+    <div class="decor decor--top" aria-hidden="true"></div>
+    <div class="decor decor--bottom" aria-hidden="true"></div>
+    
+    <!-- Icones no canto superior direito -->
+    <div class="access-icons access-icons--top" aria-hidden="true">
+      <i class="fa-solid fa-wheelchair-move"></i>
+      <i class="fa-solid fa-person-walking-with-cane"></i>
+      <i class="fa-solid fa-ear-deaf"></i>
+    </div>
+
+    <!-- Icones no canto inferior esquerdo -->
+    <div class="access-icons access-icons--bottom" aria-hidden="true">
+      <i class="fa-solid fa-wheelchair-move"></i>
+      <i class="fa-solid fa-person-walking-with-cane"></i>
+      <i class="fa-solid fa-ear-deaf"></i>
+    </div>
+    
+    <div class="layout">
+      <!-- Lado esquerdo / Login Candidato -->
+      <form class="login login--candidate" data-login="candidato">
+        <!-- Titulo -->
+        <h2><i class="fa-solid fa-user" aria-hidden="true"></i><span>Candidato</span></h2>
+        <p>Faça parte do nosso time<br>e encontre novas oportunidades.</p>
+        
+        <!-- Campo do usuário -->
+        <label class="field">
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          <input name="usuario" type="text" autocomplete="username" placeholder="E-mail ou usuário" aria-label="E-mail ou usuário do candidato" required>
+        </label>
+
+        <!-- Campo de senha-->
+        <label class="field">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i>
+          <input name="senha" type="password" autocomplete="current-password" placeholder="Senha" aria-label="Senha do candidato" required>
+          <button class="toggle-password" type="button" aria-label="Mostrar senha" aria-pressed="false">
+          <i class="fa-regular fa-eye"></i></button>
+        </label>
+
+        <!-- Lembrar senha / Esqueci minha senha -->
+        <div class="options">
+          <label class="remember">
+            <input type="checkbox" name="lembrar"><span>Lembrar-me</span>
+          </label>
+          
+          <a href="index.html#faq">Esqueci minha senha</a>
+        </div>
+
+        <!-- Botões de login e criar conta-->
+        <button class="enter" type="submit">ENTRAR <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+        <a class="signup" href="index.html#faq">Criar conta</a>
+      </form>
+      
+      <!-- Parte central -->
+      <section class="center" aria-label="iLives - Inclusão que conecta pessoas e oportunidades">
+        <!-- Logo empresa -->
+        <img class="logo" src="assets/logo.png" alt="iLives - Included Lives">
+        <span class="short-line" aria-hidden="true"></span>
+        
+        <!-- Titulo -->
+        <h1>INCLUSÃO QUE CONECTA<br>PESSOAS E<br>OPORTUNIDADES!!</h1>
+
+        <!-- Imagem inclusão-->
+        <img class="people" src="assets/inclusao.jpg" alt="Ilustração de cinco pessoas com diferentes deficiências e recursos de mobilidade">
+      </section>
+      
+      <!-- Lado esquerdo / Login Empresa -->
+      <form class="login login--company" data-login="empresa">
+        <!-- Titulo -->
+        <h2><i class="fa-solid fa-building" aria-hidden="true"></i><span>Empresa</span></h2>
+        <p>Conecte sua empresa a talentos<br>diversos e qualificados.</p>
+        
+        <!-- Campo do usuário -->
+        <label class="field">
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          <input name="usuario" type="text" autocomplete="username" placeholder="E-mail ou usuário" aria-label="E-mail ou usuário da empresa" required>
+        </label>
+        
+        <!-- Campo de senha-->
+        <label class="field">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i>
+          <input name="senha" type="password" autocomplete="current-password" placeholder="Senha" aria-label="Senha da empresa" required>
+          <button class="toggle-password" type="button" aria-label="Mostrar senha" aria-pressed="false"><i class="fa-regular fa-eye"></i></button>
+        </label>
+
+        <!-- Lembrar senha / Esqueci minha senha -->
+        <div class="options">
+          <label class="remember">
+            <input type="checkbox" name="lembrar"><span>Lembrar-me</span>
+          </label>
+            
+          <a href="index.html#faq">Esqueci minha senha</a>
+        </div>
+        
+        <!-- Botões de login e criar conta-->
+        <button class="enter" type="submit">ENTRAR <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+        <a class="signup" href="index.html#faq">Criar conta</a>
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>

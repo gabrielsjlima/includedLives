@@ -1,0 +1,364 @@
+/* Telas de apresentação:cabeçalho + seção = altura exata da janela.
+   Benefícios e vagas formam uma única tela, como na referência. */
+:root {
+   --header-height: 112px
+}
+
+html {
+   scroll-padding-top: var(--header-height)
+}
+
+.hero,
+.benefits-jobs-screen,
+.guide-section,
+.faq-section {
+   height: calc(100vh - var(--header-height));
+   height: calc(100dvh - var(--header-height));
+   min-height: 0
+}
+
+.benefits-jobs-screen {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   gap: clamp(12px, 2vh, 28px);
+   padding: clamp(16px, 2vh, 28px) 0
+}
+
+.benefits-jobs-screen>.section {
+   padding: 0
+}
+
+.benefits-jobs-screen .section-title {
+   font-size: clamp(24px, 2.5vw, 40px)
+}
+
+.benefits-jobs-screen .small-line {
+   margin: 8px 0 15px
+}
+
+.benefits-grid {
+   gap: clamp(10px, 1.4vw, 24px)
+}
+
+.benefit {
+   min-height: 0;
+   padding: clamp(14px, 1.5vw, 25px);
+   border-radius: 18px
+}
+
+.circle-icon {
+   width: clamp(54px, 5.3vw, 82px);
+   height: clamp(54px, 5.3vw, 82px);
+   font-size: clamp(25px, 2.5vw, 38px)
+}
+
+.benefit h3 {
+   font-size: clamp(15px, 1.4vw, 21px);
+   margin: 12px 0 8px
+}
+
+.benefit p {
+   font-size: clamp(13px, 1.1vw, 17px);
+   line-height: 1.35
+}
+
+.jobs-grid {
+   gap: clamp(10px, 1.4vw, 24px)
+}
+
+.job {
+   padding: clamp(12px, 1.4vw, 23px)
+}
+
+.job h3 {
+   font-size: clamp(15px, 1.25vw, 20px);
+   min-height: 0;
+   margin: 13px 0
+}
+
+.job p {
+   font-size: clamp(12px, 1vw, 15px);
+   margin: 10px 0
+}
+
+.job p i {
+   font-size: 18px
+}
+
+.company {
+   min-height: 0;
+   padding-bottom: 9px
+}
+
+.btn-job {
+   padding: clamp(10px, 1vh, 15px) 8px;
+   margin-top: 5px
+}
+
+.demo-note {
+   margin: 9px 0 0
+}
+
+.guide-section {
+   display: flex;
+   align-items: center;
+   padding: clamp(14px, 2vh, 28px) 0
+}
+
+.guide-section>.container {
+   width: min(1480px, 92%)
+}
+
+.guide-intro {
+   padding-bottom: clamp(10px, 2vh, 26px)
+}
+
+.guide-intro h2 {
+   font-size: clamp(28px, 3vw, 50px)
+}
+
+.guide-intro p {
+   font-size: clamp(15px, 1.25vw, 20px);
+   margin: 12px 0
+}
+
+.guide-card {
+   padding: clamp(12px, 1.5vw, 25px)
+}
+
+.guide-illustration img {
+   max-height: 42vh
+}
+
+.guide-copy h3 {
+   font-size: clamp(19px, 1.8vw, 29px);
+   margin-bottom: 12px
+}
+
+.guide-copy li {
+   font-size: clamp(13px, 1vw, 16px);
+   padding: 8px 14px;
+   margin-bottom: 8px
+}
+
+.guide-copy li i {
+   padding: 8px
+}
+
+.guide-copy .btn-outline {
+   margin-top: 6px
+}
+
+.faq-section {
+   display: flex;
+   align-items: center;
+   padding: clamp(12px, 2vh, 26px) 0
+}
+
+.faq-intro h2 {
+   font-size: clamp(35px, 4vw, 65px)
+}
+
+.faq-intro img {
+   max-height: 40vh
+}
+
+.faq-intro p {
+   font-size: clamp(14px, 1.2vw, 19px)
+}
+
+.search {
+   padding: 9px 16px;
+   margin-bottom: 12px
+}
+
+.accordion {
+   gap: 8px
+}
+
+.faq-trigger {
+   padding: 8px 16px;
+   font-size: clamp(14px, 1.15vw, 18px)
+}
+
+.faq-icon {
+   width: clamp(38px, 3.5vw, 53px);
+   height: clamp(38px, 3.5vw, 53px);
+   font-size: 20px
+}
+
+.faq-answer {
+   padding: 0 15px 10px 75px;
+   font-size: clamp(12px, 1vw, 16px)
+}
+
+.faq-answer p {
+   padding: 10px 14px
+}
+
+/* Telas mais baixas: compactação adicional sem ocultar os textos. */
+@media (min-width:1051px) and (max-height:760px) {
+   .benefits-jobs-screen {
+      gap: 9px;
+      padding: 10px 0
+   }
+
+   .benefits-jobs-screen .section-title {
+      font-size: 26px
+   }
+
+   .benefits-jobs-screen .small-line {
+      margin: 5px 0 9px
+   }
+
+   .benefit {
+      padding: 11px 15px
+   }
+
+   .circle-icon {
+      width: 48px;
+      height: 48px;
+      font-size: 23px
+   }
+
+   .benefit h3 {
+      margin: 7px 0 4px;
+      font-size: 15px
+   }
+
+   .benefit p {
+      font-size: 12px
+   }
+
+   .job {
+      padding: 10px 14px
+   }
+
+   .job h3 {
+      margin: 8px 0;
+      font-size: 15px
+   }
+
+   .job p {
+      margin: 6px 0
+   }
+
+   .btn-job {
+      padding: 8px
+   }
+
+   .demo-note {
+      font-size: 10px;
+      margin: 4px 0 0
+   }
+
+   .guide-intro h2 {
+      font-size: 32px
+   }
+
+   .guide-intro p {
+      font-size: 15px
+   }
+
+   .guide-illustration img {
+      max-height: 34vh
+   }
+
+   .guide-copy li {
+      padding: 6px 10px
+   }
+
+   .faq-intro img {
+      max-height: 32vh
+   }
+
+   .faq-trigger {
+      padding: 6px 12px
+   }
+
+   .faq-answer p {
+      padding: 8px
+   }
+}
+
+/* Em celulares e tablets, preservar conteúdo e acessibilidade é prioritário:
+   uma seção pode crescer além da altura visível, sem cortes. */
+@media(max-width:1050px) {
+   :root {
+      --header-height: 112px
+   }
+
+   .benefits-jobs-screen,
+   .guide-section,
+   .faq-section {
+      height: auto;
+      min-height: calc(100dvh - var(--header-height))
+   }
+
+   .benefits-jobs-screen {
+      padding: 40px 0;
+      gap: 28px
+   }
+
+   .guide-section,
+   .faq-section {
+      padding: 48px 0
+   }
+
+   .benefit {
+      padding: 24px
+   }
+
+   .circle-icon {
+      width: 72px;
+      height: 72px;
+      font-size: 32px
+   }
+
+   .benefit h3 {
+      font-size: 20px
+   }
+
+   .benefit p {
+      font-size: 16px
+   }
+
+   .job {
+      padding: 22px
+   }
+
+   .job h3 {
+      font-size: 19px
+   }
+
+   .job p {
+      font-size: 15px
+   }
+
+   .guide-illustration img,
+   .faq-intro img {
+      max-height: none
+   }
+}
+
+@media(max-width:720px) {
+   :root {
+      --header-height: 76px
+   }
+
+   .hero {
+      height: auto;
+      min-height: calc(100dvh - var(--header-height))
+   }
+
+   .benefits-jobs-screen {
+      padding: 36px 0;
+      gap: 30px
+   }
+
+   .guide-section,
+   .faq-section {
+      padding: 40px 0
+   }
+}

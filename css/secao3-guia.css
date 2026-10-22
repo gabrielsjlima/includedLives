@@ -1,0 +1,116 @@
+/* Included Lives — guia.css */
+.guide-section {
+    background: linear-gradient(#fff, #fdfbff)
+}
+
+.guide-intro {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: center;
+    padding: 0 25px 36px
+}
+
+.guide-intro h2 {
+    font-size: clamp(30px, 3.5vw, 58px);
+    line-height: 1.12;
+    margin: 0;
+    font-weight: 900
+}
+
+.guide-intro p {
+    font-size: 21px;
+    max-width: 750px;
+    line-height: 1.5
+}
+
+.handwriting {
+    font: 700 clamp(36px, 4vw, 66px) Caveat, cursive;
+    color: #8e2cc3;
+    transform: rotate(-9deg);
+    text-align: center;
+    flex-shrink: 0
+}
+
+.guide-card {
+    border-radius: 24px;
+    background: #f8f6ff;
+    display: grid;
+    grid-template-columns: 38% 62%;
+    padding: 30px;
+    gap: 28px;
+    align-items: center
+}
+
+.guide-illustration {
+    border-right: 2px solid #e5dff5;
+    padding: 15px 30px 15px 0
+}
+
+.guide-illustration img {
+    width: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply
+}
+
+.guide-copy {
+    padding: 5px 22px 5px 15px
+}
+
+.guide-copy h3 {
+    font-size: clamp(22px, 2vw, 33px);
+    line-height: 1.3;
+    color: #16196b;
+    margin: 0 0 25px
+}
+
+.guide-copy h3 span:not(.heart) {
+    color: #8624bc
+}
+
+.heart {
+    display: inline-grid;
+    place-items: center;
+    background: #ebe1fa;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    color: #8525be;
+    margin-right: 12px
+}
+
+.guide-copy ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.guide-copy li {
+    background: #f0ebfa;
+    border-radius: 35px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    font-size: 17px;
+    display: flex;
+    gap: 20px;
+    align-items: center
+}
+
+.guide-copy li i {
+    background: #8d2ac2;
+    color: white;
+    padding: 11px;
+    border-radius: 50%
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    border: 2px solid #8d2ac2;
+    color: #8526ad;
+    padding: 13px 24px;
+    border-radius: 35px;
+    font-weight: 800;
+    margin-top: 15px
+}

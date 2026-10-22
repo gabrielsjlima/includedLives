@@ -1,0 +1,518 @@
+:root {
+    --purple: #7d2889;
+    --lilac: #bf6bd7;
+    --ink: #fff
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    font-family: Poppins, Arial, sans-serif
+}
+
+body {
+    overflow-x: hidden
+}
+
+.page {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: clamp(12px, 3vw, 56px) clamp(14px, 4.8vw, 75px);
+    background: radial-gradient(ellipse at center, #fff 20%, #fbf9fd 70%, #f5effb 100%)
+}
+
+.decor {
+    position: absolute;
+    width: clamp(180px, 24vw, 380px);
+    aspect-ratio: 1;
+    border: 3px solid #e2d0ed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1
+}
+
+.decor:before {
+    content: "";
+    position: absolute;
+    inset: 27px;
+    background: #e8d9f3;
+    border-radius: 50%
+}
+
+.decor--top {
+    top: -24%;
+    left: -12%
+}
+
+.decor--bottom {
+    bottom: -25%;
+    right: -12%
+}
+
+.access-icons {
+    position: absolute;
+    display: flex;
+    gap: clamp(12px, 2.2vw, 35px);
+    color: #dfcbea;
+    font-size: clamp(24px, 3.5vw, 56px);
+    opacity: .9;
+    pointer-events: none
+}
+
+.access-icons--top {
+    top: 2.5%;
+    right: 2.6%
+}
+
+.access-icons--bottom {
+    bottom: 4.5%;
+    left: 3.5%
+}
+
+.layout {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1392px;
+    height: min(70vh, 690px);
+    height: min(70dvh, 690px);
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(10px, 1vw, 16px);
+    align-items: center
+}
+
+.login {
+    height: 82%;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px;
+    padding: clamp(16px, 2.5vw, 40px);
+    background: linear-gradient(140deg, #812a8d 0%, #772583 55%, #72247f 100%);
+    color: #fff;
+    box-shadow: 0 15px 35px #5c327a35
+}
+
+.login:after {
+    content: "";
+    position: absolute;
+    bottom: -18%;
+    left: -22%;
+    width: 60%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #b46ac638;
+    pointer-events: none
+}
+
+.login--company:after {
+    left: auto;
+    right: -22%
+}
+
+.login h2 {
+    margin: 0 0 clamp(7px, 1.4vh, 16px);
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.5vw, 24px);
+    font-size: clamp(19px, 2.4vw, 37px);
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap
+}
+
+.login h2 i {
+    font-size: 1.25em;
+    flex: none
+}
+
+.login p {
+    font-size: clamp(11px, 1.12vw, 17px);
+    line-height: 1.45;
+    margin: 0 0 auto;
+    min-height: 0
+}
+
+.field {
+    height: clamp(37px, 5.6vh, 57px);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: clamp(9px, 1vw, 16px);
+    padding: 0 clamp(10px, 1.4vw, 21px);
+    margin-bottom: clamp(8px, 1.4vh, 15px);
+    background: #fff;
+    border-radius: 17px;
+    color: #79418e
+}
+
+.field>i {
+    width: 20px;
+    text-align: center;
+    flex: none;
+    font-size: clamp(13px, 1.25vw, 18px)
+}
+
+.field input {
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    outline: 0;
+    border: 0;
+    background: transparent;
+    font: 400 clamp(11px, 1vw, 15px) Poppins, Arial, sans-serif;
+    color: #482654
+}
+
+.field input::placeholder {
+    color: #a79bb5
+}
+
+.toggle-password {
+    border: 0;
+    background: transparent;
+    color: #aa9abd;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 7px;
+    margin: clamp(5px, 1vh, 11px) 0 auto;
+    font-size: clamp(9px, .9vw, 13px)
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    white-space: nowrap;
+    cursor: pointer
+}
+
+.remember input {
+    appearance: none;
+    margin: 0;
+    width: clamp(17px, 1.6vw, 24px);
+    height: clamp(17px, 1.6vw, 24px);
+    flex: none;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer
+}
+
+.remember input:checked {
+    background: #c574d7
+}
+
+.remember input:checked:after {
+    content: '✓';
+    display: block;
+    text-align: center;
+    color: #fff;
+    font-weight: 700
+}
+
+.options a,
+.signup {
+    color: #fff;
+    text-decoration: none
+}
+
+.options a {
+    text-align: right
+}
+
+.options a:hover,
+.signup:hover {
+    text-decoration: underline
+}
+
+.enter {
+    width: 84%;
+    height: clamp(41px, 6vh, 61px);
+    flex: none;
+    align-self: center;
+    border: 0;
+    border-radius: 40px;
+    background: linear-gradient(95deg, #b968d1, #c06cda);
+    font: 700 clamp(15px, 1.5vw, 21px) Poppins, Arial, sans-serif;
+    color: #fff;
+    cursor: pointer;
+    transition: filter .2s
+}
+
+.enter:hover {
+    filter: brightness(1.08)
+}
+
+.enter i {
+    margin-left: 7px;
+    font-size: .9em
+}
+
+.signup {
+    align-self: center;
+    margin-top: auto;
+    font-size: clamp(12px, 1.05vw, 16px);
+    text-decoration: underline;
+    text-underline-offset: 5px
+}
+
+.center {
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(12px, 2vh, 24px) 0 0;
+    border-radius: 26px;
+    background: #fff;
+    box-shadow: 0 14px 45px #6a48801e;
+    color: var(--purple)
+}
+
+.logo {
+    display: block;
+    width: min(66%, 350px);
+    height: clamp(85px, 17vh, 170px);
+    object-fit: contain;
+    flex: none
+}
+
+.short-line {
+    width: 94px;
+    height: 2px;
+    flex: none;
+    background: #a34aaf;
+    margin: clamp(4px, .8vh, 10px) 0 clamp(12px, 2.2vh, 25px)
+}
+
+.center h1 {
+    margin: 0;
+    padding: 0 8px;
+    text-align: center;
+    font-size: clamp(16px, 1.9vw, 29px);
+    font-weight: 800;
+    line-height: 1.38;
+    letter-spacing: -.5px;
+    flex: none
+}
+
+.people {
+    display: block;
+    min-height: 0;
+    width: 100%;
+    flex: 1;
+    object-fit: contain;
+    object-position: center bottom;
+    margin-top: clamp(4px, 1.5vh, 15px)
+}
+
+@media(max-width:1100px) {
+    .login {
+        padding: clamp(12px, 2vw, 25px)
+    }
+
+    .login h2 {
+        gap: 10px
+    }
+
+    .options {
+        flex-wrap: wrap
+    }
+
+    .center h1 {
+        font-size: clamp(15px, 2.1vw, 23px)
+    }
+}
+
+@media(max-height:690px) and (min-width:801px) {
+    .layout {
+        height: 84dvh
+    }
+
+    .login {
+        height: 95%;
+        padding-block: 14px
+    }
+
+    .logo {
+        height: 13vh
+    }
+
+    .short-line {
+        margin-block: 6px
+    }
+
+    .center h1 {
+        font-size: clamp(14px, 1.8vw, 23px)
+    }
+
+    .login p {
+        font-size: clamp(10px, 1vw, 14px)
+    }
+
+    .options {
+        margin-block: 4px
+    }
+
+    .signup {
+        margin-top: 8px
+    }
+}
+
+@media(max-width:800px) {
+    .page {
+        height: auto;
+        min-height: 100dvh;
+        overflow: hidden;
+        padding: 50px 18px
+    }
+
+    .layout {
+        height: auto;
+        max-width: 560px;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px
+    }
+
+    .center {
+        grid-column: 1/-1;
+        grid-row: 1;
+        height: 470px
+    }
+
+    .login {
+        height: 440px;
+        padding: 20px 15px
+    }
+
+    .login h2 {
+        font-size: 20px
+    }
+
+    .login p {
+        font-size: 11px
+    }
+
+    .options {
+        font-size: 10px
+    }
+
+    .field {
+        height: 45px
+    }
+
+    .access-icons {
+        font-size: 23px
+    }
+
+    .access-icons--bottom {
+        bottom: 1%
+    }
+}
+
+@media(max-width:560px) {
+    .page {
+        padding: 32px 15px 45px
+    }
+
+    .layout {
+        max-width: 420px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px
+    }
+
+    .center {
+        grid-column: 1;
+        grid-row: 1;
+        height: 420px
+    }
+
+    .center h1 {
+        font-size: clamp(18px, 5vw, 23px)
+    }
+
+    .logo {
+        height: 120px;
+        width: 75%
+    }
+
+    .login {
+        height: 470px;
+        padding: 26px
+    }
+
+    .login h2 {
+        font-size: 29px
+    }
+
+    .login p {
+        font-size: 14px
+    }
+
+    .options {
+        font-size: 12px;
+        flex-wrap: nowrap
+    }
+
+    .field {
+        height: 52px
+    }
+
+    .access-icons {
+        display: none
+    }
+}
+
+@media(max-width:350px) {
+    .login {
+        padding: 19px
+    }
+
+    .login h2 {
+        font-size: 25px
+    }
+
+    .options {
+        font-size: 10px
+    }
+}
+
+.back-home {
+    position: fixed;
+    top: 14px;
+    left: 18px;
+    z-index: 10;
+    color: #79268c;
+    text-decoration: none;
+    font: 600 14px Poppins, sans-serif;
+    background: #ffffffdb;
+    padding: 8px 12px;
+    border-radius: 20px
+}

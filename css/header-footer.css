@@ -1,0 +1,95 @@
+/* Header reduzido ao navegar:todas as seções acompanham a altura atual. */
+:root {
+    --header-height: 112px;
+}
+
+.header {
+    height: var(--header-height);
+    transition: height .24s ease, box-shadow .24s ease;
+}
+
+.header-inner,
+.brand img,
+.login-link,
+.nav a {
+    transition: all .24s ease;
+}
+
+body.header-compact {
+    --header-height: 68px;
+}
+
+body.header-compact .brand img {
+    width: 142px;
+    max-height: 54px;
+}
+
+body.header-compact .login-link {
+    padding: 11px 25px;
+}
+
+body.header-compact .nav a {
+    padding: 8px 0;
+}
+
+body.header-compact .header {
+    box-shadow: 0 4px 18px #3a1a4d18;
+}
+
+/* A altura de cada seção é recalculada pelo mesmo --header-height. */
+@media(max-width:720px) {
+    :root {
+        --header-height: 76px;
+    }
+
+    body.header-compact {
+        --header-height: 60px;
+    }
+
+    body.header-compact .brand img {
+        width: 110px;
+        max-height: 46px;
+    }
+
+    body.header-compact .login-link {
+        padding: 9px 12px;
+    }
+
+    .nav {
+        top: var(--header-height);
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+    .header,
+    .header-inner,
+    .brand img,
+    .login-link,
+    .nav a {
+        transition: none;
+    }
+}
+
+/* Included Lives — footer.css */
+
+.footer {
+    background: #f8f3fc;
+    padding: 30px 0
+}
+
+.footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px
+}
+
+.footer img {
+    width: 130px
+}
+
+.footer a {
+    color: var(--purple);
+    font-weight: 700
+}

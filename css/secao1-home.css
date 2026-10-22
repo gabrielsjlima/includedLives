@@ -1,0 +1,118 @@
+/* Included Lives — home.css */
+.hero {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 20% 30%, #f9f6ff, white 65%);
+    min-height: calc(100dvh - 112px);
+    display: flex;
+    align-items: center
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 43% 57%;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    z-index: 1
+}
+
+.hero-copy {
+    padding: 45px 0
+}
+
+.hero-copy h1 {
+    font-size: clamp(36px, 4.2vw, 68px);
+    letter-spacing: -2px;
+    white-space: nowrap;
+    margin: 0;
+    font-weight: 900
+}
+
+.hero-copy h1 span,
+.guide-intro h2 span,
+.faq-intro h2 span {
+    color: var(--purple)
+}
+
+.hero-copy h2 {
+    font-size: clamp(18px, 1.6vw, 25px);
+    margin: 8px 0 22px
+}
+
+.small-line {
+    height: 4px;
+    width: 76px;
+    background: var(--purple);
+    border-radius: 4px;
+    margin: 15px 0 28px
+}
+
+.hero-copy p {
+    font-size: clamp(18px, 1.45vw, 24px);
+    line-height: 1.4;
+    max-width: 550px
+}
+
+.hero-copy .hero-support {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 470px
+}
+
+.btn {
+    padding: 18px 34px;
+    margin-top: 12px;
+    text-align: center
+}
+
+.hero-art {
+    position: relative;
+    align-self: end;
+    display: flex;
+    align-items: end;
+    min-width: 0
+}
+
+.hero-art img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    mix-blend-mode: multiply
+}
+
+.blob {
+    position: absolute;
+    inset: 15% 2% 10% 5%;
+    background: #f2ebfb;
+    border-radius: 45% 55% 40% 50%
+}
+
+.decor-ring {
+    position: absolute;
+    border: 35px solid #e8d9f7aa;
+    border-radius: 50%;
+    width: 310px;
+    height: 310px
+}
+
+.decor-ring.top {
+    left: -170px;
+    top: -170px
+}
+
+.decor-ring.bottom {
+    right: -190px;
+    bottom: -180px
+}
+
+.corner-icons {
+    position: absolute;
+    right: 5%;
+    top: 35px;
+    display: flex;
+    gap: 30px;
+    color: #d8c5eb;
+    font-size: 38px
+}

@@ -1,0 +1,137 @@
+/* Included Lives — beneficios.css */
+.section {
+    padding: 75px 0
+}
+
+.section-title {
+    font-size: clamp(29px, 2.8vw, 44px);
+    margin: 0;
+    font-weight: 900;
+    color: #321449
+}
+
+.section-title span {
+    color: var(--purple)
+}
+
+.uppercase {
+    color: var(--purple)
+}
+
+.benefits-section {
+    padding-bottom: 28px
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px
+}
+
+.benefit {
+    background: linear-gradient(145deg, #f9f6fd, #f3eefb);
+    padding: 25px 30px 30px;
+    border-radius: 20px;
+    min-height: 275px
+}
+
+.circle-icon {
+    height: 92px;
+    width: 92px;
+    border-radius: 50%;
+    background: linear-gradient(130deg, #74248e, #a338b6);
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 40px
+}
+
+.benefit h3 {
+    font-size: 21px;
+    margin: 18px 0 12px;
+    color: #40174d
+}
+
+.benefit p {
+    color: #646077;
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 0
+}
+
+/* Included Lives — vagas.css */
+
+.jobs-section {
+    padding-top: 35px
+}
+
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px
+}
+
+.text-link {
+    color: var(--purple);
+    font-weight: 800
+}
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px
+}
+
+.job {
+    border: 1px solid #e7d9f2;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 5px 16px #3b1e4e0c
+}
+
+.company {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    min-height: 45px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e6dded;
+    color: #6c6881;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.company-symbol {
+    font-weight: 900;
+    color: var(--purple);
+    font-size: 23px
+}
+
+.job h3 {
+    color: var(--purple);
+    font-size: 20px;
+    min-height: 50px
+}
+
+.job p {
+    font-size: 15px;
+    font-weight: 700;
+    color: #8a2ca4
+}
+
+.job p i {
+    margin-right: 15px;
+    font-size: 22px
+}
+
+.job p+p {
+    color: #777185
+}
+
+.btn-job {
+    border-radius: 9px;
+    width: 100%;
+    padding: 16px 10px;
+    font-size: 14px
+}
