@@ -13,9 +13,8 @@
   padding: 40px 5%;
   box-sizing: border-box;
   margin: 0;
-  background-color: #6e0670;
-  /* #2e004f;  Um roxo mais escuro para dar contraste com o fundo */
-  color: #EEF0F2;  
+  background-color: #fdfcff;  
+  color: #010b13;  
 }
 
 footer > div {
@@ -24,19 +23,18 @@ footer > div {
 
 /*Estilo dos Links*/
 .links{
-   color: #F1FFFA;
+   color: #212529;
    flex-direction: column;
    display: flex;
    display:inline-block;
-   gap: 10px;
+   gap: 12px;
    margin-top: 20px;
 }
 
 .links a {
-   color: #e4fcf3;
+   color: #212529;
    text-decoration: none;
    font-size: 15px;
-   line-height: 1.5ch;
 }
 
 .links h5{
@@ -49,8 +47,8 @@ footer > div {
 /*Botao*/
 
 .botao{
-   background-color: #F1FFFA;
-   color: #6e0670;
+   background-color:#6e0670;;
+   color: #FFFFFF;
    border: none;
    border-radius: 10px;
    padding: 10px 10px;
@@ -126,7 +124,7 @@ footer hr {
     display: block;
     width: 100%;
     border: 0;
-    border-top: 1px solid white;
+    border-top: 1px solid rgb(0, 0, 0);
     margin: 30px 0px;
     margin-bottom: -20px;
 }
@@ -173,10 +171,10 @@ footer hr {
       margin: auto;
       text-align: center;
    }
-  .botao {
+
+   .botao {
       text-align: center;
       white-space: nowrap;
       min-width: 100px;
-   }
-   
+   }  
 }
