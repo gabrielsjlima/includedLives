@@ -36,7 +36,7 @@
     border-radius: 24px;
     background: #f8f6ff;
     display: grid;
-    grid-template-columns: 38% 62%;
+    grid-template-columns: minmax(0, 38fr) minmax(0, 62fr); /* Divide a largura disponível entre as colunas, respeitando o gap e permitindo que encolham sem causar transbordamento. */
     padding: 30px;
     gap: 28px;
     align-items: center
