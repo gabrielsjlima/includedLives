@@ -68,13 +68,25 @@
         height: 76px
     }
 
+    /* Organiza o cabeçalho apenas no mobile. */
+    .header-inner {
+        gap: 12px;
+    }
+
+    .brand {
+        order: 1;
+        min-width: 0;
+    }
+
     .brand img {
         width: 125px
     }
 
     .menu-toggle {
         display: block;
-        margin-left: auto
+        margin-left: 0;
+        order: 3;
+        flex-shrink: 0;
     }
 
     .nav {
@@ -97,7 +109,10 @@
 
     .login-link {
         padding: 12px 15px;
-        font-size: 12px
+        font-size: 12px;
+        order: 2;
+        margin-left: auto;
+        flex-shrink: 0;
     }
 
     .hero {
