@@ -7,32 +7,37 @@
     font-size: clamp(29px, 2.8vw, 44px);
     margin: 0;
     font-weight: 900;
-    color: #321449
+    color: #321449;
 }
 
 .section-title span {
-    color: var(--purple)
+    color: var(--purple);
 }
 
 .uppercase {
-    color: var(--purple)
+    color: var(--purple);
 }
 
 .benefits-section {
-    padding-bottom: 28px
+    padding-bottom: 28px;
 }
 
 .benefits-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 25px
+    gap: 25px;
+    margin: 30px 0px 60px 0px;
 }
 
 .benefit {
     background: linear-gradient(145deg, #f9f6fd, #f3eefb);
     padding: 25px 30px 30px;
     border-radius: 20px;
-    min-height: 275px
+    min-height: 275px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .circle-icon {
@@ -49,7 +54,7 @@
 .benefit h3 {
     font-size: 21px;
     margin: 18px 0 12px;
-    color: #40174d
+    color: #40174d;
 }
 
 .benefit p {
@@ -69,7 +74,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .text-link {
@@ -87,7 +93,7 @@
     border: 1px solid #e7d9f2;
     border-radius: 16px;
     padding: 28px;
-    box-shadow: 0 5px 16px #3b1e4e0c
+    box-shadow: 0 5px 16px #3b1e4e0c;
 }
 
 .company {
@@ -99,7 +105,7 @@
     border-bottom: 1px solid #e6dded;
     color: #6c6881;
     font-size: 12px;
-    font-weight: 700
+    font-weight: 700;
 }
 
 .company-symbol {
@@ -111,7 +117,7 @@
 .job h3 {
     color: var(--purple);
     font-size: 20px;
-    min-height: 50px
+    min-height: 50px;
 }
 
 .job p {

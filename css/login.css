@@ -97,7 +97,7 @@ body {
 }
 
 .login {
-    height: 82%;
+    height: 85%;
     min-height: 0;
     min-width: 0;
     display: flex;
@@ -108,7 +108,8 @@ body {
     padding: clamp(16px, 2.5vw, 40px);
     background: linear-gradient(140deg, #812a8d 0%, #772583 55%, #72247f 100%);
     color: #fff;
-    box-shadow: 0 15px 35px #5c327a35
+    box-shadow: 0 15px 35px #5c327a35;
+    text-align: center;
 }
 
 .login:after {
@@ -136,7 +137,8 @@ body {
     font-size: clamp(19px, 2.4vw, 37px);
     font-weight: 700;
     line-height: 1.25;
-    white-space: nowrap
+    white-space: nowrap;
+    justify-content: center;
 }
 
 .login h2 i {
@@ -148,7 +150,9 @@ body {
     font-size: clamp(11px, 1.12vw, 17px);
     line-height: 1.45;
     margin: 0 0 auto;
-    min-height: 0
+    min-height: 0;
+    margin-bottom: 30px;
+    margin-top: 10px;
 }
 
 .field {
@@ -201,7 +205,8 @@ body {
     align-items: center;
     gap: 7px;
     margin: clamp(5px, 1vh, 11px) 0 auto;
-    font-size: clamp(9px, .9vw, 13px)
+    font-size: clamp(9px, .9vw, 13px);
+    margin-bottom: 20px;
 }
 
 .remember {
@@ -261,7 +266,8 @@ body {
     font: 700 clamp(15px, 1.5vw, 21px) Poppins, Arial, sans-serif;
     color: #fff;
     cursor: pointer;
-    transition: filter .2s
+    transition: filter .2s;
+    margin-bottom: 15px;
 }
 
 .enter:hover {
@@ -353,11 +359,11 @@ body {
 
 @media(max-height:690px) and (min-width:801px) {
     .layout {
-        height: 84dvh
+        height: 60dvh;
     }
 
     .login {
-        height: 95%;
+        height: 85%;
         padding-block: 14px
     }
 
@@ -374,11 +380,11 @@ body {
     }
 
     .login p {
-        font-size: clamp(10px, 1vw, 14px)
+        font-size: clamp(10px, 1vw, 14px);
     }
 
     .options {
-        margin-block: 4px
+        margin-bottom: 15px;
     }
 
     .signup {
