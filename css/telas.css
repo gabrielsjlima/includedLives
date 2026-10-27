@@ -12,9 +12,8 @@ html {
 .benefits-jobs-screen,
 .guide-section,
 .faq-section {
-   height: calc(100vh - var(--header-height));
-   height: calc(100dvh - var(--header-height));
-   min-height: 0
+   height: auto; /* A altura passa a acompanhar o conteúdo, permitindo que as seções cresçam e evitando que uma invada a outra. */
+   min-height: calc(100vh - 112px);
 }
 
 .benefits-jobs-screen {
