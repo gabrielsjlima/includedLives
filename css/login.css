@@ -24,9 +24,9 @@ body {
     position: relative;
     isolation: isolate;
     width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    min-height: 0;
+    height: auto; /* Permite que a página cresça quando o conteúdo ultrapassa a janela. */
+    min-height: 100vh;
+    min-height: 100dvh;
     overflow: hidden;
     display: grid;
     place-items: center;
@@ -87,8 +87,7 @@ body {
     z-index: 1;
     width: 100%;
     max-width: 1392px;
-    height: min(70vh, 690px);
-    height: min(70dvh, 690px);
+    height: auto; /* Deixa o conteúdo determinar a altura do conjunto. */
     min-height: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
@@ -97,8 +96,8 @@ body {
 }
 
 .login {
-    height: 85%;
-    min-height: 0;
+    height: auto; /* Mantém uma altura mínima e permite espaço para todos os campos. */
+    min-height: 400px;
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -359,12 +358,13 @@ body {
 
 @media(max-height:690px) and (min-width:801px) {
     .layout {
-        height: 60dvh;
+        /* Mantém a altura livre também em janelas mais baixas. */
+        height: auto;
     }
 
     .login {
-        height: 85%;
-        padding-block: 14px
+        height: auto;
+        padding-block: 14px;
     }
 
     .logo {
@@ -414,7 +414,8 @@ body {
     }
 
     .login {
-        height: 440px;
+        height: auto;
+        min-height: 440px;
         padding: 20px 15px
     }
 
@@ -470,7 +471,8 @@ body {
     }
 
     .login {
-        height: 470px;
+        height: auto;
+        min-height: 470px;
         padding: 26px
     }
 
@@ -521,4 +523,40 @@ body {
     background: #ffffffdb;
     padding: 8px 12px;
     border-radius: 20px
+}
+
+@media (max-width: 800px) {
+  /* Mantém a navegação em uma faixa fixa durante a rolagem. */
+  .login-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
+  }
+
+  /* Posiciona o link dentro da faixa. */
+  .login-header .back-home {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  /* Reserva espaço para a faixa no início da página. */
+  .page {
+    margin-top: 64px;
+  }
+}
+
+/* Separa as opções e permite quebrar a linha quando faltar espaço. */
+.options {
+  flex-wrap: wrap;
+  gap: 12px;
 }
