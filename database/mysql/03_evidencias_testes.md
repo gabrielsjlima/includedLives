@@ -25,7 +25,7 @@ Todos os testes foram realizados em ambiente local de desenvolvimento, utilizand
 | Bloqueio de candidatura com candidato inexistente | Aprovado | Erro MySQL 1452 |
 | Bloqueio de candidatura duplicada | Aprovado | Erro MySQL 1062 |
 | Reversão dos registros fictícios | Aprovado | `ROLLBACK` executado e contagens zeradas |
-| Exclusão em cascata entre candidato e formação | Verificação final pendente | Inserção, exclusão, consulta e `ROLLBACK` executados; confirmar o valor retornado pela consulta |
+| Exclusão em cascata entre candidato e formação | Aprovado | `formacoes_restantes = 0`; `ROLLBACK` executado |
 
 ## 3. Testes de integridade
 
@@ -83,9 +83,12 @@ Foi executado um teste com as seguintes etapas:
 4. Consulta dos registros restantes na tabela `FORMACAO`.
 5. Execução de `ROLLBACK`.
 
-Todas as instruções foram executadas sem erros, porém a evidência disponível registra apenas que a consulta retornou uma linha de resultado, sem apresentar o valor de `formacoes_restantes`.
+A consulta retornou `formacoes_restantes = 0`, confirmando
+que a formação vinculada foi excluída automaticamente.
 
-**Status:** Pendente de confirmação do valor `formacoes_restantes = 0`.
+O comando `ROLLBACK` foi executado após a verificação.
+
+**Status:** Aprovado.
 
 ## 4. Estrutura do banco
 

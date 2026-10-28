@@ -2,9 +2,11 @@
 
 **Fonte principal:** `Modelo_Banco.pdf` (modelo físico, páginas 9–12). Modelo convertido para MySQL 8.0.16+.
 code database\mysql\README_MIGRACAO.md
+
 ## Arquivos
 - `01_create_tables.sql`: cria banco `includedlives_dev` e 10 tabelas; executar **somente em banco de desenvolvimento vazio**.
 - `02_validacao_estrutura.sql`: consultas de inspeção. A primeira deve listar 10 tabelas; a segunda deve retornar 10.
+- `03_evidencias_testes.md`: documenta os testes realizados no MySQL e seus resultados.
 
 ## Executar
 No cliente MySQL já conectado ao servidor local:
@@ -29,8 +31,26 @@ Ou usando `mysql -u usuario -p < 01_create_tables.sql` no terminal que tenha o c
 4. **C22** do catálogo de consultas menciona `Lado`, ausente no DDL. Não criamos essa coluna sem aprovação.
 5. O catálogo C01–C30 descreve necessidades; **não inclui SELECTs prontos**. Devem ser implementados em tarefa posterior.
 
+
 ## Segurança e testes
-- `SENHA` deve receber somente hashes fortes gerados pela aplicação, nunca senha em texto puro.
-- `CPF`, `CID`, laudos e informações de deficiência são sensíveis. Não use dados reais nos testes; implementar controle de acesso antes de expor APIs.
-- Este SQL foi revisado estaticamente, **não executado em MySQL** neste ambiente. PR só deve ser aprovado depois da execução em banco isolado e revisão dos resultados.
-- Não há `DROP` e o script de criação **não é idempotente para tabelas**; ele deve ser executado uma única vez em banco vazio.
+
+### Segurança
+- `SENHA` deve receber somente hashes fortes gerados pela aplicação, nunca senhas em texto puro.
+- `CPF`, `CID`, laudos e informações de deficiência são dados sensíveis e exigem proteção adequada.
+- Não utilizar dados pessoais reais nos testes.
+- Implementar autenticação e controle de acesso antes de expor APIs.
+
+### Validação realizada
+- Estrutura executada no MySQL Server 8.0.46.
+- As 10 tabelas foram criadas com sucesso.
+- Foram identificadas 9 chaves estrangeiras.
+- Os testes de integridade selecionados foram aprovados.
+- O teste de exclusão em cascata retornou `formacoes_restantes = 0`.
+- Evidências documentadas em `03_evidencias_testes.md`.
+- A aprovação final depende da revisão da equipe.
+
+### Cuidados na execução
+- O script de criação não contém `DROP`.
+- O script não é idempotente para as tabelas.
+- Executar `01_create_tables.sql` apenas uma vez em banco de desenvolvimento vazio.
+- Não executar sobre produção.
