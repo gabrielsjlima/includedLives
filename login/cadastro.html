@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro | Included Lives</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cadastro.css">
+  <script src="js/cadastro.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <a class="back" href="index.html" aria-label="Voltar para página inicial">← Voltar para início</a>
+    <div class="decoration decoration--one" aria-hidden="true"></div>
+    <div class="decoration decoration--two" aria-hidden="true"></div>
+    <section class="signup-layout" aria-label="Cadastro Included Lives">
+      <aside class="intro">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <p class="eyebrow">INCLUDED LIVES</p>
+        <h1>Seu próximo passo começa aqui.</h1>
+        <p>Conectamos talentos e empresas para construir oportunidades mais acessíveis e inclusivas.</p>
+        <div class="intro-feature"><span aria-hidden="true">✓</span> Cadastro gratuito e simples</div>
+        <div class="intro-feature"><span aria-hidden="true">✓</span> Experiência pensada para acessibilidade</div>
+        <div class="intro-feature"><span aria-hidden="true">✓</span> Mais oportunidades de conexão</div>
+        <p class="intro-footer">Inclusão que transforma possibilidades.</p>
+      </aside>
+      <section class="form-card">
+        <p class="eyebrow">CRIE SUA CONTA</p>
+        <h2>Bem-vindo(a)!</h2>
+        <p class="subtitle">Escolha como deseja participar da plataforma.</p>
+        <div class="tabs" role="tablist" aria-label="Tipo de cadastro">
+          <button type="button" class="tab active" role="tab" aria-selected="true" aria-controls="candidate-form" id="candidate-tab" data-tab="candidate">Sou candidato(a)</button>
+          <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="company-form" id="company-tab" data-tab="company">Sou empresa</button>
+        </div>
+        <form id="candidate-form" class="signup-form" role="tabpanel" aria-labelledby="candidate-tab">
+          <div class="field-grid">
+            <label>Nome completo <input name="name" autocomplete="name" required placeholder="Seu nome completo"></label>
+            <label>E-mail <input type="email" name="email" autocomplete="email" required placeholder="seuemail@exemplo.com"></label>
+            <label>Senha <input type="password" name="password" autocomplete="new-password" minlength="8" required placeholder="Mínimo de 8 caracteres"></label>
+            <label>Confirmar senha <input type="password" name="confirmPassword" autocomplete="new-password" minlength="8" required placeholder="Repita sua senha"></label>
+          </div>
+          <label class="check"><input type="checkbox" name="terms" required> <span>Li e concordo com os <a href="#" class="terms-link">Termos de Uso</a> e a <a href="#" class="terms-link">Política de Privacidade</a>.</span></label>
+          <button class="submit" type="submit">Criar conta de candidato(a) →</button>
+        </form>
+        <form id="company-form" class="signup-form" role="tabpanel" aria-labelledby="company-tab" hidden>
+          <div class="field-grid">
+            <label>Nome da empresa <input name="companyName" autocomplete="organization" required placeholder="Nome da empresa"></label>
+            <label>CNPJ <input name="cnpj" inputmode="numeric" maxlength="18" required placeholder="00.000.000/0000-00"></label>
+            <label>E-mail corporativo <input type="email" name="email" autocomplete="email" required placeholder="contato@empresa.com"></label>
+            <label>Nome do responsável <input name="manager" autocomplete="name" required placeholder="Nome do responsável"></label>
+            <label>Senha <input type="password" name="password" autocomplete="new-password" minlength="8" required placeholder="Mínimo de 8 caracteres"></label>
+            <label>Confirmar senha <input type="password" name="confirmPassword" autocomplete="new-password" minlength="8" required placeholder="Repita sua senha"></label>
+          </div>
+          <label class="check"><input type="checkbox" name="terms" required> <span>Li e concordo com os <a href="#" class="terms-link">Termos de Uso</a> e a <a href="#" class="terms-link">Política de Privacidade</a>.</span></label>
+          <button class="submit" type="submit">Criar conta empresarial →</button>
+        </form>
+        <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+        <p class="login-link">Já possui uma conta? <a href="login.html">Entrar</a></p>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
