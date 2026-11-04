@@ -1,0 +1,35 @@
+.sidebar {
+    border-right: 1px solid #e9dcec;
+    background: #fff7ff91;
+    padding: 34px 12px
+}
+
+.sidebar nav {
+    display: grid;
+    gap: 12px
+}
+
+.side-link {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-radius: 10px;
+    font-weight: 500
+}
+
+.side-link i {
+    font-size: 21px;
+    width: 23px
+}
+
+.side-link.active,
+.side-link:hover {
+    background: #f0d8f5;
+    color: var(--deep);
+    font-weight: 700
+}

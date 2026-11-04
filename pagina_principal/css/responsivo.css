@@ -1,0 +1,247 @@
+/* Breakpoints e ajustes responsivos globais */
+@media(max-width:1050px) {
+    .nav {
+        gap: 16px;
+        font-size: 13px
+    }
+
+    .brand img {
+        width: 150px
+    }
+
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .jobs-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .guide-card {
+        grid-template-columns: 1fr
+    }
+
+    .guide-illustration {
+        border-right: 0;
+        border-bottom: 2px solid #e5dff5;
+        max-width: 440px;
+        margin: auto
+    }
+
+    .guide-intro {
+        align-items: flex-start
+    }
+
+    .handwriting {
+        font-size: 43px
+    }
+
+    .faq-grid {
+        grid-template-columns: 1fr
+    }
+
+    .faq-intro {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 0 20px
+    }
+
+    .faq-intro .small-line {
+        grid-column: 1/-1
+    }
+
+    .faq-intro img {
+        grid-column: 2;
+        grid-row: 2/4
+    }
+
+    .faq-content {
+        max-width: 850px;
+        width: 100%;
+        margin: auto
+    }
+}
+
+@media(max-width:720px) {
+    .header {
+        height: 76px
+    }
+
+    .brand img {
+        width: 125px
+    }
+
+    .menu-toggle {
+        display: block;
+        margin-left: auto
+    }
+
+    .nav {
+        display: none;
+        position: absolute;
+        top: 76px;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 10px 20px #3b1e4e22;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px 6%;
+        gap: 8px
+    }
+
+    .nav.open {
+        display: flex
+    }
+
+    .login-link {
+        padding: 12px 15px;
+        font-size: 12px
+    }
+
+    .hero {
+        min-height: 0
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr
+    }
+
+    .hero-copy {
+        padding: 50px 0 0
+    }
+
+    .hero-copy h1 {
+        font-size: clamp(30px, 8vw, 50px);
+        letter-spacing: -1px
+    }
+
+    .hero-copy p {
+        font-size: 18px
+    }
+
+    .hero-copy .hero-support {
+        font-size: 13px
+    }
+
+    .hero-art {
+        margin: 25px auto 0;
+        width: 100%
+    }
+
+    .corner-icons {
+        display: none
+    }
+
+    .section {
+        padding: 48px 0
+    }
+
+    .benefits-grid,
+    .jobs-grid {
+        grid-template-columns: 1fr
+    }
+
+    .benefit {
+        min-height: 0
+    }
+
+    .title-row {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 15px
+    }
+
+    .guide-intro {
+        padding: 0 0 25px;
+        display: block
+    }
+
+    .guide-intro h2 {
+        font-size: clamp(27px, 7vw, 42px)
+    }
+
+    .guide-intro p {
+        font-size: 17px
+    }
+
+    .handwriting {
+        display: none
+    }
+
+    .guide-card {
+        padding: 18px;
+        gap: 10px
+    }
+
+    .guide-copy {
+        padding: 5px
+    }
+
+    .guide-copy li {
+        font-size: 14px
+    }
+
+    .guide-copy h3 {
+        font-size: 21px
+    }
+
+    .heart {
+        width: 42px;
+        height: 42px
+    }
+
+    .faq-intro {
+        display: block
+    }
+
+    .faq-intro img {
+        max-height: 260px;
+        margin: auto
+    }
+
+    .faq-intro h2 {
+        font-size: 44px
+    }
+
+    .faq-trigger {
+        font-size: 15px;
+        padding: 12px;
+        gap: 12px
+    }
+
+    .faq-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 19px
+    }
+
+    .faq-answer {
+        padding: 0 12px 12px 12px;
+        font-size: 14px
+    }
+
+    .search {
+        margin: 0 0 20px
+    }
+
+    .footer .container {
+        flex-wrap: wrap
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 16px 20px
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    html {
+        scroll-behavior: auto
+    }
+
+    * {
+        transition: none !important
+    }
+}

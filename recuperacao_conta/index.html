@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>Recuperar acesso | Included Lives</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="../pagina_principal/index.html" aria-label="Included Lives - início"><img src="assets/logo.png" alt="Included Lives"></a>
+      <a class="top-link" href="login.html">Voltar para entrar</a>
+    </header>
+    <main class="content">
+      <section class="illustration" aria-label="Ilustração de uma pessoa usando um computador para recuperar seu acesso">
+        <img src="assets/ilustracao-recuperacao.jpg" alt="Mulher em cadeira de rodas utilizando notebook, com símbolos de e-mail e segurança">
+      </section>
+      <section class="recovery-card" aria-labelledby="title">
+        <h1 id="title">Vamos recuperar seu acesso</h1>
+        <p class="subtitle">Informe o e-mail usado no seu cadastro.</p>
+        <form id="recovery-form" novalidate>
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="seunome@exemplo.com" required aria-describedby="feedback">
+          <button class="submit" type="submit">Enviar link de recuperação</button>
+          <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+        </form>
+        <p class="explanation">Se houver uma conta com esse e-mail, enviaremos as instruções para redefinir sua senha.</p>
+        <div class="back-divider"><span></span><a href="login.html">Voltar para entrar</a><span></span></div>
+        <p class="help">Não tem mais acesso ao e-mail? <a href="../pagina_principal/index.html#faq">Pedir ajuda</a></p>
+      </section>
+    </main>
+    <div class="wave wave-back" aria-hidden="true"></div>
+    <div class="wave wave-front" aria-hidden="true"></div>
+  </div>
+</body>
+</html>

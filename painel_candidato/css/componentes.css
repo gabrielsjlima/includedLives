@@ -1,0 +1,84 @@
+.card {
+    background: #fff;
+    border: 1px solid #eee3f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px #55245c08
+}
+
+.primary,
+.outline {
+    border-radius: 9px;
+    padding: 13px 20px;
+    font-weight: 700;
+    border: 1.5px solid var(--purple)
+}
+
+.primary {
+    background: linear-gradient(95deg, #92139d, #99159f);
+    color: #fff
+}
+
+.outline {
+    background: #fff;
+    color: var(--deep)
+}
+
+.text-button {
+    background: none;
+    border: 0;
+    color: var(--deep);
+    font-weight: 600
+}
+
+.listcard {
+    padding: 22px;
+    margin-bottom: 16px
+}
+
+.listcard .detail {
+    margin-top: 15px
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 18px
+}
+
+dialog {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 490px;
+    width: calc(100% - 32px);
+    box-shadow: 0 15px 60px #0003
+}
+
+dialog::backdrop {
+    background: #1e102d77
+}
+
+dialog h2 {
+    padding-right: 25px
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    border: 0;
+    background: transparent;
+    font-size: 27px
+}
+
+#toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #43104f;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 9px;
+    display: none;
+    z-index: 10
+}

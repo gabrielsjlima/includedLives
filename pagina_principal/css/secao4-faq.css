@@ -1,0 +1,123 @@
+/* Included Lives — faq.css */
+.faq-section {
+    background: radial-gradient(ellipse at 10% 50%, #f4effd, #fff 65%)
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: 41% 59%;
+    align-items: center;
+    gap: 35px
+}
+
+.faq-intro h2 {
+    font-size: clamp(42px, 4.5vw, 75px);
+    line-height: 1.03;
+    margin: 0
+}
+
+.faq-intro p {
+    font-size: 19px;
+    line-height: 1.5;
+    max-width: 460px
+}
+
+.faq-intro img {
+    width: 95%;
+    max-height: 420px;
+    object-fit: contain;
+    mix-blend-mode: multiply
+}
+
+.faq-content {
+    min-width: 0
+}
+
+.search {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid #e3d8f5;
+    border-radius: 30px;
+    padding: 14px 20px;
+    max-width: 370px;
+    margin: 0 0 20px auto;
+    color: var(--purple)
+}
+
+.search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--deep)
+}
+
+.accordion {
+    display: grid;
+    gap: 12px
+}
+
+.faq-item {
+    background: #fff;
+    border: 1px solid #f0e8f9;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 7px 24px #44215a09
+}
+
+.faq-trigger {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    text-align: left;
+    padding: 13px 24px;
+    border: 0;
+    background: transparent;
+    color: #41145e;
+    font-size: 18px;
+    font-weight: 700
+}
+
+.faq-icon {
+    display: grid;
+    place-items: center;
+    width: 53px;
+    height: 53px;
+    flex: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #77218f, #a631af);
+    color: white;
+    font-size: 24px
+}
+
+.question-text {
+    flex: 1
+}
+
+.arrow {
+    transition: transform .2s
+}
+
+.faq-item.is-open .arrow {
+    transform: rotate(180deg)
+}
+
+.faq-answer {
+    padding: 0 25px 20px 97px;
+    color: #4d3469;
+    font-size: 16px;
+    line-height: 1.55
+}
+
+.faq-answer p {
+    margin: 0;
+    background: #f7f1fd;
+    border-radius: 16px;
+    padding: 18px
+}
+
+.no-results {
+    padding: 20px
+}

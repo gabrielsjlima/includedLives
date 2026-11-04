@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/painel-empresa.css">
+  <link rel="stylesheet" href="css/modulos.css">
+  <script src="js/painel-empresa.js" defer></script>
+  <title>Painel da empresa | Included Lives</title>
+  <script src="../shared/integration.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#visao-geral" aria-label="Included Lives, visão geral">
+        <img src="assets/logo.png"alt="iLives"><span class="brand-name">IVES</span>
+      </a>
+      
+      <div class="company-label">
+        <i class="fa-regular fa-building"></i>
+        <span>Transportadora Porto Ferreira</span>
+      </div>
+
+      <div class="top-actions">
+        <button class="top-message" data-page="mensagens">
+          <i class="fa-regular fa-comment-dots"></i><span>Mensagens</span><b class="notification-dot"></b>
+        </button>
+        
+        <div class="account">
+          <span class="avatar">TP</span>
+          <button id="accountButton" aria-expanded="false" aria-controls="accountMenu">
+            Minha conta 
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          
+          <div id="accountMenu" class="account-menu" hidden>
+            <button data-page="perfil">Perfil da empresa</button>
+            <button data-page="ajuda">Ajuda</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <aside class="sidebar" aria-label="Menu da empresa">
+      <nav id="sideNav">
+        <button class="nav-link active" data-page="visao-geral">
+          <i class="fa-solid fa-house"></i>
+          <span>Visão geral</span>
+        </button>
+
+        <button class="nav-link" data-page="vagas">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Minhas vagas</span>
+        </button>
+
+        <button class="nav-link" data-page="candidaturas">
+          <i class="fa-solid fa-users"></i>
+          <span>Candidaturas</span>
+        </button>
+
+        <button class="nav-link" data-page="talentos">
+          <i class="fa-solid fa-user-magnifying-glass"></i>
+          <span>Banco de talentos</span>
+        </button>
+
+        <button class="nav-link" data-page="perfil">
+          <i class="fa-regular fa-building"></i>
+          <span>Perfil da empresa</span>
+        </button>
+
+        <button class="nav-link" data-page="orientacoes">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Orientações e boas práticas</span>
+        </button>
+      </nav>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <section id="overview" class="page overview" aria-labelledby="pageTitle">
+        <div class="page-heading">
+          <div>
+            <h1 id="pageTitle">Vamos dar o próximo passo na inclusão?</h1>
+            <p>Organize suas vagas e acompanhe o que precisa da sua atenção.</p>
+          </div>
+          
+          <button class="btn btn-primary publish" data-page="vagas">
+            <i class="fa-solid fa-plus"></i> 
+            Publicar vaga
+          </button>
+        </div>
+
+        <div class="stats">
+          <article class="stat-card">
+            <span class="circle-icon"><i class="fa-regular fa-file-lines"></i></span>
+
+            <div>
+              <strong>5</strong>
+              <p>Vagas ativas</p>
+            </div>
+          </article>
+
+          <article class="stat-card">
+            <span class="circle-icon"><i class="fa-solid fa-users"></i></span>
+            
+            <div>
+              <strong>8</strong>
+              <p>Candidaturas aguardando<br class="desktop-only"> resposta</p>
+            </div>
+          </article>
+
+          <article class="stat-card">
+            <span class="circle-icon"><i class="fa-regular fa-calendar"></i></span>
+            
+            <div>
+              <strong>2</strong>
+              <p>Entrevistas nesta semana</p>
+            </div>
+          </article>
+        </div>
+        
+        <div class="middle-grid">
+          <section class="panel attention">
+            <h2>Precisa da sua atenção</h2>
+            <div class="attention-row"><span class="circle-icon small"><i class="fa-regular fa-envelope"></i></span>
+              <div class="attention-text"><strong>Responder 8 candidaturas</strong>
+                <p>Há candidaturas sem atualização há 5 dias</p>
+              </div><button class="btn btn-primary btn-small" data-page="candidaturas">Ver candidaturas</button>
+            </div>
+            <div class="attention-row"><span class="circle-icon small"><i class="fa-regular fa-comment"></i></span>
+              <div class="attention-text"><strong>Confirmar recurso para entrevista</strong>
+                <p>1 solicitação de comunicação por escrito</p>
+              </div><button class="btn btn-primary btn-small" data-page="candidaturas">Analisar solicitação</button>
+            </div>
+            <div class="attention-row"><span class="circle-icon small"><i
+                  class="fa-solid fa-universal-access"></i></span>
+              <div class="attention-text"><strong>Completar acessibilidade de uma vaga</strong>
+                <p>Assistente de logística: recursos ainda não informados</p>
+              </div><button class="btn btn-primary btn-small" data-page="vagas">Revisar vaga</button>
+            </div>
+          </section>
+          <aside class="panel guidance"><span class="circle-icon"><i class="fa-solid fa-book-open"></i></span>
+            <h2>Contrate com mais informação</h2>
+            <p>Orientações para entrevistas e processos acessíveis.</p>
+            <div class="guide-illustration" aria-hidden="true"><i class="fa-solid fa-clipboard-check"></i><span></span>
+            </div><button class="text-link" data-page="orientacoes">Acessar boas práticas <i
+                class="fa-solid fa-arrow-right"></i></button>
+          </aside>
+        </div>
+        <section class="panel jobs">
+          <h2>Suas vagas</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vaga</th>
+                  <th>Situação</th>
+                  <th>Candidaturas</th>
+                  <th colspan="2">Próxima ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Assistente administrativo</td>
+                  <td><span class="status published"><i class="fa-solid fa-circle"></i> Publicada</span></td>
+                  <td>15</td>
+                  <td><button class="btn btn-outline" data-page="vagas">Gerenciar</button></td>
+                  <td><button class="dots" data-page="vagas"
+                      aria-label="Mais opções da vaga Assistente administrativo"><i
+                        class="fa-solid fa-ellipsis-vertical"></i></button></td>
+                </tr>
+                <tr>
+                  <td>Auxiliar de expedição</td>
+                  <td><span class="status published"><i class="fa-solid fa-circle"></i> Publicada</span></td>
+                  <td>8</td>
+                  <td><button class="btn btn-outline" data-page="vagas">Gerenciar</button></td>
+                  <td><button class="dots" data-page="vagas" aria-label="Mais opções da vaga Auxiliar de expedição"><i
+                        class="fa-solid fa-ellipsis-vertical"></i></button></td>
+                </tr>
+                <tr>
+                  <td>Assistente de logística</td>
+                  <td><span class="status draft"><i class="fa-solid fa-circle"></i> Rascunho</span></td>
+                  <td>—</td>
+                  <td><button class="btn btn-outline" data-page="vagas">Continuar edição</button></td>
+                  <td><button class="dots" data-page="vagas" aria-label="Mais opções da vaga Assistente de logística"><i
+                        class="fa-solid fa-ellipsis-vertical"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+      <section id="workspace" class="page workspace" hidden aria-live="polite"></section>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+<div class="ilives-links" style="position:fixed;left:12px;bottom:12px;z-index:200;background:#fff;border:1px solid #ddd;border-radius:8px;padding:6px 10px;font:12px Arial"><a href="../pagina_principal/index.html">Início</a> · <a href="../recuperacao_conta/login.html">Sair da prévia</a></div>
+</body>
+
+</html>

@@ -1,0 +1,412 @@
+:root {
+    --purple: #8b239b;
+    --purple-2: #a12bad;
+    --dark: #3b104c;
+    --ink: #30303c;
+    --muted: #6e6a7d
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    font-family: Inter, Arial, sans-serif;
+    color: var(--ink)
+}
+
+body {
+    overflow-x: hidden;
+    background: #fefcfe
+}
+
+.page {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column
+}
+
+.topbar {
+    height: 128px;
+    flex: 0 0 128px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 37px clamp(30px, 4.3vw, 68px) 0;
+    position: relative;
+    z-index: 3
+}
+
+.brand {
+    display: inline-flex;
+    width: 196px;
+    height: 68px;
+    align-items: center
+}
+
+.brand img {
+    width: 100%;
+    height: auto;
+    display: block
+}
+
+.top-link {
+    font-size: 22px;
+    color: var(--dark);
+    text-decoration: none;
+    padding-top: 22px
+}
+
+.top-link:hover,
+.back-divider a:hover,
+.help a:hover {
+    text-decoration: underline
+}
+
+.content {
+    width: min(1450px, 100%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(25px, 3.5vw, 58px);
+    padding: 0 clamp(30px, 4vw, 65px) 90px;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    min-height: 0
+}
+
+.illustration {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.illustration img {
+    display: block;
+    width: 100%;
+    max-width: 690px;
+    max-height: 65dvh;
+    object-fit: contain;
+    mix-blend-mode: multiply
+}
+
+.recovery-card {
+    background: rgba(255, 255, 255, .91);
+    border: 1px solid #e1d9e4;
+    border-radius: 20px;
+    box-shadow: 0 8px 26px rgba(65, 28, 80, .025);
+    padding: clamp(28px, 3.2vw, 50px) clamp(28px, 3vw, 45px) clamp(30px, 3.5vw, 52px);
+    text-align: center;
+    min-width: 0;
+    max-width: 706px;
+    width: 100%;
+    justify-self: center
+}
+
+.recovery-card h1 {
+    margin: 0;
+    color: var(--dark);
+    font-size: clamp(26px, 2.55vw, 41px);
+    font-weight: 800;
+    letter-spacing: -.045em;
+    line-height: 1.18
+}
+
+.subtitle {
+    margin: 17px 0 35px;
+    font-size: clamp(16px, 1.45vw, 24px);
+    line-height: 1.4
+}
+
+form {
+    text-align: left
+}
+
+label {
+    font-size: 20px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 12px
+}
+
+input {
+    display: block;
+    width: 100%;
+    height: 67px;
+    border: 1.5px solid #bfbac8;
+    border-radius: 13px;
+    background: #fff;
+    padding: 0 22px;
+    font: inherit;
+    font-size: 20px;
+    outline: none
+}
+
+input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #8b239b20
+}
+
+input::placeholder {
+    color: #93909e
+}
+
+.submit {
+    border: 0;
+    border-radius: 35px;
+    background: linear-gradient(100deg, #892394, #a0219e);
+    color: white;
+    font: 700 22px Inter, Arial, sans-serif;
+    width: 100%;
+    height: 67px;
+    cursor: pointer;
+    margin-top: 32px;
+    box-shadow: 0 6px 12px #7e198615
+}
+
+.submit:hover {
+    filter: brightness(1.08)
+}
+
+.submit:focus-visible,
+a:focus-visible {
+    outline: 3px solid #ae6ac0;
+    outline-offset: 4px
+}
+
+.feedback {
+    margin: 0;
+    color: #8b239b;
+    font-size: 14px;
+    line-height: 1.4
+}
+
+.feedback:not(:empty) {
+    margin-top: 12px
+}
+
+.feedback.error {
+    color: #ad254b
+}
+
+.explanation {
+    font-size: clamp(15px, 1.22vw, 19px);
+    line-height: 1.6;
+    margin: 24px auto 41px;
+    max-width: 530px
+}
+
+.back-divider {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 43px
+}
+
+.back-divider span {
+    height: 1px;
+    background: #d6d2d9;
+    flex: 1
+}
+
+.back-divider a,
+.help a {
+    color: #5b1464;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 18px;
+    white-space: nowrap
+}
+
+.help {
+    font-size: 18px;
+    margin: 0
+}
+
+.wave {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    left: -8%;
+    width: 120%;
+    height: 230px;
+    border-radius: 50% 50% 0 0
+}
+
+.wave-back {
+    bottom: -92px;
+    background: #f6e4f9;
+    transform: rotate(-4deg)
+}
+
+.wave-front {
+    bottom: -150px;
+    background: #efd0f4;
+    transform: rotate(5deg)
+}
+
+@media(max-height:850px) and (min-width:851px) {
+    .topbar {
+        height: 100px;
+        flex-basis: 100px;
+        padding-top: 18px
+    }
+
+    .content {
+        padding-bottom: 45px
+    }
+
+    .recovery-card {
+        padding-top: 24px;
+        padding-bottom: 24px
+    }
+
+    .subtitle {
+        margin: 10px 0 20px
+    }
+
+    .explanation {
+        margin: 14px auto 20px
+    }
+
+    .back-divider {
+        margin-bottom: 22px
+    }
+
+    .submit {
+        margin-top: 20px
+    }
+
+    .illustration img {
+        max-height: 65dvh
+    }
+}
+
+@media(max-width:850px) {
+    .topbar {
+        height: 100px;
+        flex-basis: 100px;
+        padding: 22px 24px 0
+    }
+
+    .brand {
+        width: 150px
+    }
+
+    .top-link {
+        font-size: 15px;
+        padding-top: 18px
+    }
+
+    .content {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 0 20px 105px;
+        align-content: start;
+        flex: 1
+    }
+
+    .illustration img {
+        max-width: 380px;
+        max-height: 31dvh
+    }
+
+    .recovery-card {
+        max-width: 600px;
+        padding: 27px 23px
+    }
+
+    .subtitle {
+        margin: 10px 0 22px
+    }
+
+    .recovery-card h1 {
+        font-size: 28px
+    }
+
+    .submit {
+        margin-top: 20px
+    }
+
+    .explanation {
+        margin: 18px auto 25px
+    }
+
+    .back-divider {
+        margin-bottom: 25px
+    }
+
+    .wave {
+        height: 130px;
+        bottom: -65px
+    }
+
+    .wave-front {
+        bottom: -95px
+    }
+}
+
+@media(max-width:450px) {
+    .topbar {
+        padding-inline: 18px
+    }
+
+    .brand {
+        width: 124px
+    }
+
+    .top-link {
+        font-size: 13px
+    }
+
+    .illustration img {
+        max-height: 24dvh
+    }
+
+    .recovery-card {
+        padding: 22px 18px
+    }
+
+    .recovery-card h1 {
+        font-size: 23px
+    }
+
+    .subtitle {
+        font-size: 15px
+    }
+
+    label,
+    input,
+    .submit {
+        font-size: 16px
+    }
+
+    input,
+    .submit {
+        height: 52px
+    }
+
+    .explanation,
+    .help {
+        font-size: 14px
+    }
+
+    .back-divider {
+        gap: 10px
+    }
+
+    .back-divider a,
+    .help a {
+        font-size: 14px
+    }
+}
