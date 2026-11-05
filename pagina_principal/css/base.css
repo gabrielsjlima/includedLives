@@ -68,7 +68,7 @@ img {
 
 .brand img {
     width: 190px;
-    max-height: 86px;
+    max-height: 150px;
     object-fit: contain
 }
 

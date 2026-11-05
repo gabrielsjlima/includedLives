@@ -69,17 +69,11 @@ button:disabled {
 }
 
 .brand img {
-    height: 48px;
-    width: 48px;
+    height: 130px;
+    width: 110px;
     object-fit: cover;
     object-position: 23% 50%;
     border-radius: 10px
-}
-
-.brand-name {
-    font-weight: 800;
-    font-size: 25px;
-    letter-spacing: -1px
 }
 
 .company-label {
