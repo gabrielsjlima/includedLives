@@ -8,13 +8,14 @@ html {
    scroll-padding-top: var(--header-height)
 }
 
+/* Substitui a altura fixa por altura mínima para permitir que as seções cresçam e evitar sobreposição de conteúdo. */
 .hero,
 .benefits-jobs-screen,
 .guide-section,
 .faq-section {
-   height: calc(100vh - var(--header-height));
-   height: calc(100dvh - var(--header-height));
-   min-height: 0
+   height: auto;
+   min-height: calc(100vh - var(--header-height));
+   min-height: calc(100dvh - var(--header-height));
 }
 
 .benefits-jobs-screen {

@@ -74,7 +74,18 @@
 
     .menu-toggle {
         display: block;
-        margin-left: auto
+        margin-left: 0;
+        order: 3;
+    }
+
+    /* No celular, organiza o cabeçalho em logo, login e menu. */
+    .brand {
+        order: 1;
+    }
+
+    .login-link {
+        order: 2;
+        margin-left: auto;
     }
 
     .nav {

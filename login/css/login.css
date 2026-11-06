@@ -87,9 +87,13 @@ body {
     z-index: 1;
     width: 100%;
     max-width: 1392px;
-    height: min(70vh, 690px);
+    /*Antes, o layout ficava limitado a uma parte da altura da janela.*/
+    /*height: min(70vh, 690px);
     height: min(70dvh, 690px);
-    min-height: 0;
+    min-height: 0;*/
+    /* Permite que o layout cresça conforme o conteúdo dos formulários. */
+    height: auto;
+    min-height: 470px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
     gap: clamp(10px, 1vw, 16px);
@@ -97,7 +101,8 @@ body {
 }
 
 .login {
-    height: 85%;
+    /* Troquei de 85% para auto assim o cartão cresce para acomodar os campos, textos e links. */
+    height: auto;
     min-height: 0;
     min-width: 0;
     display: flex;
