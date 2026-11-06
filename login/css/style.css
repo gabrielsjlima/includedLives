@@ -61,7 +61,17 @@ body {
     font-size: 22px;
     color: var(--dark);
     text-decoration: none;
-    padding-top: 22px
+    padding-top: 22px;
+
+    /* Padroniza o destaque do botão de voltar com o da tela de login. */
+    background: #ffffffdb;
+    padding: 8px 12px;
+    border-radius: 20px;
+    color: #79268c;
+    font-weight: 600;
+
+    /* Destaca o botão branco sobre o fundo claro da página. */
+    box-shadow: 0 2px 8px #79268c18;
 }
 
 .top-link:hover,
@@ -305,7 +315,7 @@ a:focus-visible {
 
     .top-link {
         font-size: 15px;
-        padding-top: 18px
+        padding: 8px 12px;
     }
 
     .content {
