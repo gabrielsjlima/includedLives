@@ -19,9 +19,10 @@ body.header-compact {
     --header-height: 68px;
 }
 
+/* Troquei o max-height de 54px para none porque assim evita que o limite de altura deixe o logo pequeno demais ao rolar a página. */
 body.header-compact .brand img {
     width: 142px;
-    max-height: 54px;
+    max-height: none;
 }
 
 body.header-compact .login-link {
