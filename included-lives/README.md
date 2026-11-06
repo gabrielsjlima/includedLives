@@ -8,10 +8,12 @@
 ---
 
 ## 1. Integrantes do Grupo
-* Vinícius Sodré Vito
-* [Nome do Integrante 2]
-* [Nome do Integrante 3]
-* [Nome do Integrante 4]
+* Adriana Carla Rodrigues
+* Gabriel Sebastião;
+* Maria Luísa;
+* Pâmela Roberta;
+* Vinícius Sodré Vito;
+* Wallace Petterson;
 
 ---
 
