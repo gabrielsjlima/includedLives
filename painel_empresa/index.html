@@ -19,6 +19,13 @@
       <a class="brand" href="#visao-geral" aria-label="Included Lives, visão geral">
         <img src="assets/logo.png"alt="iLives">
       </a>
+
+      <!-- Abre e fecha o menu da empresa no celular. -->
+      <button type="button" class="menu-toggle" id="companyMenuToggle"
+        aria-label="Abrir menu" aria-expanded="false"
+        aria-controls="companyMenu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
       
       <div class="company-label">
         <i class="fa-regular fa-building"></i>
@@ -45,7 +52,7 @@
       </div>
     </header>
     
-    <aside class="sidebar" aria-label="Menu da empresa">
+    <aside class="sidebar" id="companyMenu" aria-label="Menu da empresa">
       <nav id="sideNav">
         <button class="nav-link active" data-page="visao-geral">
           <i class="fa-solid fa-house"></i>

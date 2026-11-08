@@ -259,11 +259,19 @@
 
 /* Preferências */
 
-.toggle {
+/* Nas preferências, mantém a caixinha ao lado do texto.
+   O seletor mais específico prevalece sobre .formcard label,
+   que organiza os campos do currículo em coluna. */
+.formcard label.toggle {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 12px 0
+    gap: 12px;
+    padding: 12px 0;
+}
+
+/* Impede que a caixinha encolha quando o texto ocupar mais espaço. */
+.toggle input {
+    flex-shrink: 0;
 }
 
 .toggle input {

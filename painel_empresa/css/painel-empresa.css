@@ -799,3 +799,74 @@ tbody tr:last-child td {
         display: none
     }
 }
+
+/* No desktop, a lateral já está visível.
+   O botão hambúrguer será usado apenas no mobile. */
+.menu-toggle {
+    display: none;
+}
+
+@media (max-width: 780px) {
+    /* No mobile, o cabeçalho passa a ocupar espaço na página.
+       Assim, não encobre o menu nem o título do conteúdo. */
+    .topbar {
+        position: relative;
+    }
+
+    /* Exibe o botão com uma área de toque de 44px. */
+    .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border: 0;
+        border-radius: 8px;
+        background: #efd4f5;
+        color: var(--purple);
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    /* Remove o formato de faixa horizontal.
+       Quando fechado, o menu não ocupa espaço. */
+    .sidebar {
+        display: none;
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 12px;
+        overflow: visible;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    /* O JavaScript adicionará esta classe para abrir o menu. */
+    .sidebar.is-open {
+        display: block;
+    }
+
+    /* Organiza as opções uma abaixo da outra,
+       sem exigir uma largura maior que a tela. */
+    .sidebar nav {
+        display: grid;
+        min-width: 0;
+        gap: 7px;
+    }
+
+    /* Permite que nomes maiores quebrem a linha. */
+    .sidebar .nav-link {
+        width: 100%;
+        white-space: normal;
+        padding: 14px 16px;
+        gap: 16px;
+        font-size: 15px;
+    }
+
+    .sidebar .nav-link i {
+        width: 27px;
+        font-size: 21px;
+        flex-shrink: 0;
+    }
+}

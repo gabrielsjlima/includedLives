@@ -45,7 +45,7 @@
     }
 
     .topbar {
-        padding: 0 16px
+        padding: 0 12px
     }
 
     .hero-grid {
@@ -57,7 +57,7 @@
     }
 
     .topnav {
-        gap: 18px
+        gap: 12px
     }
 }
 

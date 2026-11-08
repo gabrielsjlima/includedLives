@@ -88,3 +88,67 @@ header img {
     width: 100%;
     text-align: left
 }
+
+/* No desktop, a navegação lateral já aparece.
+   O botão hambúrguer será exibido apenas no mobile. */
+.menu-toggle {
+    display: none;
+}
+
+@media (max-width: 850px) {
+    /* Reduz os espaços para os elementos caberem no celular. */
+    .topbar {
+        padding: 0 12px;
+        gap: 12px;
+    }
+
+    /* Mantém a proporção do logo e reserva espaço para os botões. */
+    .topbar > img {
+        width: 80px;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    /* Exibe o hambúrguer com uma área de toque de 44px. */
+    .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border: 0;
+        border-radius: 8px;
+        background: #f0d8f5;
+        color: var(--purple);
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    /* Substitui a margem de 120px do desktop por espaço flexível. */
+    .topnav {
+        margin-left: auto;
+        gap: 12px;
+    }
+
+    /* Mostra os atalhos de vagas e mensagens somente como ícones. */
+    .topnav a {
+        font-size: 0;
+    }
+
+    .topnav i {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    /* Oculta o nome, mantendo o avatar e a seta do perfil. */
+    .account span:not(.avatar) {
+        display: none;
+    }
+
+    .account {
+        margin-left: 0;
+        gap: 5px;
+        flex-shrink: 0;
+    }
+}

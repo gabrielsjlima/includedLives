@@ -380,3 +380,75 @@
         white-space: normal
     }
 }
+
+/* No celular, cada candidatura aparece como um cartão,
+   evitando arrastar a tabela para consultar as informações. */
+@media (max-width: 640px) {
+    .ws-table.candidate-table {
+        display: block;
+        min-width: 0; /* Remove o mínimo de 570px desta tabela. */
+        white-space: normal; /* Permite quebrar os textos. */
+    }
+
+    /* Mantém os cabeçalhos disponíveis sem ocupar espaço visual. */
+    .candidate-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+
+    .candidate-table tbody {
+        display: grid;
+        gap: 16px; /* Separa os cartões. */
+    }
+
+    .candidate-table tbody tr {
+        display: block;
+        min-width: 0;
+        padding: 14px;
+        border: 1px solid #eaddec;
+        border-radius: 10px;
+        background: #fff;
+    }
+
+    .candidate-table tbody td {
+        display: block;
+        padding: 8px 0;
+        border: 0;
+        overflow-wrap: anywhere; /* Evita que textos longos ultrapassem o cartão. */
+    }
+
+    /* Identifica os dados que antes tinham títulos nas colunas. */
+    .candidate-table td:nth-child(2)::before {
+        content: "Vaga";
+    }
+
+    .candidate-table td:nth-child(3)::before {
+        content: "Etapa";
+    }
+
+    .candidate-table td:nth-child(4)::before {
+        content: "Atualização";
+    }
+
+    .candidate-table td::before {
+        display: block;
+        margin-bottom: 4px;
+        color: #6d6b79;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    /* A mensagem de lista vazia não precisa de título de coluna. */
+    .candidate-table td[colspan]::before {
+        content: none;
+    }
+
+    .candidate-table .ws-btn {
+        width: 100%; /* Facilita tocar em “Ver candidatura”. */
+        white-space: normal;
+    }
+}
