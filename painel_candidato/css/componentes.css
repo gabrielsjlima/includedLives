@@ -82,3 +82,49 @@ dialog h2 {
     display: none;
     z-index: 10
 }
+
+/* Dá um fundo lilás suave ao grupo de opções. */
+.recurso-opcoes {
+    display: grid;
+    gap: 6px;
+    margin: 16px 0 0;
+    padding: 10px 14px;
+    border: 1px solid #eaddec;
+    border-radius: 12px;
+    background: #fcf8ff;
+}
+
+.recurso-opcoes legend {
+    padding: 0 6px;
+    font-weight: 700;
+}
+
+/* Deixa a linha inteira clicável, inclusive no celular. */
+.recurso-opcoes label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    cursor: pointer;
+}
+
+.recurso-opcoes input {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #8a1e99;
+}
+
+/* Permite que os botões quebrem de linha em telas estreitas. */
+.recurso-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+#recursoErro {
+    color: #a12243;
+}

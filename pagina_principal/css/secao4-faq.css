@@ -24,7 +24,7 @@
 
 .faq-intro img {
     width: 95%;
-    max-height: 420px;
+    max-height: 500px;
     object-fit: contain;
     mix-blend-mode: multiply
 }

@@ -77,3 +77,28 @@ search?.addEventListener("input", () => {
   );
   updateHeader();
 })();
+// Reposiciona as artes apenas no celular.
+(() => {
+  const mobile = window.matchMedia("(max-width: 720px)");
+
+  const heroGrid = document.querySelector(".hero-grid");
+  const heroArt = heroGrid?.querySelector(".hero-art");
+  const heroDescription = heroGrid?.querySelector(".hero-copy > p");
+
+  const guideCard = document.querySelector(".guide-card");
+  const guideArt = guideCard?.querySelector(".guide-illustration");
+  const guideTitle = guideCard?.querySelector(".guide-copy > h3");
+
+  function positionImages() {
+    if (mobile.matches) {
+      if (heroArt && heroDescription) heroDescription.before(heroArt);
+      if (guideArt && guideTitle) guideTitle.after(guideArt);
+    } else {
+      if (heroArt) heroGrid.append(heroArt);
+      if (guideArt) guideCard.prepend(guideArt);
+    }
+  }
+
+  positionImages();
+  mobile.addEventListener("change", positionImages);
+})();

@@ -210,6 +210,68 @@ function drawJobs() {
       )
       .join("") || '<tr><td colspan="4">Nenhuma vaga encontrada.</td></tr>';
 }
+
+// Guardamos esta opção em uma constante porque ela também será
+// usada na validação: “Não oferece” precisa ser marcado sozinho.
+const SEM_RECURSOS = "Não oferece recursos específicos no momento";
+
+// Cada item desta lista vai virar uma caixinha no formulário.
+// Para acrescentar uma opção no futuro, basta incluir outro texto aqui.
+const RECURSOS_DA_VAGA = [
+  "Acessibilidade física (rampas, elevadores e banheiros adaptados)",
+  "Intérprete de Libras",
+  "Legendas e comunicação visual",
+  "Leitor de tela e softwares acessíveis",
+  "Materiais em Braille ou fonte ampliada",
+  "Mobiliário e equipamentos adaptados",
+  "Ambiente com controle de estímulos sensoriais",
+  "Instruções e treinamentos adaptados",
+  "Acompanhamento por profissional ou equipe de apoio",
+  "Horário flexível",
+  "Trabalho remoto ou híbrido",
+  "Pausas adaptadas",
+  SEM_RECURSOS,
+];
+
+// Recebe a vaga que está sendo criada ou editada
+// e devolve o HTML do checklist.
+function renderAccessChecklist(vaga) {
+  // Na edição, recupera as opções salvas. Se não houver lista,
+  // usa um array vazio e todas as caixinhas começam desmarcadas.
+  const marcados = vaga.accessOptions ?? [];
+
+  // map() cria um trecho de HTML para cada recurso.
+  // includes() verifica se aquele recurso já estava marcado.
+  // join("") reúne os trechos em um só texto, sem vírgulas entre eles.
+  const opcoes = RECURSOS_DA_VAGA.map((recurso) => {
+    const checked = marcados.includes(recurso) ? "checked" : "";
+
+    // esc() protege o HTML ao inserir textos dentro da página.
+    // O label permite marcar a caixinha clicando também no texto.
+    return `
+      <label class="ws-check">
+        <input type="checkbox" name="accessOptions"
+          value="${esc(recurso)}" ${checked}>
+        <span>${esc(recurso)}</span>
+      </label>
+    `;
+  }).join("");
+
+  // fieldset reúne as opções em um grupo; legend dá nome ao grupo.
+  // ${opcoes} insere aqui todas as caixinhas montadas acima.
+  return `
+    <fieldset class="ws-fieldset job-access-checklist">
+      <legend>Recursos de acessibilidade disponíveis</legend>
+      <p class="ws-muted">Marque os recursos disponíveis para esta vaga.</p>
+
+      <div class="ws-grid two">
+        ${opcoes}
+      </div>
+
+    </fieldset>
+  `;
+}
+
 function editJob(id) {
   const j = id
     ? byId(id)
@@ -224,13 +286,15 @@ function editJob(id) {
         access: "",
         applications: 0,
       };
+
+  //Insere o checklist de acessibilidade da vaga logo após a descrição.
   return (
     head(
       id ? "Editar vaga" : "Publicar nova vaga",
       "Preencha as informações e salve a oportunidade.",
       button("Voltar às vagas", "go:vagas"),
     ) +
-    `<form id="jobForm" class="ws-card" data-id="${id || ""}"><div class="ws-grid two"><label>Título da vaga<input name="title" required maxlength="100" value="${esc(j.title)}"></label><label>Cidade<input name="city" required value="${esc(j.city)}"></label><label>Modelo de trabalho<select name="model">${["Presencial", "Híbrido", "Remoto"].map((x) => `<option ${j.model === x ? "selected" : ""}>${x}</option>`).join("")}</select></label><label>Tipo de contratação<select name="type">${["CLT", "PJ", "Estágio", "Temporário"].map((x) => `<option ${j.type === x ? "selected" : ""}>${x}</option>`).join("")}</select></label><label>Salário<input name="salary" value="${esc(j.salary)}"></label><label>Situação<select name="status">${["Rascunho", "Publicada", "Pausada"].map((x) => `<option ${j.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></label></div><div class="ws-list" style="margin-top:16px"><label>Descrição da oportunidade<textarea name="description" required>${esc(j.description)}</textarea></label><label>Recursos de acessibilidade disponíveis<textarea name="access" placeholder="Descreva os recursos oferecidos">${esc(j.access)}</textarea></label></div><div class="ws-actions" style="margin-top:18px"><button class="ws-btn primary" type="submit">Salvar vaga</button>${button("Cancelar", "go:vagas")}</div></form>`
+    `<form id="jobForm" class="ws-card" data-id="${id || ""}"><div class="ws-grid two"><label>Título da vaga<input name="title" required maxlength="100" value="${esc(j.title)}"></label><label>Cidade<input name="city" required value="${esc(j.city)}"></label><label>Modelo de trabalho<select name="model">${["Presencial", "Híbrido", "Remoto"].map((x) => `<option ${j.model === x ? "selected" : ""}>${x}</option>`).join("")}</select></label><label>Tipo de contratação<select name="type">${["CLT", "PJ", "Estágio", "Temporário"].map((x) => `<option ${j.type === x ? "selected" : ""}>${x}</option>`).join("")}</select></label><label>Salário<input name="salary" value="${esc(j.salary)}"></label><label>Situação<select name="status">${["Rascunho", "Publicada", "Pausada"].map((x) => `<option ${j.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></label></div><div class="ws-list" style="margin-top:16px"><label>Descrição da oportunidade<textarea name="description" required>${esc(j.description)}</textarea></label>${renderAccessChecklist(j)}</div><div class="ws-actions" style="margin-top:18px"><button class="ws-btn primary" type="submit">Salvar vaga</button>${button("Cancelar", "go:vagas")}</div></form>`
   );
 }
 function candidates() {
@@ -527,7 +591,9 @@ document.addEventListener("submit", (e) => {
   )
     return;
   e.preventDefault();
-  const data = Object.fromEntries(new FormData(f));
+  // Guarda o formulário para poder ler todas as caixinhas marcadas.
+  const formData = new FormData(f);
+  const data = Object.fromEntries(formData);
   if (f.id === "jobForm") {
     const id = +f.dataset.id;
     const j = id
@@ -536,6 +602,31 @@ document.addEventListener("submit", (e) => {
           id: Math.max(0, ...state.jobs.map((x) => x.id)) + 1,
           applications: 0,
         };
+// getAll() pega todas as caixinhas marcadas, mesmo com o mesmo nome.
+const marcados = formData.getAll("accessOptions");
+const semRecursos = marcados.includes(SEM_RECURSOS);
+
+// “Não oferece recursos” não pode ser salvo junto com outros recursos.
+if (semRecursos && marcados.length > 1) {
+  notify("Marque “Não oferece recursos” sozinho ou desmarque essa opção.");
+  return;
+}
+
+// Preserva o texto que já existia nas vagas antigas.
+const textoAnterior =
+  j.accessOther ?? (Array.isArray(j.accessOptions) ? "" : j.access ?? "");
+
+    // A lista serve para remarcar as caixinhas ao abrir a vaga em Editar.
+    data.accessOptions = marcados;
+    data.accessOther = textoAnterior;
+
+    // A aba Acessibilidade continua recebendo um resumo em texto.
+    // Se a empresa marcou “Não oferece recursos”, exibe só essa opção.
+    data.access = semRecursos
+    ? SEM_RECURSOS
+    : [...marcados, textoAnterior].filter(Boolean).join("; ");
+
+    // Aplica os dados do formulário à vaga atual.
     Object.assign(j, data);
     if (!id) state.jobs.push(j);
     state.history = state.history || [];

@@ -365,3 +365,37 @@ html {
       padding: 40px 0
    }
 }
+
+@media (min-width: 1051px) {
+    .guide-illustration img {
+        max-height: 300px;
+    }
+}
+/* Ajusta as artes da home apenas em telas de até 720px. */
+@media (max-width: 720px) {
+
+    /* Topo: centraliza a arte entre o subtítulo e a descrição.
+       Use um valor menor que 82% se quiser reduzir a imagem. */
+    .hero-copy .hero-art {
+        width: min(82%, 330px);
+        margin: 12px auto 16px;
+    }
+
+    /* Guia: centraliza o livro abaixo do título.
+       Remove a borda e o espaço interno da posição antiga. */
+    .guide-copy .guide-illustration {
+        width: min(74%, 245px);
+        margin: 8px auto 14px;
+        padding: 0;
+        border: 0;
+    }
+
+    /* FAQ: mantém a imagem no lugar e reduz um pouco a largura.
+       A altura acompanha a largura para não deformar a arte. */
+    .faq-intro img {
+        display: block;
+        width: min(84%, 300px);
+        height: auto;
+        margin: 12px auto 0;
+    }
+}

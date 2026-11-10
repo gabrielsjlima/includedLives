@@ -45,19 +45,45 @@ function notify(message) {
 document.getElementById("orientacoesBtn").onclick = () =>
   showDialog(
     "Orientações da entrevista",
-    "Confira a data e o horário com a empresa. Prepare um local tranquilo para a entrevista online e teste seu acesso com antecedência.",
+    "Confirme com a empresa a data, o horário e o formato da entrevista. Se for online, use o link enviado pela empresa."
   );
 
+const recursoDialog = document.getElementById("recursoDialog");
+const recursoForm = document.getElementById("recursoForm");
+const recursoErro = document.getElementById("recursoErro");
+
+// Abre a janela e recupera as opções salvas neste navegador.
 document.getElementById("recursoBtn").onclick = () => {
-  const pedido = prompt(
-    "Qual recurso de acessibilidade você deseja solicitar?",
-  );
+  const salvos = (localStorage.getItem("ilives_recurso") ?? "").split("; ");
 
-  if (pedido?.trim()) {
-    localStorage.setItem("ilives_recurso", pedido.trim());
-    notify("Solicitação registrada neste navegador (demonstração).");
-  }
+  recursoForm.querySelectorAll('input[name="recurso"]').forEach((caixa) => {
+    caixa.checked = salvos.includes(caixa.value);
+  });
+
+  recursoErro.textContent = "";
+  recursoDialog.showModal();
 };
+
+// Fecha sem salvar alterações.
+document.getElementById("cancelarRecurso").onclick = () => {
+  recursoDialog.close();
+};
+
+recursoForm.addEventListener("submit", (event) => {
+  // Evita recarregar a página e pega todas as opções marcadas.
+  event.preventDefault();
+  const recursos = new FormData(recursoForm).getAll("recurso");
+
+  if (recursos.length === 0) {
+    recursoErro.textContent = "Marque pelo menos um recurso para salvar.";
+    return;
+  }
+
+  // Nesta versão, a seleção fica salva só neste navegador.
+  localStorage.setItem("ilives_recurso", recursos.join("; "));
+  recursoDialog.close();
+  notify("Seleção salva neste navegador. Ela ainda não foi enviada à empresa.");
+});
 
 document.getElementById("accountBtn").onclick = () => {
   const m = document.getElementById("accountMenu");

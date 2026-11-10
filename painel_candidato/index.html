@@ -104,7 +104,7 @@
                                 <h3>Entrevista para Assistente administrativo</h3>
                                 <p>Transportadora Porto Ferreira</p>
                                 <p class="small">
-                                    <i class="fa-solid fa-video accent"></i> 24 de outubro, às 14h <span class="sep">•</span> Online
+                                    <i class="fa-solid fa-calendar-days accent"></i> 24 de outubro, às 14h <span class="sep">•</span> Online
                                 </p>
                             </div>
                         </div>
@@ -382,6 +382,34 @@
             <div id="dialogBody"></div>
             <div class="buttons">
                 <button class="primary" value="close">Entendi</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Janela aberta pelo botão "Solicitar outro recurso". -->
+    <dialog id="recursoDialog" aria-labelledby="recursoTitulo" aria-describedby="recursoDescricao">
+        <form id="recursoForm">
+            <h2 id="recursoTitulo">Recursos para sua entrevista</h2>
+            <p id="recursoDescricao">Marque o que ajudaria você a participar da entrevista.</p>
+
+            <!-- Cada opção pode ser marcada clicando na caixa ou no texto. -->
+            <fieldset class="recurso-opcoes">
+                <legend>Recursos de acessibilidade</legend>
+
+                <label><input type="checkbox" name="recurso" value="Intérprete de Libras"> Intérprete de Libras</label>
+                <label><input type="checkbox" name="recurso" value="Legendas na chamada"> Legendas na chamada</label>
+                <label><input type="checkbox" name="recurso" value="Comunicação por escrito"> Comunicação por escrito</label>
+                <label><input type="checkbox" name="recurso" value="Material em formato acessível"> Material em formato acessível</label>
+                <label><input type="checkbox" name="recurso" value="Local com acesso sem degraus"> Local com acesso sem degraus</label>
+                <label><input type="checkbox" name="recurso" value="Pausas durante a entrevista"> Pausas durante a entrevista</label>
+            </fieldset>
+
+            <!-- A mensagem de validação aparece aqui, dentro da janela. -->
+            <p id="recursoErro" role="alert"></p>
+
+            <div class="recurso-acoes">
+                <button type="button" class="outline" id="cancelarRecurso">Cancelar</button>
+                <button type="submit" class="primary">Salvar seleção</button>
             </div>
         </form>
     </dialog>

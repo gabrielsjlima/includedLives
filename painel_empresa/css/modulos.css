@@ -452,3 +452,54 @@
         white-space: normal;
     }
 }
+
+/* Agrupa as opções em uma área própria, abaixo da descrição da vaga. */
+.job-access-checklist {
+    min-width: 0;
+    margin-top: 8px;
+    padding: 14px;
+    border: 1px solid #eaddec;
+    border-radius: 12px;
+    background: #faf6fd;
+}
+
+/* Aproxima a instrução das caixinhas. */
+.job-access-checklist .ws-muted {
+    margin: 0 0 12px;
+}
+
+/* Mantém duas colunas no desktop, com um espaço curto entre opções. */
+.job-access-checklist .ws-grid.two {
+    gap: 8px 12px;
+}
+
+/* Cada opção tem sua própria área clicável, incluindo o texto. */
+.job-access-checklist .ws-check {
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 1px solid #eaddec;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* Impede que a caixinha encolha quando o texto quebra em duas linhas. */
+.job-access-checklist .ws-check input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+/* Separa “Não oferece recursos” das opções de recursos disponíveis. */
+.job-access-checklist .ws-check:last-child {
+    grid-column: 1 / -1;
+    background: #f3eaf7;
+}
+
+/* No celular, mostra uma opção por linha. */
+@media (max-width: 640px) {
+    .job-access-checklist .ws-grid.two {
+        grid-template-columns: 1fr;
+    }
+}
