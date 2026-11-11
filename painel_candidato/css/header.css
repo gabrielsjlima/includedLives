@@ -1,18 +1,33 @@
+/* Mantém o cabeçalho visível durante a rolagem,
+   preservando o espaço que ele ocupa na página. */
 .topbar {
     height: var(--header);
     background: #fff;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #e9dcec;
-    position: relative;
-    z-index: 3;
+    position: sticky;
+    top: 0;
+    z-index: 30;
     padding: 0 32px;
-    gap: 35px
+    gap: 35px;
 }
 
-header img {
+/* Organiza o link da logo e impede que ele encolha
+   quando os outros elementos ocuparem espaço no cabeçalho. */
+.topbar .brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+/* Controla a imagem dentro do link.
+   A altura automática mantém a proporção original da logo. */
+.topbar .brand img {
+    display: block;
     width: 100px;
-    height: 100px;
+    height: auto;
 }
 
 .topnav {
@@ -102,16 +117,19 @@ header img {
         gap: 12px;
     }
 
-    /* Mantém a proporção do logo e reserva espaço para os botões. */
-    .topbar > img {
-        width: 80px;
+    /* Define o tamanho da logo no celular.
+    O seletor considera que a imagem agora está dentro do link.
+    A largura permanece igual durante a rolagem. */
+    .topbar .brand img {
+        width: 100px;
         height: auto;
-        flex-shrink: 0;
     }
 
-    /* Exibe o hambúrguer com uma área de toque de 44px. */
+    /* No celular, o menu será aberto pelo ícone do usuário.
+   Por isso, o botão hambúrguer deixa de aparecer. */
     .menu-toggle {
-        display: inline-flex;
+        display: none;
+        /*display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 44px;
@@ -122,7 +140,7 @@ header img {
         background: #f0d8f5;
         color: var(--purple);
         font-size: 22px;
-        cursor: pointer;
+        cursor: pointer;*/
     }
 
     /* Substitui a margem de 120px do desktop por espaço flexível. */

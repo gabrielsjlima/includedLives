@@ -503,3 +503,91 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Minhas vagas: transforma cada linha em um cartão no celular.
+   Acima de 640px, a tabela continua com o visual do desktop. */
+@media (max-width: 640px) {
+
+    /* Retira o mínimo de 570px somente da tabela de vagas. */
+    .ws-table.jobs-table {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        white-space: normal;
+    }
+
+    /* Mantém os cabeçalhos no HTML, sem ocupar espaço visual. */
+    .jobs-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+
+    /* Organiza os cartões um abaixo do outro. */
+    .jobs-table tbody {
+        display: grid;
+        gap: 12px;
+        width: 100%;
+    }
+
+    /* Cada linha da tabela passa a ter aparência de cartão. */
+    .jobs-table tbody tr {
+        display: block;
+        min-width: 0;
+        padding: 14px;
+        border: 1px solid #eaddec;
+        border-radius: 10px;
+        background: #fcf8ff;
+    }
+
+    /* Empilha as informações e permite quebrar textos longos. */
+    .jobs-table tbody td {
+        display: block;
+        padding: 6px 0;
+        border: 0;
+        overflow-wrap: anywhere;
+    }
+
+    /* Aproxima a cidade e o modelo de trabalho do nome da vaga. */
+    .jobs-table .ws-muted {
+        margin: 4px 0 0;
+    }
+
+    /* Recoloca os títulos das colunas dentro de cada cartão. */
+    .jobs-table td:nth-child(2)::before {
+        content: "Situação";
+    }
+
+    .jobs-table td:nth-child(3)::before {
+        content: "Candidaturas";
+    }
+
+    .jobs-table td::before {
+        display: block;
+        margin-bottom: 4px;
+        color: #5d6070;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* A mensagem de lista vazia não recebe título de coluna. */
+    .jobs-table td[colspan]::before {
+        content: none;
+    }
+
+    /* Deixa Gerenciar e Editar com áreas de toque confortáveis. */
+    .jobs-table .ws-actions {
+        gap: 8px;
+        margin-top: 6px;
+    }
+
+    .jobs-table .ws-actions .ws-btn {
+        flex: 1 1 110px;
+        min-height: 44px;
+        white-space: normal;
+        text-align: center;
+    }
+}

@@ -184,6 +184,7 @@ function overviewSync() {
     )
     .join("");
 }
+//Identifica a tabela de vagas para ajustar só ela no celular. (<table class="ws-table jobs-table">)
 function jobs() {
   return (
     head(
@@ -191,7 +192,7 @@ function jobs() {
       "Gerencie suas oportunidades e acompanhe candidaturas.",
       button('<i class="fa-solid fa-plus"></i> Publicar vaga', "new-job", true),
     ) +
-    `<div class="ws-card"><div class="ws-tools"><input id="jobSearch" placeholder="Buscar por cargo ou cidade" aria-label="Buscar vagas"><select id="jobStatus"><option value="">Todas as situações</option><option>Publicada</option><option>Rascunho</option><option>Pausada</option></select></div><div class="ws-table-wrap"><table class="ws-table"><thead><tr><th>Vaga</th><th>Situação</th><th>Candidaturas</th><th>Ações</th></tr></thead><tbody id="jobRows"></tbody></table></div></div>`
+    `<div class="ws-card"><div class="ws-tools"><input id="jobSearch" placeholder="Buscar por cargo ou cidade" aria-label="Buscar vagas"><select id="jobStatus"><option value="">Todas as situações</option><option>Publicada</option><option>Rascunho</option><option>Pausada</option></select></div><div class="ws-table-wrap"><table class="ws-table jobs-table"><thead><tr><th>Vaga</th><th>Situação</th><th>Candidaturas</th><th>Ações</th></tr></thead><tbody id="jobRows"></tbody></table></div></div>`
   );
 }
 function drawJobs() {
@@ -657,8 +658,23 @@ const textoAnterior =
   }
 });
 accountButton.addEventListener("click", () => {
+  // No mobile, o TP abre a navegação completa da empresa.
+  if (window.matchMedia("(max-width: 780px)").matches) {
+    accountMenu.hidden = true;
+
+    setCompanyMenuOpen(
+      !companyMenu.classList.contains("is-open")
+    );
+
+    return;
+  }
+
+  // No desktop, mantém as opções atuais de "Minha conta".
   accountMenu.hidden = !accountMenu.hidden;
-  accountButton.setAttribute("aria-expanded", String(!accountMenu.hidden));
+  accountButton.setAttribute(
+    "aria-expanded",
+    String(!accountMenu.hidden)
+  );
 });
 window.addEventListener("hashchange", () => {
   const page = location.hash.slice(1);
@@ -698,22 +714,54 @@ window.addEventListener("storage", (e) => {
   }
 });
 
-// Identifica o botão e o menu da empresa no HTML.
-const companyMenuToggle = document.getElementById("companyMenuToggle");
+// Identifica a navegação que antes era aberta pelo hambúrguer.
 const companyMenu = document.getElementById("companyMenu");
 
-if (companyMenuToggle && companyMenu) {
-  function setCompanyMenuOpen(open) {
-    // A classe definida no CSS mostra ou esconde o menu mobile.
-    companyMenu.classList.toggle("is-open", open);
+// Usa o mesmo limite de largura do CSS da empresa.
+const companyMobile = window.matchMedia("(max-width: 780px)");
 
-    // Atualiza o estado e a descrição do botão.
-    companyMenuToggle.setAttribute("aria-expanded", String(open));
-    companyMenuToggle.setAttribute(
-      "aria-label",
-      open ? "Fechar menu" : "Abrir menu"
-    );
-  }
+// Abre ou fecha a navegação pelo botão TP.
+function setCompanyMenuOpen(open) {
+  companyMenu.classList.toggle("is-open", open);
+
+  // Informa se a navegação está aberta e descreve a ação do botão.
+  accountButton.setAttribute("aria-expanded", String(open));
+  accountButton.setAttribute(
+    "aria-label",
+    open ? "Fechar menu da empresa" : "Abrir menu da empresa"
+  );
+}
+
+// Fecha o menu depois de selecionar uma seção.
+companyMenu.querySelectorAll(".nav-link").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (companyMobile.matches) {
+      setCompanyMenuOpen(false);
+    }
+  });
+});
+
+// Limpa os menus e configura o botão ao mudar o tamanho da tela.
+function updateCompanyMenu() {
+  companyMenu.classList.remove("is-open");
+  accountMenu.hidden = true;
+
+  accountButton.setAttribute("aria-expanded", "false");
+  accountButton.setAttribute(
+    "aria-controls",
+    companyMobile.matches ? "companyMenu" : "accountMenu"
+  );
+  accountButton.setAttribute(
+    "aria-label",
+    companyMobile.matches
+      ? "Abrir menu da empresa"
+      : "Abrir opções da empresa"
+  );
+}
+
+// Configura ao carregar e quando alternar entre mobile e desktop.
+updateCompanyMenu();
+companyMobile.addEventListener("change", updateCompanyMenu);
 
   // Cada toque alterna entre abrir e fechar.
   companyMenuToggle.addEventListener("click", () => {
@@ -724,4 +772,3 @@ if (companyMenuToggle && companyMenu) {
   companyMenu.querySelectorAll(".nav-link").forEach((button) => {
     button.addEventListener("click", () => setCompanyMenuOpen(false));
   });
-}

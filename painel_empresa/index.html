@@ -38,10 +38,11 @@
         </button>
         
         <div class="account">
-          <span class="avatar">TP</span>
-          <button id="accountButton" aria-expanded="false" aria-controls="accountMenu">
-            Minha conta 
-            <i class="fa-solid fa-chevron-down"></i>
+          <!-- Coloca o avatar dentro do botão: tocar no círculo ou na seta executa a mesma ação. -->
+          <button type="button" id="accountButton" aria-label="Abrir opções da empresa" aria-expanded="false" aria-controls="accountMenu">
+            <span class="avatar" aria-hidden="true">TP</span>
+            Minha conta
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
           </button>
           
           <div id="accountMenu" class="account-menu" hidden>

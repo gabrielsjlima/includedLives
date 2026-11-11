@@ -85,11 +85,6 @@ recursoForm.addEventListener("submit", (event) => {
   notify("Seleção salva neste navegador. Ela ainda não foi enviada à empresa.");
 });
 
-document.getElementById("accountBtn").onclick = () => {
-  const m = document.getElementById("accountMenu");
-  m.hidden = !m.hidden;
-};
-
 const resume = document.getElementById("resumeForm");
 
 try {
@@ -239,22 +234,78 @@ window.addEventListener('load', () => {
     });
 });
 
-// Identifica o botão hambúrguer e o menu que ele controla.
-const menuToggle = document.getElementById("menuToggle");
+// O mesmo botão do usuário terá funções diferentes:
+// mobile: abre a navegação completa;
+// desktop: abre as opções da conta.
+const accountBtn = document.getElementById("accountBtn");
+const accountMenu = document.getElementById("accountMenu");
 const candidateMenu = document.getElementById("candidateMenu");
 
-if (menuToggle && candidateMenu) {
-  function setMenuOpen(open) {
-    // Mostra ou esconde o menu usando a classe definida no CSS.
-    candidateMenu.classList.toggle("is-open", open);
+// Usa o mesmo limite de largura definido no CSS.
+const mobileMenu = window.matchMedia("(max-width: 850px)");
 
-    // Atualiza a informação de abertura e o nome do botão.
-    menuToggle.setAttribute("aria-expanded", String(open));
-    menuToggle.setAttribute(
-      "aria-label",
-      open ? "Fechar menu" : "Abrir menu"
+// Mostra ou esconde a navegação completa no celular.
+function setCandidateMenuOpen(open) {
+  candidateMenu.classList.toggle("is-open", open);
+
+  // Informa aos leitores de tela se o menu está aberto.
+  accountBtn.setAttribute("aria-expanded", String(open));
+  accountBtn.setAttribute(
+    "aria-label",
+    open ? "Fechar menu do candidato" : "Abrir menu do candidato"
+  );
+}
+
+// Clique no ícone do usuário.
+accountBtn.onclick = () => {
+  if (mobileMenu.matches) {
+    // No celular, fecha o menu pequeno e alterna o menu completo.
+    accountMenu.hidden = true;
+
+    setCandidateMenuOpen(
+      !candidateMenu.classList.contains("is-open")
+    );
+  } else {
+    // No desktop, mantém as opções atuais da conta.
+    accountMenu.hidden = !accountMenu.hidden;
+
+    accountBtn.setAttribute(
+      "aria-expanded",
+      String(!accountMenu.hidden)
     );
   }
+};
+
+// Fecha a navegação depois de escolher uma seção.
+candidateMenu.querySelectorAll(".side-link").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (mobileMenu.matches) {
+      setCandidateMenuOpen(false);
+    }
+  });
+});
+
+// Atualiza o botão quando a tela muda entre mobile e desktop.
+function updateAccountButton() {
+  candidateMenu.classList.remove("is-open");
+  accountMenu.hidden = true;
+
+  accountBtn.setAttribute("aria-expanded", "false");
+  accountBtn.setAttribute(
+    "aria-controls",
+    mobileMenu.matches ? "candidateMenu" : "accountMenu"
+  );
+  accountBtn.setAttribute(
+    "aria-label",
+    mobileMenu.matches
+      ? "Abrir menu do candidato"
+      : "Abrir opções da conta"
+  );
+}
+
+// Configura ao carregar e ao redimensionar a tela.
+updateAccountButton();
+mobileMenu.addEventListener("change", updateAccountButton);
 
   // Cada toque alterna entre abrir e fechar.
   menuToggle.addEventListener("click", () => {
@@ -265,4 +316,3 @@ if (menuToggle && candidateMenu) {
   candidateMenu.querySelectorAll(".side-link").forEach((button) => {
     button.addEventListener("click", () => setMenuOpen(false));
   });
-}
