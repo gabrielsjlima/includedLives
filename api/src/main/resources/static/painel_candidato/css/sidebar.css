@@ -1,0 +1,73 @@
+.sidebar {
+    border-right: 1px solid #e9dcec;
+    background: #fff7ff91;
+    padding: 34px 12px
+}
+
+.sidebar nav {
+    display: grid;
+    gap: 12px
+}
+
+.side-link {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-radius: 10px;
+    font-weight: 500
+}
+
+.side-link i {
+    font-size: 21px;
+    width: 23px
+}
+
+.side-link.active,
+.side-link:hover {
+    background: #f0d8f5;
+    color: var(--deep);
+    font-weight: 700
+}
+
+@media (max-width: 850px) {
+    /* Coloca menu e conteúdo um abaixo do outro,
+       liberando a largura antes reservada à lateral. */
+    .shell {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Enquanto fechado, o menu não ocupa espaço. */
+    .sidebar {
+        display: none;
+        padding: 12px;
+        border-right: 0;
+        border-bottom: 1px solid #e9dcec;
+        background: #fff;
+    }
+
+    /* Esta classe será controlada pelo JavaScript. */
+    .sidebar.is-open {
+        display: block;
+    }
+
+    /* Mostra os nomes das opções e alinha os ícones à esquerda.
+       Sobrescreve o estilo antigo que escondia os textos no mobile. */
+    .sidebar .side-link {
+        width: 100%;
+        font-size: 16px;
+        justify-content: flex-start;
+        padding: 14px 16px;
+        gap: 16px;
+    }
+
+    .sidebar .side-link i {
+        font-size: 21px;
+        flex-shrink: 0;
+    }
+}

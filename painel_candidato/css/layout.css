@@ -7,8 +7,7 @@
 .main {
     padding: 30px 25px 24px;
     min-width: 0;
-    /* Deixa a rolagem na página, sem criar uma área de rolagem dentro do conteúdo. */
-    overflow: visible;
+    overflow: auto
 }
 
 .view {

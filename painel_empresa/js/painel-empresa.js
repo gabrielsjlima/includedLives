@@ -1,774 +1,112 @@
-const overview = document.getElementById("overview"),
-  workspace = document.getElementById("workspace"),
-  accountButton = document.getElementById("accountButton"),
-  accountMenu = document.getElementById("accountMenu");
-const initial = {
-  jobs: [
-    {
-      id: 1,
-      title: "Assistente administrativo",
-      city: "Porto Ferreira, SP",
-      model: "Presencial",
-      type: "CLT",
-      salary: "A combinar",
-      status: "Publicada",
-      description: "Apoiar rotinas administrativas, documentos e atendimento.",
-      access: "Comunicação por escrito, acesso sem degraus",
-      applications: 15,
-    },
-    {
-      id: 2,
-      title: "Auxiliar de expedição",
-      city: "Porto Ferreira, SP",
-      model: "Presencial",
-      type: "CLT",
-      salary: "A combinar",
-      status: "Publicada",
-      description: "Separação de mercadorias e organização do estoque.",
-      access: "Acesso sem degraus",
-      applications: 8,
-    },
-    {
-      id: 3,
-      title: "Assistente de logística",
-      city: "Porto Ferreira, SP",
-      model: "Híbrido",
-      type: "CLT",
-      salary: "A combinar",
-      status: "Rascunho",
-      description: "Controle de pedidos e apoio logístico.",
-      access: "A confirmar",
-      applications: 0,
-    },
-  ],
-  candidates: [
-    {
-      id: 1,
-      name: "Ana Souza",
-      initials: "AS",
-      job: 1,
-      stage: "Entrevista",
-      skills: "Organização, Excel, atendimento",
-      access: "Comunicação por escrito",
-      updated: "Hoje",
-      notes: "",
-    },
-    {
-      id: 2,
-      name: "Carlos Lima",
-      initials: "CL",
-      job: 1,
-      stage: "Em análise",
-      skills: "Pacote Office, comunicação",
-      access: "Legendas",
-      updated: "Há 2 dias",
-      notes: "",
-    },
-    {
-      id: 3,
-      name: "Juliana Alves",
-      initials: "JA",
-      job: 1,
-      stage: "Inscrição recebida",
-      skills: "Administração, atendimento",
-      access: "Acesso sem degraus",
-      updated: "Hoje",
-      notes: "",
-    },
-    {
-      id: 4,
-      name: "Rafael Santos",
-      initials: "RS",
-      job: 2,
-      stage: "Em análise",
-      skills: "Logística, estoque",
-      access: "Comunicação por escrito",
-      updated: "Há 3 dias",
-      notes: "",
-    },
-  ],
-  talents: [
-    {
-      id: 1,
-      name: "Mariana Oliveira",
-      city: "Porto Ferreira",
-      skills: "Atendimento, Excel",
-      area: "Administrativo",
-    },
-    {
-      id: 2,
-      name: "Lucas Pereira",
-      city: "São Carlos",
-      skills: "Logística, estoque",
-      area: "Logística",
-    },
-    {
-      id: 3,
-      name: "Beatriz Costa",
-      city: "Pirassununga",
-      skills: "Comunicação, suporte",
-      area: "Atendimento",
-    },
-  ],
-  company: {
-    name: "Transportadora Porto Ferreira",
-    email: "contato@exemplo.com",
-    city: "Porto Ferreira, SP",
-    description: "Empresa comprometida com oportunidades inclusivas.",
-    website: "",
-    contact: "Equipe de recrutamento",
-  },
-  messages: [
-    {
-      id: 1,
-      from: "Ana Souza",
-      text: "Gostaria de confirmar os recursos de acessibilidade para a entrevista.",
-      reply: "",
-    },
-  ],
-};
-const KEY = "ilives-empresa-demo-v2";
-let state;
-try {
-  state = JSON.parse(localStorage.getItem(KEY)) || structuredClone(initial);
-} catch {
-  state = structuredClone(initial);
+const overview=document.getElementById('overview'),workspace=document.getElementById('workspace');
+const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const api=(path,method,body)=>ILives.request(path,method,body);
+let page='visao-geral';
+function notice(message){const t=document.getElementById('toast');t.textContent=message;t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),3500)}
+async function navigate(next){page=next;history.replaceState(null,'','#'+next);document.querySelectorAll('[data-page]').forEach(el=>el.classList.toggle('active',el.dataset.page===next));overview.hidden=true;workspace.hidden=false;workspace.innerHTML='<p>Carregando...</p>';
+ try{
+ if(next==='visao-geral'){
+  const [jobs,apps,convs]=await Promise.all([api('/minhas-vagas'),api('/candidaturas-empresa'),api('/conversas')]);
+  const active=jobs.filter(j=>j.status==='ATIVA').length, waiting=apps.filter(a=>a.status==='INSCRITO'||a.status==='EM_ANALISE').length, interviews=apps.filter(a=>a.status==='ENTREVISTA').length;
+  const unread=convs.reduce((sum,c)=>sum+Number(c.naoLidas||0),0);
+  workspace.innerHTML=`<div class="ws-head overview-title"><div><h1>Vamos dar o próximo passo na inclusão?</h1><p class="ws-sub">Organize suas vagas e acompanhe o que precisa da sua atenção.</p></div><button class="ws-btn primary" data-page="vagas">+ Publicar vaga</button></div>
+  <div class="ws-grid overview-stats">
+    <div class="ws-card metric"><span class="metric-icon"><i class="fa-regular fa-file-lines"></i></span><div><strong>${active}</strong><p>Vagas ativas</p></div></div>
+    <div class="ws-card metric"><span class="metric-icon"><i class="fa-solid fa-users"></i></span><div><strong>${waiting}</strong><p>Candidaturas aguardando resposta</p></div></div>
+    <div class="ws-card metric"><span class="metric-icon"><i class="fa-regular fa-calendar"></i></span><div><strong>${interviews}</strong><p>Entrevistas em andamento</p></div></div>
+  </div>
+  <div class="overview-columns"><div class="ws-card attention"><h2>Precisa da sua atenção</h2>
+    ${waiting?`<div class="attention-item"><span class="metric-icon"><i class="fa-regular fa-envelope"></i></span><div><b>${waiting} candidatura(s) aguardando análise</b><p>Confira os candidatos das suas vagas.</p></div><button class="ws-btn primary" data-page="vagas">Ver candidaturas</button></div>`:''}
+    ${unread?`<div class="attention-item"><span class="metric-icon"><i class="fa-regular fa-comment-dots"></i></span><div><b>${unread} mensagem(ns) não lida(s)</b><p>Responda às suas conversas.</p></div><button class="ws-btn primary" data-page="mensagens">Ver mensagens</button></div>`:''}
+    ${!waiting&&!unread?'<p class="empty-attention">Tudo em dia! Nenhuma pendência no momento.</p>':''}
+    <div class="ws-actions"><button class="ws-btn" data-page="vagas">Gerenciar vagas</button><button class="ws-btn" data-page="vagas">Ver candidaturas</button></div>
+   </div><div class="ws-card guidance"><span class="metric-icon"><i class="fa-solid fa-book-open"></i></span><h2>Contrate com mais informação</h2><p>Orientações para entrevistas e processos acessíveis.</p><button class="ws-btn" data-page="orientacoes">Acessar boas práticas →</button></div></div>`;
+ }
+ else if(next==='vagas')await jobsView();
+ else if(next==='candidaturas')await appsView();
+ else if(next==='perfil')await profileView();
+ else if(next==='talentos')await talentsView();
+ else if(next==='mensagens')await messagesView();
+ else if(next==='orientacoes')orientacoesView();
+ else workspace.innerHTML='<div class="ws-card"><h1>'+escapeHtml(next==='mensagens'?'Mensagens':next==='ajuda'?'Ajuda':'Orientações')+'</h1><p>Esta área não possui um serviço de mensagens ou suporte conectado. Para contatos, utilize os canais oficiais da plataforma.</p></div>';
+ }catch(e){workspace.innerHTML='<div class="ws-card" role="alert">'+escapeHtml(e.message)+'</div>';}}
+function orientacoesView(){workspace.innerHTML=`<div class="ws-head"><div><h1>Orientações e boas práticas</h1><p class="ws-sub">Um processo seletivo acessível começa antes da entrevista.</p></div></div><div class="guidance-grid">
+<article class="ws-card"><h2>1. Descreva vagas com clareza</h2><p>Informe responsabilidades, local, modalidade, jornada, requisitos essenciais e recursos de acessibilidade. Evite exigir habilidades que não sejam necessárias para o cargo.</p></article>
+<article class="ws-card"><h2>2. Convide à comunicação acessível</h2><p>Ofereça alternativas para entrevistas por vídeo, telefone ou por escrito. Pergunte sobre adaptações necessárias sem exigir exposição de informações médicas.</p></article>
+<article class="ws-card"><h2>3. Avalie competências</h2><p>Use critérios consistentes e relacionados ao trabalho. Faça perguntas objetivas e conceda tempo adequado para respostas.</p></article>
+<article class="ws-card"><h2>4. Dê retorno a todas as pessoas</h2><p>Atualize as etapas no painel e envie mensagens respeitosas e claras, inclusive quando a pessoa não for selecionada.</p></article>
+<article class="ws-card"><h2>5. Proteja informações</h2><p>Compartilhe currículos apenas com quem participa do recrutamento. Não envie dados pessoais ou documentos por canais não autorizados.</p></article>
+<article class="ws-card"><h2>6. Prepare a integração</h2><p>Planeje recursos de acessibilidade, ferramentas de trabalho e orientações para a equipe antes do início das atividades.</p></article>
+</div>`;}
+async function jobsView(){const jobs=await api('/minhas-vagas');workspace.innerHTML=`<div class="ws-head"><div><h1>Minhas vagas</h1><p class="ws-sub">Gerencie oportunidades e acompanhe candidatos por vaga.</p></div><button class="ws-btn primary" id="newJob">+ Nova vaga</button></div><div class="job-grid">${jobs.map(j=>`<article class="ws-card job-tile"><div class="job-top"><h2>${escapeHtml(j.titulo)}</h2><span class="status-pill">${escapeHtml(j.status)}</span></div><p><i class="fa-solid fa-location-dot"></i> ${escapeHtml(j.cidade||'Local não informado')}</p><p><i class="fa-solid fa-users"></i> ${Number(j.candidaturas)} candidatura(s)</p><div class="ws-actions"><button class="ws-btn primary" data-job-apps="${j.id}">Ver candidaturas</button><button class="ws-btn" data-edit="${j.id}">Editar</button>${j.status!=='ENCERRADA'?`<button class="ws-btn danger" data-close="${j.id}">Encerrar</button>`:''}</div></article>`).join('')||'<div class="ws-card">Nenhuma vaga cadastrada. Crie sua primeira oportunidade.</div>'}</div>`;
+ document.getElementById('newJob').onclick=()=>jobForm();workspace.querySelectorAll('[data-job-apps]').forEach(b=>b.onclick=()=>appsView(Number(b.dataset.jobApps)));workspace.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>jobForm(jobs.find(j=>j.id===+b.dataset.edit)));workspace.querySelectorAll('[data-close]').forEach(b=>b.onclick=async()=>{if(!confirm('Encerrar esta vaga?'))return;try{await api('/minhas-vagas/'+b.dataset.close,'DELETE');await jobsView()}catch(e){notice(e.message)}});}
+function jobForm(j={}){workspace.innerHTML=`<div class="ws-head"><h1>${j.id?'Editar':'Criar'} vaga</h1></div><form id="jobForm" class="ws-card"><div class="ws-grid two"><label>Título<input name="titulo" required maxlength="150" value="${escapeHtml(j.titulo)}"></label><label>Cidade<input name="cidade" value="${escapeHtml(j.cidade)}"></label><label>Modelo<select name="modelo">${['Presencial','Híbrido','Remoto'].map(v=>`<option ${j.modelo===v?'selected':''}>${v}</option>`).join('')}</select></label><label>Contrato<select name="contrato">${['CLT','PJ','Estágio','Temporário'].map(v=>`<option ${j.contrato===v?'selected':''}>${v}</option>`).join('')}</select></label><label>Status<select name="status">${[['PAUSADA','Pausada'],['ATIVA','Publicada'],['ENCERRADA','Encerrada']].map(([v,t])=>`<option value="${v}" ${j.status===v?'selected':''}>${t}</option>`).join('')}</select></label></div><label>Descrição<textarea name="descricao" rows="5">${escapeHtml(j.descricao)}</textarea></label><label>Acessibilidade oferecida<textarea name="acessibilidade" rows="3">${escapeHtml(j.acessibilidade)}</textarea></label><div class="ws-actions"><button class="ws-btn primary" type="submit">Salvar</button><button class="ws-btn" type="button" id="cancelJob">Cancelar</button></div></form>`;
+ document.getElementById('cancelJob').onclick=()=>navigate('vagas');document.getElementById('jobForm').onsubmit=async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.target));try{await api('/minhas-vagas'+(j.id?'/'+j.id:''),j.id?'PUT':'POST',data);notice('Vaga salva!');navigate('vagas')}catch(err){notice(err.message)}};}
+async function appsView(vagaId=null){const apps= vagaId?await api('/candidaturas-empresa/vaga/'+vagaId):await api('/candidaturas-empresa');workspace.innerHTML=`<div class="ws-head"><div><h1>Candidaturas recebidas</h1><p class="ws-sub">${vagaId?'Candidatos desta vaga':'Acompanhe os processos seletivos da sua empresa.'}</p></div>${vagaId?'<button class="ws-btn" data-page="vagas">← Voltar às vagas</button>':''}</div><div class="app-grid">${apps.map(a=>`<article class="ws-card candidate-tile"><div class="candidate-heading"><div class="candidate-avatar">${escapeHtml((a.nome||'?').slice(0,1).toUpperCase())}</div><div><h2>${escapeHtml(a.nome)}</h2><p>Vaga: ${escapeHtml(a.titulo)}</p></div></div><p class="candidate-summary">${escapeHtml(a.resumo||'Currículo disponível para consulta.')}</p><label>Etapa do processo<select data-stage="${a.vagaId}:${a.candidatoId}">${[['INSCRITO','Inscrito'],['EM_ANALISE','Em análise'],['ENTREVISTA','Entrevista'],['APROVADO','Aprovado'],['REPROVADO','Não selecionado']].map(([v,t])=>`<option value="${v}" ${a.status===v?'selected':''}>${t}</option>`).join('')}</select></label><div class="ws-actions"><button class="ws-btn" data-cv="${a.candidatoId}"><i class="fa-regular fa-file-lines"></i> Ver currículo</button><button class="ws-btn primary" data-start-chat="${a.vagaId}:${a.candidatoId}"><i class="fa-regular fa-comment-dots"></i> Mensagem</button>${a.status!=='REPROVADO'&&a.status!=='APROVADO'?`<button class="ws-btn danger" data-reject="${a.vagaId}:${a.candidatoId}">Não selecionar</button>`:''}</div></article>`).join('')||'<div class="ws-card">Nenhuma candidatura recebida para esta seleção.</div>'}</div>`;
+ workspace.querySelectorAll('[data-cv]').forEach(b=>b.onclick=()=>curriculumView(Number(b.dataset.cv),()=>appsView(vagaId)));
+ workspace.querySelectorAll('[data-start-chat]').forEach(btn=>btn.onclick=async()=>{const [vagaId,candidatoId]=btn.dataset.startChat.split(':').map(Number);try{const c=await api('/conversas','POST',{vagaId,candidatoId});await navigate('mensagens');await openChat(c.id)}catch(e){notice(e.message)}});
+ workspace.querySelectorAll('[data-stage]').forEach(el=>el.onchange=async()=>{const [vaga,candidato]=el.dataset.stage.split(':');if(el.value==='REPROVADO'&&!confirm('Não selecionar este candidato e enviar mensagem de agradecimento?')){await appsView(vagaId);return;}if(el.value==='APROVADO'&&!confirm('Aprovar este candidato e encerrar a vaga para novas candidaturas?')){await appsView(vagaId);return;}try{await api('/candidaturas-empresa/'+vaga+'/'+candidato,'PUT',{status:el.value});notice('Etapa atualizada');await appsView(vagaId)}catch(e){notice(e.message);await appsView(vagaId)}});
+ workspace.querySelectorAll('[data-reject]').forEach(b=>b.onclick=async()=>{if(!confirm('Não selecionar e enviar uma mensagem de agradecimento ao candidato?'))return;const [vaga,candidato]=b.dataset.reject.split(':');try{await api('/candidaturas-empresa/'+vaga+'/'+candidato,'PUT',{status:'REPROVADO'});notice('Candidato informado');await appsView(vagaId)}catch(e){notice(e.message)}});
 }
-const persist = () => ILives.saveState(state);
-let current = "visao-geral",
-  jobId = 1,
-  personId = 1,
-  tab = "candidaturas";
-const esc = (s) =>
-  String(s ?? "").replace(
-    /[&<>"']/g,
-    (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-        c
-      ],
-  );
-const byId = (id) => state.jobs.find((j) => j.id === +id);
-const cname = (id) => byId(id)?.title || "Vaga não encontrada";
-const badge = (s) =>
-  `<span class="ws-pill ${["Publicada", "Entrevista", "Entrevista agendada"].includes(s) ? "ok" : ["Em análise", "Rascunho"].includes(s) ? "warn" : ""}">${esc(s)}</span>`;
-function notify(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("visible");
-  clearTimeout(notify.timer);
-  notify.timer = setTimeout(() => t.classList.remove("visible"), 3500);
+async function curriculumView(candidateId,back){const cv=await api('/curriculos/'+candidateId);const x=cv.perfil;const items=(rows,render)=>rows.length?rows.map(render).join(''):'<p>Não informado.</p>';workspace.innerHTML=`<div class="ws-head"><h1>Currículo do candidato</h1><button class="ws-btn" id="backCv">← Voltar</button></div><div class="ws-card resume"><h2>${escapeHtml(x.NOME)}</h2><p>${escapeHtml([x.CIDADE,x.UF].filter(Boolean).join(' / '))}</p><h3>Sobre mim</h3><p>${escapeHtml(x.SOBRE_MIM||'Não informado.')}</p><h3>Formação</h3>${items(cv.formacoes,v=>`<p>${escapeHtml([v.CURSO,v.ESCOLARIDADE,v.INSTITUICAO].filter(Boolean).join(' · '))}</p>`)}<h3>Experiência profissional</h3>${items(cv.experiencias,v=>`<p><b>${escapeHtml(v.CARGO)}</b> · ${escapeHtml(v.EMPRESA)}<br>${escapeHtml(v.DESCRICAO_ATIVIDADES)}</p>`)}<h3>Habilidades</h3><div class="skill-list">${items(cv.habilidades,v=>`<span class="skill-chip">${escapeHtml(v.NOME_HABILIDADE)}</span>`)}</div></div>`;document.getElementById('backCv').onclick=back;}
+async function profileView(){const p=await api('/perfil');const fields=[['nome','Nome fantasia',p.NOME_FANTASIA],['email','E-mail de login',p.EMAIL],['contato','Telefone',p.CONTATO],['cidade','Cidade',p.CIDADE],['uf','UF',p.UF],['cep','CEP',p.CEP],['logradouro','Logradouro',p.LOGRADOURO],['numero','Número',p.NUMERO],['bairro','Bairro',p.BAIRRO],['complemento','Complemento',p.COMPLEMENTO],['site','Site (opcional)',p.SITE_URL],['instagram','Instagram (opcional)',p.INSTAGRAM_URL],['linkedin','LinkedIn (opcional)',p.LINKEDIN_URL]];workspace.innerHTML=`<div class="ws-head"><div><h1>Perfil da empresa</h1><p class="ws-sub">Personalize as informações da sua empresa.</p></div></div><form id="profileForm" class="ws-card"><h2>Dados e localização</h2><div class="ws-grid two">${fields.map(([key,label,value])=>`<label>${label}<input name="${key}" ${key==='nome'||key==='email'?'required':''} maxlength="${key==='logo'?500:255}" value="${escapeHtml(value)}"></label>`).join('')}</div><div class="logo-upload"><div><h2>Logo da empresa</h2><p class="ws-sub">Escolha uma imagem JPG, PNG ou WebP de até 2 MB.</p><input type="file" id="companyLogoFile" accept="image/png,image/jpeg,image/webp"><button type="button" class="ws-btn" id="uploadCompanyLogo">Enviar logo</button></div><img id="companyLogoPreview" src="/api/empresa/logo" alt="Logo atual da empresa" onerror="this.hidden=true"></div><button class="ws-btn primary">Salvar perfil</button></form><form id="passwordForm" class="ws-card password-card"><h2>Segurança da conta</h2><div class="ws-grid two"><label>Senha atual<input type="password" name="atual" required autocomplete="current-password"></label><label>Nova senha<input type="password" name="nova" required minlength="8" autocomplete="new-password"></label></div><button class="ws-btn primary">Alterar senha</button></form>`;document.getElementById('profileForm').onsubmit=async e=>{e.preventDefault();try{await api('/empresa/perfil','PUT',Object.fromEntries(new FormData(e.target)));notice('Perfil atualizado');await profileView();const profile=await api('/perfil');document.querySelector('.company-label span').textContent=profile.NOME_FANTASIA;}catch(err){notice(err.message)}};document.getElementById('uploadCompanyLogo').onclick=async()=>{const file=document.getElementById('companyLogoFile').files[0];if(!file){notice('Escolha uma imagem.');return;}if(file.size>2*1024*1024||!['image/png','image/jpeg','image/webp'].includes(file.type)){notice('Use JPG, PNG ou WebP de até 2 MB.');return;}const fd=new FormData();fd.append('logo',file);try{const response=await fetch('/api/empresa/logo',{method:'POST',credentials:'same-origin',headers:{'X-CSRF-Token':ILives.csrf},body:fd});if(!response.ok){const err=await response.json().catch(()=>({}));throw Error(err.erro||'Erro no upload');}const img=document.getElementById('companyLogoPreview');img.hidden=false;img.src='/api/empresa/logo?v='+Date.now();notice('Logo atualizada!');}catch(err){notice(err.message)}};document.getElementById('passwordForm').onsubmit=async e=>{e.preventDefault();try{await api('/empresa/senha','PUT',Object.fromEntries(new FormData(e.target)));e.target.reset();notice('Senha atualizada')}catch(err){notice(err.message)}};}
+async function talentsView(){const [t,jobs]=await Promise.all([api('/talentos'),api('/minhas-vagas')]);const active=jobs.filter(j=>j.status==='ATIVA');workspace.innerHTML=`<div class="ws-head"><div><h1>Banco de talentos</h1><p class="ws-sub">Conheça profissionais disponíveis para oportunidades.</p></div></div><div class="app-grid">${t.map(x=>`<article class="ws-card candidate-tile"><div class="candidate-heading"><div class="candidate-avatar">${escapeHtml((x.nome||'?')[0].toUpperCase())}</div><div><h2>${escapeHtml(x.nome)}</h2><p>${escapeHtml(x.cidade||'Local não informado')}</p></div></div><p>${escapeHtml(x.resumo||'Perfil sem apresentação.')}</p><div class="ws-actions"><button class="ws-btn" data-cv="${x.id}">Ver currículo</button><button class="ws-btn primary" data-select="${x.id}" ${active.length?'':'disabled'}>Selecionar para vaga</button></div></article>`).join('')||'<div class="ws-card">Nenhum perfil disponível no momento.</div>'}</div>`;workspace.querySelectorAll('[data-cv]').forEach(b=>b.onclick=()=>curriculumView(Number(b.dataset.cv),talentsView));workspace.querySelectorAll('[data-select]').forEach(b=>b.onclick=async()=>{const options=active.map(j=>`${j.id}: ${j.titulo}`).join('\n');const choice=prompt('Informe o número da vaga para vincular o candidato:\n'+options);if(!choice)return;const job=active.find(j=>String(j.id)===choice.trim());if(!job){notice('Selecione um ID de vaga válido');return;}if(!confirm('Vincular este candidato à vaga '+job.titulo+'?'))return;try{await api('/talentos/'+b.dataset.select+'/selecionar','POST',{vagaId:job.id});notice('Candidato vinculado à vaga')}catch(e){notice(e.message)}});}
+
+async function updateCompanyUnread(){try{const convs=await api('/conversas');const count=convs.reduce((n,c)=>n+Number(c.naoLidas||0),0);const btn=document.querySelector('.top-message');if(!btn)return;let badge=btn.querySelector('.message-alert');if(!badge){badge=document.createElement('span');badge.className='message-alert';btn.append(badge);}badge.textContent=count>99?'99+':String(count);badge.hidden=count===0;}catch(e){/* Ignora erros temporários de rede */}}
+let currentConversation=null;
+async function messagesView(){
+ const convs=await api('/conversas');
+ workspace.innerHTML=`<div class="ws-head"><div><h1>Mensagens</h1><p class="ws-sub">Converse com candidatos das suas vagas.</p></div></div>
+ <div class="chat-layout"><div class="ws-card chat-list"><h2>Conversas</h2>${convs.length?convs.map(c=>`<button class="chat-entry" data-chat="${c.id}"><b>${escapeHtml(c.candidato)}</b><small>${escapeHtml(c.vaga)}</small>${Number(c.naoLidas)?`<span class="unread-count">${Number(c.naoLidas)}</span>`:''}</button>`).join(''):'<p>Nenhuma conversa iniciada. Abra Minhas vagas para conversar com um candidato.</p>'}</div><div class="ws-card chat-content" id="chatContent"><p>Selecione uma conversa.</p></div></div>`;
+ workspace.querySelectorAll('[data-chat]').forEach(b=>b.onclick=()=>openChat(Number(b.dataset.chat)));
+ if(currentConversation&&convs.some(c=>Number(c.id)===currentConversation))await openChat(currentConversation);
 }
-const head = (title, sub = "", action = "") =>
-  `<div class="ws-head"><div><h1>${title}</h1><p class="ws-sub">${sub}</p></div>${action}</div>`;
-const button = (label, action, primary = false) =>
-  `<button class="ws-btn ${primary ? "primary" : ""}" data-action="${action}">${label}</button>`;
-function overviewSync() {
-  const stats = overview.querySelectorAll(".stat-card strong");
-  if (stats.length) {
-    stats[0].textContent = state.jobs.filter(
-      (j) => j.status === "Publicada",
-    ).length;
-    stats[1].textContent = state.candidates.filter((c) =>
-      ["Inscrição recebida", "Em análise"].includes(c.stage),
-    ).length;
-    stats[2].textContent = state.candidates.filter(
-      (c) => c.stage === "Entrevista",
-    ).length;
-  }
-  const tbody = overview.querySelector(".jobs tbody");
-  tbody.innerHTML = state.jobs
-    .slice(0, 4)
-    .map(
-      (j) =>
-        `<tr><td>${esc(j.title)}</td><td>${badge(j.status)}</td><td>${j.applications}</td><td><button class="btn btn-outline" data-action="manage:${j.id}">Gerenciar</button></td><td></td></tr>`,
-    )
-    .join("");
-}
-//Identifica a tabela de vagas para ajustar só ela no celular. (<table class="ws-table jobs-table">)
-function jobs() {
-  return (
-    head(
-      "Minhas vagas",
-      "Gerencie suas oportunidades e acompanhe candidaturas.",
-      button('<i class="fa-solid fa-plus"></i> Publicar vaga', "new-job", true),
-    ) +
-    `<div class="ws-card"><div class="ws-tools"><input id="jobSearch" placeholder="Buscar por cargo ou cidade" aria-label="Buscar vagas"><select id="jobStatus"><option value="">Todas as situações</option><option>Publicada</option><option>Rascunho</option><option>Pausada</option></select></div><div class="ws-table-wrap"><table class="ws-table jobs-table"><thead><tr><th>Vaga</th><th>Situação</th><th>Candidaturas</th><th>Ações</th></tr></thead><tbody id="jobRows"></tbody></table></div></div>`
-  );
-}
-function drawJobs() {
-  const q = (document.getElementById("jobSearch")?.value || "").toLowerCase(),
-    status = document.getElementById("jobStatus")?.value || "";
-  document.getElementById("jobRows").innerHTML =
-    state.jobs
-      .filter(
-        (j) =>
-          (j.title + " " + j.city).toLowerCase().includes(q) &&
-          (!status || j.status === status),
-      )
-      .map(
-        (j) =>
-          `<tr><td><b>${esc(j.title)}</b><div class="ws-muted">${esc(j.city)} · ${esc(j.model)}</div></td><td>${badge(j.status)}</td><td>${j.applications}</td><td><div class="ws-actions">${button("Gerenciar", "manage:" + j.id)}${button("Editar", "edit:" + j.id)}</div></td></tr>`,
-      )
-      .join("") || '<tr><td colspan="4">Nenhuma vaga encontrada.</td></tr>';
+async function openChat(conversa){
+ currentConversation=Number(conversa);
+ const convs=await api('/conversas');const item=convs.find(c=>Number(c.id)===currentConversation);
+ if(!item)return;
+ const messages=await api('/conversas/'+currentConversation+'/mensagens');
+ const target=document.getElementById('chatContent');if(!target)return;
+ target.innerHTML=`<div class="chat-heading"><div><h2>${escapeHtml(item.candidato)}</h2><p class="ws-sub">Vaga: ${escapeHtml(item.vaga)}</p></div><button type="button" class="ws-btn danger" id="deleteConversation">Excluir conversa</button></div><div class="chat-history" role="log" aria-label="Histórico de mensagens">${messages.length?messages.map(m=>`<div class="chat-bubble ${m.remetente==='empresa'?'mine':'theirs'}">${escapeHtml(m.texto)}</div>`).join(''):'<p>Nenhuma mensagem ainda. Envie a primeira.</p>'}</div><form id="chatForm" class="chat-form"><label for="chatText">Mensagem</label><textarea id="chatText" maxlength="2000" rows="2" required placeholder="Digite sua mensagem..."></textarea><button class="ws-btn primary">Enviar</button></form>`;
+ target.querySelector('#deleteConversation').onclick=async()=>{if(!confirm('Ocultar esta conversa da sua lista? O histórico não será apagado para o candidato.'))return;try{await api('/conversas/'+currentConversation,'DELETE');currentConversation=null;await messagesView();notice('Conversa removida da sua lista.')}catch(e){notice(e.message)}};const history=target.querySelector('.chat-history');history.scrollTop=history.scrollHeight;
+ await api('/conversas/'+currentConversation+'/lidas','PUT');updateCompanyUnread();
+ target.querySelector('#chatForm').onsubmit=async e=>{e.preventDefault();const text=target.querySelector('#chatText').value;try{await api('/conversas/'+currentConversation+'/mensagens','POST',{texto:text});await messagesView();await openChat(currentConversation)}catch(err){notice(err.message)}};
 }
 
-// Guardamos esta opção em uma constante porque ela também será
-// usada na validação: “Não oferece” precisa ser marcado sozinho.
-const SEM_RECURSOS = "Não oferece recursos específicos no momento";
+document.addEventListener('click',e=>{const el=e.target.closest('[data-page]');if(el){e.preventDefault();navigate(el.dataset.page)}});
+document.getElementById('accountButton').onclick=()=>{const m=document.getElementById('accountMenu');m.hidden=!m.hidden};
+const menuToggle=document.getElementById('companyMenuToggle');menuToggle.onclick=()=>{const m=document.getElementById('companyMenu');m.classList.toggle('is-open');menuToggle.setAttribute('aria-expanded',String(m.classList.contains('is-open')))};
+const logout=document.createElement('button');logout.textContent='Sair da conta';logout.onclick=()=>ILives.logout();document.getElementById('accountMenu').append(logout);
+ILives.auth('empresa')
+    .then(async () => {
+        const profile = await api('/perfil');
 
-// Cada item desta lista vai virar uma caixinha no formulário.
-// Para acrescentar uma opção no futuro, basta incluir outro texto aqui.
-const RECURSOS_DA_VAGA = [
-  "Acessibilidade física (rampas, elevadores e banheiros adaptados)",
-  "Intérprete de Libras",
-  "Legendas e comunicação visual",
-  "Leitor de tela e softwares acessíveis",
-  "Materiais em Braille ou fonte ampliada",
-  "Mobiliário e equipamentos adaptados",
-  "Ambiente com controle de estímulos sensoriais",
-  "Instruções e treinamentos adaptados",
-  "Acompanhamento por profissional ou equipe de apoio",
-  "Horário flexível",
-  "Trabalho remoto ou híbrido",
-  "Pausas adaptadas",
-  SEM_RECURSOS,
-];
 
-// Recebe a vaga que está sendo criada ou editada
-// e devolve o HTML do checklist.
-function renderAccessChecklist(vaga) {
-  // Na edição, recupera as opções salvas. Se não houver lista,
-  // usa um array vazio e todas as caixinhas começam desmarcadas.
-  const marcados = vaga.accessOptions ?? [];
 
-  // map() cria um trecho de HTML para cada recurso.
-  // includes() verifica se aquele recurso já estava marcado.
-  // join("") reúne os trechos em um só texto, sem vírgulas entre eles.
-  const opcoes = RECURSOS_DA_VAGA.map((recurso) => {
-    const checked = marcados.includes(recurso) ? "checked" : "";
+        const nomeEmpresa = profile.NOME_FANTASIA || 'Minha empresa';
 
-    // esc() protege o HTML ao inserir textos dentro da página.
-    // O label permite marcar a caixinha clicando também no texto.
-    return `
-      <label class="ws-check">
-        <input type="checkbox" name="accessOptions"
-          value="${esc(recurso)}" ${checked}>
-        <span>${esc(recurso)}</span>
-      </label>
-    `;
-  }).join("");
+        document.querySelector('.company-label span').textContent =
+            nomeEmpresa;
 
-  // fieldset reúne as opções em um grupo; legend dá nome ao grupo.
-  // ${opcoes} insere aqui todas as caixinhas montadas acima.
-  return `
-    <fieldset class="ws-fieldset job-access-checklist">
-      <legend>Recursos de acessibilidade disponíveis</legend>
-      <p class="ws-muted">Marque os recursos disponíveis para esta vaga.</p>
+        document.querySelector('.account .avatar').textContent =
+            nomeEmpresa.trim().split(/\s+/)
+                .slice(0, 2)
+                .map(p => p[0])
+                .join('')
+                .toUpperCase();
 
-      <div class="ws-grid two">
-        ${opcoes}
-      </div>
+        const accountButton=document.getElementById('accountButton');
+        const labelNode=[...accountButton.childNodes].find(n=>n.nodeType===Node.TEXT_NODE && n.textContent.trim());
+        if(labelNode)labelNode.textContent=' '+nomeEmpresa+' ';
 
-    </fieldset>
-  `;
-}
 
-function editJob(id) {
-  const j = id
-    ? byId(id)
-    : {
-        title: "",
-        city: "Porto Ferreira, SP",
-        model: "Presencial",
-        type: "CLT",
-        salary: "A combinar",
-        status: "Rascunho",
-        description: "",
-        access: "",
-        applications: 0,
-      };
-
-  //Insere o checklist de acessibilidade da vaga logo após a descrição.
-  return (
-    head(
-      id ? "Editar vaga" : "Publicar nova vaga",
-      "Preencha as informações e salve a oportunidade.",
-      button("Voltar às vagas", "go:vagas"),
-    ) +
-    `<form id="jobForm" class="ws-card" data-id="${id || ""}"><div class="ws-grid two"><label>Título da vaga<input name="title" required maxlength="100" value="${esc(j.title)}"></label><label>Cidade<input name="city" required value="${esc(j.city)}"></label><label>Modelo de trabalho<select name="model">${["Presencial", "Híbrido", "Remoto"].map((x) => `<option ${j.model === x ? "selected" : ""}>${x}</option>`).join("")}</select></label><label>Tipo de contratação<select name="type">${["CLT", "PJ", "Estágio", "Temporário"].map((x) => `<option ${j.type === x ? "selected" : ""}>${x}</option>`).join("")}</select></label><label>Salário<input name="salary" value="${esc(j.salary)}"></label><label>Situação<select name="status">${["Rascunho", "Publicada", "Pausada"].map((x) => `<option ${j.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></label></div><div class="ws-list" style="margin-top:16px"><label>Descrição da oportunidade<textarea name="description" required>${esc(j.description)}</textarea></label>${renderAccessChecklist(j)}</div><div class="ws-actions" style="margin-top:18px"><button class="ws-btn primary" type="submit">Salvar vaga</button>${button("Cancelar", "go:vagas")}</div></form>`
-  );
-}
-function candidates() {
-  return (
-    head(
-      "Candidaturas",
-      "Acompanhe pessoas candidatas e atualize as etapas dos processos.",
-    ) +
-    `<div class="ws-card"><div class="ws-tools"><input id="candidateSearch" placeholder="Buscar por nome ou habilidade"><select id="candidateStage"><option value="">Todas as etapas</option>${["Inscrição recebida", "Em análise", "Entrevista", "Entrevista agendada", "Aprovada", "Não selecionada"].map((s) => `<option>${s}</option>`).join("")}</select></div><div class="ws-table-wrap"><table class="ws-table candidate-table"><thead><tr><th>Pessoa candidata</th><th>Vaga</th><th>Etapa</th><th>Atualização</th><th>Ação</th></tr></thead><tbody id="candidateRows"></tbody></table></div></div>`
-  );
-}
-function drawCandidates(jobFilter) {
-  const q = (
-      document.getElementById("candidateSearch")?.value || ""
-    ).toLowerCase(),
-    stage = document.getElementById("candidateStage")?.value || "";
-  document.getElementById("candidateRows").innerHTML =
-    state.candidates
-      .filter(
-        (c) =>
-          (c.name + " " + c.skills).toLowerCase().includes(q) &&
-          (!stage || c.stage === stage) &&
-          (!jobFilter || c.job === jobFilter),
-      )
-      .map(
-        (c) =>
-          `<tr><td><b>${esc(c.name)}</b><div class="ws-muted">${esc(c.skills)}</div></td><td>${esc(cname(c.job))}</td><td>${badge(c.stage)}</td><td>${esc(c.updated)}</td><td>${button("Ver candidatura", "person:" + c.id)}</td></tr>`,
-      )
-      .join("") ||
-    '<tr><td colspan="5">Nenhuma candidatura encontrada.</td></tr>';
-}
-function person(id) {
-  const c = state.candidates.find((x) => x.id === +id);
-  if (!c) return "<p>Candidatura não encontrada.</p>";
-  return (
-    head(
-      esc(c.name),
-      "Candidatura para " + esc(cname(c.job)),
-      button("Voltar às candidaturas", "go:candidaturas"),
-    ) +
-    `<div class="ws-split"><div class="ws-card"><h2>Perfil da pessoa candidata</h2><p><b>Habilidades:</b> ${esc(c.skills)}</p><p><b>Recursos solicitados:</b> ${esc(c.access)}</p><p><b>Última atualização:</b> ${esc(c.updated)}</p><div class="ws-notice">Dados de demonstração. Informações reais devem vir de um cadastro autorizado.</div></div><form id="personForm" class="ws-card" data-id="${c.id}"><h2>Atualizar processo</h2><div class="ws-list"><label>Etapa<select name="stage">${["Inscrição recebida", "Em análise", "Entrevista", "Entrevista agendada", "Aprovada", "Não selecionada"].map((s) => `<option ${c.stage === s ? "selected" : ""}>${s}</option>`).join("")}</select></label><label>Observações internas<textarea name="notes">${esc(c.notes)}</textarea></label><button class="ws-btn primary" type="submit">Salvar atualização</button></div></form></div>`
-  );
-}
-function manage(id) {
-  const j = byId(id);
-  if (!j) return "Vaga não encontrada";
-  return (
-    `<p class="ws-muted">Minhas vagas / ${esc(j.title)}</p>` +
-    head(
-      esc(j.title),
-      esc(j.city) + " · " + esc(j.model) + " · " + esc(j.type),
-      button("Editar vaga", "edit:" + id),
-    ) +
-    `<div class="ws-tabs">${["candidaturas", "sobre", "acessibilidade", "historico"].map((t) => `<button class="ws-tab ${tab === t ? "active" : ""}" data-action="tab:${t}">${{ candidaturas: "Candidaturas", sobre: "Sobre a vaga", acessibilidade: "Acessibilidade", historico: "Histórico" }[t]}</button>`).join("")}</div><div id="manageTab"></div>`
-  );
-}
-function drawManageTab() {
-  const j = byId(jobId),
-    el = document.getElementById("manageTab");
-  if (!el) return;
-  if (tab === "candidaturas") {
-    el.innerHTML =
-      `<div class="ws-grid two"><div class="ws-card ws-stat"><i class="fa-solid fa-users"></i><div><strong>${state.candidates.filter((c) => c.job === jobId).length}</strong><p>Candidaturas demonstrativas</p></div></div><div class="ws-card ws-stat"><i class="fa-regular fa-calendar"></i><div><strong>${state.candidates.filter((c) => c.job === jobId && c.stage.includes("Entrevista")).length}</strong><p>Entrevistas</p></div></div></div>` +
-      candidates().replace(
-        head(
-          "Candidaturas",
-          "Acompanhe pessoas candidatas e atualize as etapas dos processos.",
-        ),
-        "",
-      );
-    drawCandidates(jobId);
-  } else if (tab === "sobre") {
-    el.innerHTML = `<div class="ws-card"><h2>Sobre a vaga</h2><p>${esc(j.description)}</p><p><b>Modelo:</b> ${esc(j.model)} · <b>Contrato:</b> ${esc(j.type)} · <b>Salário:</b> ${esc(j.salary)}</p>${badge(j.status)}</div>`;
-  } else if (tab === "acessibilidade") {
-    el.innerHTML = `<div class="ws-card"><h2>Recursos de acessibilidade</h2><p>${esc(j.access || "Ainda não informado")}</p>${button("Editar recursos", "edit:" + j.id)}</div>`;
-  } else {
-    el.innerHTML = `<div class="ws-card"><h2>Histórico da vaga</h2><p>Esta demonstração registra alterações localmente no navegador.</p>${
-      (state.history || [])
-        .filter((h) => h.job === j.id)
-        .map((h) => `<p>• ${esc(h.text)} — ${esc(h.date)}</p>`)
-        .join("") || "<p>Nenhuma alteração registrada nesta sessão.</p>"
-    }</div>`;
-  }
-}
-function talents() {
-  return (
-    head(
-      "Banco de talentos",
-      "Explore perfis demonstrativos por área e habilidade.",
-    ) +
-    `<div class="ws-card"><div class="ws-tools"><input id="talentSearch" placeholder="Buscar por nome, área ou habilidade"></div><div id="talentRows" class="ws-grid"></div></div>`
-  );
-}
-function drawTalents() {
-  const q = (
-    document.getElementById("talentSearch")?.value || ""
-  ).toLowerCase();
-  document.getElementById("talentRows").innerHTML =
-    state.talents
-      .filter((t) =>
-        (t.name + " " + t.area + " " + t.skills).toLowerCase().includes(q),
-      )
-      .map(
-        (t) =>
-          `<article class="ws-card"><h2>${esc(t.name)}</h2><p>${esc(t.city)} · ${esc(t.area)}</p><p class="ws-muted">${esc(t.skills)}</p>${button("Convidar para vaga", "invite:" + t.id)}</article>`,
-      )
-      .join("") || "<p>Nenhum talento encontrado.</p>";
-}
-function profile() {
-  const c = state.company;
-  return (
-    head(
-      "Perfil da empresa",
-      "Atualize as informações exibidas sobre sua organização.",
-    ) +
-    `<form id="companyForm" class="ws-card"><div class="ws-grid two">${[
-      ["name", "Nome da empresa"],
-      ["email", "E-mail de contato"],
-      ["city", "Cidade"],
-      ["website", "Site"],
-      ["contact", "Responsável pelo recrutamento"],
-    ]
-      .map(
-        ([k, l]) =>
-          `<label>${l}<input name="${k}" value="${esc(c[k])}" ${k === "name" ? "required" : ""}></label>`,
-      )
-      .join(
-        "",
-      )}</div><label style="margin-top:16px">Sobre a empresa<textarea name="description">${esc(c.description)}</textarea></label><button class="ws-btn primary" style="margin-top:16px" type="submit">Salvar perfil</button></form>`
-  );
-}
-function guidance() {
-  return (
-    head(
-      "Orientações e boas práticas",
-      "Recursos para processos seletivos inclusivos e acessíveis.",
-    ) +
-    `<div class="ws-grid two">${[
-      [
-        "fa-universal-access",
-        "Descreva a acessibilidade",
-        "Informe recursos existentes na vaga e permita solicitações individuais.",
-      ],
-      [
-        "fa-comments",
-        "Comunicação clara",
-        "Explique etapas, prazos e formatos de entrevista em linguagem simples.",
-      ],
-      [
-        "fa-user-check",
-        "Seleção justa",
-        "Avalie habilidades relevantes para o cargo e evite critérios discriminatórios.",
-      ],
-      [
-        "fa-calendar-check",
-        "Entrevistas acessíveis",
-        "Confirme antecipadamente o formato e os recursos solicitados.",
-      ],
-    ]
-      .map(
-        ([i, t, p]) =>
-          `<article class="ws-card ws-guide"><i class="fa-solid ${i}"></i><div><h2>${t}</h2><p>${p}</p></div></article>`,
-      )
-      .join(
-        "",
-      )}</div><div class="ws-card"><h2>Checklist antes de publicar</h2><div class="ws-list">${["Descrição objetiva da função", "Requisitos realmente necessários", "Modelo de trabalho e local informados", "Recursos de acessibilidade descritos", "Canal de contato para dúvidas"].map((s, i) => `<label class="ws-check"><input type="checkbox" data-check="${i}" ${state.checks?.includes(i) ? "checked" : ""}> ${s}</label>`).join("")}</div></div>`
-  );
-}
-function messages() {
-  return (
-    head(
-      "Mensagens",
-      "Central demonstrativa de conversas com pessoas candidatas.",
-    ) +
-    `<div class="ws-card ws-list">${state.messages.map((m) => `<div class="ws-card"><h2>${esc(m.from)}</h2><p>${esc(m.text)}</p>${m.reply ? `<div class="ws-notice">Sua resposta: ${esc(m.reply)}</div>` : ""}<form class="messageForm" data-id="${m.id}"><label>Responder<textarea name="reply" required placeholder="Escreva uma resposta..."></textarea></label><button class="ws-btn primary" type="submit">Salvar resposta local</button></form></div>`).join("")}</div>`
-  );
-}
-function help() {
-  return (
-    head("Ajuda", "Encontre orientações para usar o painel.") +
-    `<div class="ws-card"><h2>Perguntas frequentes</h2><details><summary>Como publicar uma vaga?</summary><p>Abra Minhas vagas, selecione Publicar vaga, preencha os campos e escolha Publicada.</p></details><hr><details><summary>Como acompanhar candidaturas?</summary><p>Use a seção Candidaturas para pesquisar pessoas e atualizar as etapas.</p></details><hr><details><summary>As informações são enviadas automaticamente?</summary><p>Não. Este protótipo armazena dados apenas no navegador; não envia e-mails ou mensagens reais.</p></details></div>`
-  );
-}
-function render() {
-  const home = current === "visao-geral";
-  overview.hidden = !home;
-  workspace.hidden = home;
-  if (home) {
-    overviewSync();
-  } else {
-    workspace.innerHTML =
-      current === "vagas"
-        ? jobs()
-        : current === "editar"
-          ? editJob(jobId || null)
-          : current === "novo"
-            ? editJob(null)
-            : current === "candidaturas"
-              ? candidates()
-              : current === "pessoa"
-                ? person(personId)
-                : current === "gerenciar"
-                  ? manage(jobId)
-                  : current === "talentos"
-                    ? talents()
-                    : current === "perfil"
-                      ? profile()
-                      : current === "orientacoes"
-                        ? guidance()
-                        : current === "mensagens"
-                          ? messages()
-                          : help();
-    if (current === "vagas") drawJobs();
-    if (current === "candidaturas") drawCandidates();
-    if (current === "gerenciar") drawManageTab();
-    if (current === "talentos") drawTalents();
-  }
-  document.querySelectorAll(".nav-link").forEach((b) => {
-    const p = ["editar", "novo", "gerenciar"].includes(current)
-      ? "vagas"
-      : current === "pessoa"
-        ? "candidaturas"
-        : current;
-    b.classList.toggle("active", b.dataset.page === p);
-  });
-  accountMenu.hidden = true;
-  accountButton.setAttribute("aria-expanded", "false");
-}
-function navigate(page) {
-  current = page;
-  render();
-  history.replaceState(null, "", "#" + page);
-  document.querySelector(".main").scrollTop = 0;
-  window.scrollTo(0, 0);
-}
-document.addEventListener("click", (e) => {
-  const target = e.target.closest("[data-action],[data-page]");
-  if (target) {
-    const a = target.dataset.action;
-    if (a) {
-      const [verb, id] = a.split(":");
-      if (verb === "go") navigate(id);
-      else if (verb === "manage") {
-        jobId = +id;
-        tab = "candidaturas";
-        navigate("gerenciar");
-      } else if (verb === "edit") {
-        jobId = +id;
-        navigate("editar");
-      } else if (verb === "new-job") {
-        jobId = 0;
-        navigate("novo");
-      } else if (verb === "person") {
-        personId = +id;
-        navigate("pessoa");
-      } else if (verb === "tab") {
-        tab = id;
-        render();
-      } else if (verb === "invite")
-        notify("Convite demonstrativo: integração com backend pendente.");
-    } else {
-      navigate(target.dataset.page);
-    }
-    return;
-  }
-  if (!e.target.closest(".account")) {
-    accountMenu.hidden = true;
-    accountButton.setAttribute("aria-expanded", "false");
-  }
-});
-document.addEventListener("input", (e) => {
-  if (["jobSearch", "jobStatus"].includes(e.target.id)) drawJobs();
-  if (["candidateSearch", "candidateStage"].includes(e.target.id))
-    drawCandidates(current === "gerenciar" ? jobId : undefined);
-  if (e.target.id === "talentSearch") drawTalents();
-});
-document.addEventListener("change", (e) => {
-  if (e.target.dataset.check !== undefined) {
-    const n = +e.target.dataset.check;
-    state.checks = state.checks || [];
-    state.checks = e.target.checked
-      ? [...new Set([...state.checks, n])]
-      : state.checks.filter((x) => x !== n);
-    persist();
-  }
-  if (["jobStatus", "candidateStage"].includes(e.target.id))
-    e.target.dispatchEvent(new Event("input", { bubbles: true }));
-});
-document.addEventListener("submit", (e) => {
-  const f = e.target;
-  if (
-    !["jobForm", "personForm", "companyForm"].includes(f.id) &&
-    !f.classList.contains("messageForm")
-  )
-    return;
-  e.preventDefault();
-  // Guarda o formulário para poder ler todas as caixinhas marcadas.
-  const formData = new FormData(f);
-  const data = Object.fromEntries(formData);
-  if (f.id === "jobForm") {
-    const id = +f.dataset.id;
-    const j = id
-      ? byId(id)
-      : {
-          id: Math.max(0, ...state.jobs.map((x) => x.id)) + 1,
-          applications: 0,
-        };
-// getAll() pega todas as caixinhas marcadas, mesmo com o mesmo nome.
-const marcados = formData.getAll("accessOptions");
-const semRecursos = marcados.includes(SEM_RECURSOS);
-
-// “Não oferece recursos” não pode ser salvo junto com outros recursos.
-if (semRecursos && marcados.length > 1) {
-  notify("Marque “Não oferece recursos” sozinho ou desmarque essa opção.");
-  return;
-}
-
-// Preserva o texto que já existia nas vagas antigas.
-const textoAnterior =
-  j.accessOther ?? (Array.isArray(j.accessOptions) ? "" : j.access ?? "");
-
-    // A lista serve para remarcar as caixinhas ao abrir a vaga em Editar.
-    data.accessOptions = marcados;
-    data.accessOther = textoAnterior;
-
-    // A aba Acessibilidade continua recebendo um resumo em texto.
-    // Se a empresa marcou “Não oferece recursos”, exibe só essa opção.
-    data.access = semRecursos
-    ? SEM_RECURSOS
-    : [...marcados, textoAnterior].filter(Boolean).join("; ");
-
-    // Aplica os dados do formulário à vaga atual.
-    Object.assign(j, data);
-    if (!id) state.jobs.push(j);
-    state.history = state.history || [];
-    state.history.push({
-      job: j.id,
-      text: id ? "Vaga editada" : "Vaga criada",
-      date: new Date().toLocaleDateString("pt-BR"),
+        await navigate('visao-geral');
+        updateCompanyUnread();setInterval(updateCompanyUnread,20000);
+    })
+    .catch(error => {
+        console.error('Erro ao carregar o painel da empresa:', error);
+        document.getElementById('overview').hidden = true;
+        document.getElementById('workspace').hidden = false;
+        document.getElementById('workspace').textContent =
+            'Não foi possível carregar os dados da empresa. Verifique o Console.';
     });
-    persist();
-    notify("Vaga salva neste navegador.");
-    navigate("vagas");
-  } else if (f.id === "personForm") {
-    const c = state.candidates.find((x) => x.id === +f.dataset.id);
-    Object.assign(c, data, { updated: "Hoje" });
-    persist();
-    notify("Etapa atualizada localmente.");
-    render();
-  } else if (f.id === "companyForm") {
-    Object.assign(state.company, data);
-    persist();
-    notify("Perfil salvo localmente.");
-  } else {
-    const m = state.messages.find((x) => x.id === +f.dataset.id);
-    m.reply = data.reply;
-    persist();
-    notify("Resposta salva localmente, sem envio.");
-    render();
-  }
-});
-accountButton.addEventListener("click", () => {
-  // No mobile, o TP abre a navegação completa da empresa.
-  if (window.matchMedia("(max-width: 780px)").matches) {
-    accountMenu.hidden = true;
-
-    setCompanyMenuOpen(
-      !companyMenu.classList.contains("is-open")
-    );
-
-    return;
-  }
-
-  // No desktop, mantém as opções atuais de "Minha conta".
-  accountMenu.hidden = !accountMenu.hidden;
-  accountButton.setAttribute(
-    "aria-expanded",
-    String(!accountMenu.hidden)
-  );
-});
-window.addEventListener("hashchange", () => {
-  const page = location.hash.slice(1);
-  if (
-    [
-      "visao-geral",
-      "vagas",
-      "candidaturas",
-      "talentos",
-      "perfil",
-      "orientacoes",
-      "mensagens",
-      "ajuda",
-    ].includes(page)
-  )
-    navigate(page);
-});
-navigate(
-  [
-    "visao-geral",
-    "vagas",
-    "candidaturas",
-    "talentos",
-    "perfil",
-    "orientacoes",
-    "mensagens",
-    "ajuda",
-  ].includes(location.hash.slice(1))
-    ? location.hash.slice(1)
-    : "visao-geral",
-);
-
-window.addEventListener("storage", (e) => {
-  if (e.key === KEY) {
-    state = ILives.getState() || state;
-    render();
-  }
-});
-
-// Identifica a navegação que antes era aberta pelo hambúrguer.
-const companyMenu = document.getElementById("companyMenu");
-
-// Usa o mesmo limite de largura do CSS da empresa.
-const companyMobile = window.matchMedia("(max-width: 780px)");
-
-// Abre ou fecha a navegação pelo botão TP.
-function setCompanyMenuOpen(open) {
-  companyMenu.classList.toggle("is-open", open);
-
-  // Informa se a navegação está aberta e descreve a ação do botão.
-  accountButton.setAttribute("aria-expanded", String(open));
-  accountButton.setAttribute(
-    "aria-label",
-    open ? "Fechar menu da empresa" : "Abrir menu da empresa"
-  );
-}
-
-// Fecha o menu depois de selecionar uma seção.
-companyMenu.querySelectorAll(".nav-link").forEach((button) => {
-  button.addEventListener("click", () => {
-    if (companyMobile.matches) {
-      setCompanyMenuOpen(false);
-    }
-  });
-});
-
-// Limpa os menus e configura o botão ao mudar o tamanho da tela.
-function updateCompanyMenu() {
-  companyMenu.classList.remove("is-open");
-  accountMenu.hidden = true;
-
-  accountButton.setAttribute("aria-expanded", "false");
-  accountButton.setAttribute(
-    "aria-controls",
-    companyMobile.matches ? "companyMenu" : "accountMenu"
-  );
-  accountButton.setAttribute(
-    "aria-label",
-    companyMobile.matches
-      ? "Abrir menu da empresa"
-      : "Abrir opções da empresa"
-  );
-}
-
-// Configura ao carregar e quando alternar entre mobile e desktop.
-updateCompanyMenu();
-companyMobile.addEventListener("change", updateCompanyMenu);
-
-  // Cada toque alterna entre abrir e fechar.
-  companyMenuToggle.addEventListener("click", () => {
-    setCompanyMenuOpen(!companyMenu.classList.contains("is-open"));
-  });
-
-  // Fecha o menu após escolher uma das seções.
-  companyMenu.querySelectorAll(".nav-link").forEach((button) => {
-    button.addEventListener("click", () => setCompanyMenuOpen(false));
-  });

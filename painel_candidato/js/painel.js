@@ -10,6 +10,7 @@ function go(id) {
   document.getElementById("accountMenu").hidden = true;
   history.replaceState(null, "", "#" + id);
   document.getElementById("main").scrollTop = 0;
+  if(id==='mensagens' && window.ILives?.csrf) renderMessages().catch(e=>notify(e.message));
 }
 
 nav.forEach((el) =>
@@ -48,271 +49,44 @@ document.getElementById("orientacoesBtn").onclick = () =>
     "Confirme com a empresa a data, o horário e o formato da entrevista. Se for online, use o link enviado pela empresa."
   );
 
-const recursoDialog = document.getElementById("recursoDialog");
-const recursoForm = document.getElementById("recursoForm");
-const recursoErro = document.getElementById("recursoErro");
+const recursoDialog = document.getElementById('recursoDialog'), recursoForm = document.getElementById('recursoForm'), recursoErro = document.getElementById('recursoErro');
+const api = (path, method, body) => ILives.request(path, method, body);
+const resume = document.getElementById('resumeForm');
+const search = document.getElementById('jobSearch'), results = document.getElementById('jobResults');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let allJobs = [];
+const fieldNames=['nome','email','resumo','contato','cep','logradouro','numero','bairro','cidade','uf','complemento'];
+function fillResume(p) { const values={nome:p.NOME,email:p.EMAIL,resumo:p.SOBRE_MIM,contato:p.CONTATO,cep:p.CEP,logradouro:p.LOGRADOURO,numero:p.NUMERO,bairro:p.BAIRRO,cidade:p.CIDADE,uf:p.UF,complemento:p.COMPLEMENTO};fieldNames.forEach(k=>{if(resume.elements[k])resume.elements[k].value=values[k]||''});if(p.FOTO_PERFIL){const img=document.getElementById('candidatePhoto');img.src='/api/candidato/foto';img.hidden=false;} }
+function makeButton(label,fn,cls='outline'){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=label;b.onclick=fn;return b}
+function jobCard(j,saved=false){const d=document.createElement('article');d.className='candidate-job';const top=document.createElement('div');top.className='candidate-job-top';const heading=document.createElement('div');const h=document.createElement('h3');h.textContent=j.titulo;const employer=document.createElement('p');employer.className='job-company';employer.textContent=j.empresa||'Empresa';heading.append(h,employer);const chip=document.createElement('span');chip.className='job-chip';chip.textContent=[j.cidade,j.uf].filter(Boolean).join(' - ')||'Local não informado';top.append(heading,chip);d.append(top);const meta=document.createElement('p');meta.className='job-meta';meta.textContent=[j.modelo,j.contrato].filter(Boolean).join(' • ');if(meta.textContent)d.append(meta);if(j.descricao){const desc=document.createElement('p');desc.className='job-desc';desc.textContent=j.descricao;d.append(desc)}const actions=document.createElement('div');actions.className='candidate-actions';if(saved){actions.append(makeButton('Remover dos salvos',async()=>{try{await api('/vagas/'+j.id+'/salvar','DELETE');notify('Vaga removida dos salvos');await renderSaved()}catch(e){notify(e.message)}}));actions.append(makeButton('Ver oportunidades',()=>go('vagas'),'primary'))}else{actions.append(makeButton('Candidatar-se',async()=>{try{await api('/vagas/'+j.id+'/candidatar','POST');notify('Candidatura enviada!');await renderApplications()}catch(e){notify(e.message)}},'primary'));actions.append(makeButton('Salvar vaga',async()=>{try{await api('/vagas/'+j.id+'/salvar','POST');notify('Vaga salva!');await renderSaved()}catch(e){notify(e.message)}}))}d.append(actions);return d}
+async function renderJobs(){const q=search.value.toLocaleLowerCase('pt-BR');results.replaceChildren();const jobs=allJobs.filter(j=>(j.titulo+' '+j.empresa+' '+j.cidade).toLocaleLowerCase('pt-BR').includes(q));if(!jobs.length){results.innerHTML='<div class="candidate-empty">Nenhuma vaga disponível com esses filtros.</div>';return}jobs.forEach(j=>results.append(jobCard(j)))}
+const statusNames={INSCRITO:'Inscrito',EM_ANALISE:'Em análise',ENTREVISTA:'Entrevista',APROVADO:'Aprovado',FINALIZADO:'Finalizado'};
+async function renderApplications(){const target=document.getElementById('integratedApplications');if(!target)return;try{const apps=(await api('/minhas-candidaturas')).filter(a=>a.status!=='REPROVADO');target.replaceChildren();if(!apps.length){target.innerHTML='<div class="candidate-empty">Você ainda não possui candidaturas em andamento. <button class="primary" type="button" data-view="vagas">Buscar vagas</button></div>';return}apps.forEach(a=>{const d=document.createElement('article');d.className='candidate-application';const h=document.createElement('h3');h.textContent=a.titulo;const company=document.createElement('p');company.className='job-company';company.textContent=a.empresa;const badge=document.createElement('span');badge.className='stage-badge stage-'+a.status.toLowerCase();badge.textContent=statusNames[a.status]||a.status;const top=document.createElement('div');top.className='candidate-job-top';const left=document.createElement('div');left.append(h,company);top.append(left,badge);d.append(top);const steps=document.createElement('div');steps.className='application-steps';const stages=['INSCRITO','EM_ANALISE','ENTREVISTA','APROVADO'];stages.forEach((stage,i)=>{const x=document.createElement('span');x.textContent=statusNames[stage];x.className=stages.indexOf(a.status)>=i?'step done':'step';steps.append(x)});d.append(steps);d.append(makeButton('Conversar com a empresa',async()=>{try{const cv=await api('/conversas','POST',{vagaId:a.vagaId});go('mensagens');await renderMessages(cv.id)}catch(e){notify(e.message)}},'primary'));target.append(d)})}catch(e){target.textContent=e.message}}
+async function renderSaved(){const target=document.getElementById('savedLive');if(!target)return;target.replaceChildren();try{const saved=await api('/vagas-salvas');if(!saved.length){const empty=document.createElement('div');empty.className='candidate-empty';empty.textContent='Você ainda não salvou nenhuma vaga.';empty.append(makeButton('Buscar vagas',()=>go('vagas'),'primary'));target.append(empty);return}saved.forEach(j=>target.append(jobCard(j,true)))}catch(e){target.textContent=e.message}}
+resume.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(resume));try{await api('/curriculo','PUT',d);notify('Currículo atualizado!')}catch(err){notify(err.message)}};
+const photoUpload=document.getElementById('photoUpload');photoUpload.onchange=async()=>{const f=photoUpload.files?.[0];if(!f)return;if(f.size>2*1024*1024||!['image/jpeg','image/png','image/webp'].includes(f.type)){notify('Escolha JPG, PNG ou WebP de até 2 MB.');photoUpload.value='';return}try{const form=new FormData();form.append('foto',f);const response=await fetch('/api/candidato/foto',{method:'POST',body:form,credentials:'same-origin',headers:{'X-CSRF-Token':ILives.csrf}});if(!response.ok)throw Error('Não foi possível enviar a foto');const img=document.getElementById('candidatePhoto');img.src='/api/candidato/foto?t='+Date.now();img.hidden=false;notify('Foto atualizada!')}catch(e){notify(e.message)}};
+const resourceButton = document.getElementById('recursoBtn'); resourceButton.onclick = () => recursoDialog.showModal(); document.getElementById('cancelarRecurso').onclick = () => recursoDialog.close(); recursoForm.onsubmit = e => { e.preventDefault(); recursoDialog.close(); notify('Para solicitar recursos à empresa, entre em contato pelos canais informados na vaga. Este formulário ainda não envia solicitações.') };
+document.getElementById('accountBtn').onclick = () => { const m = document.getElementById('accountMenu'); m.hidden = !m.hidden };
+const logout = document.createElement('button'); logout.textContent = 'Sair da conta'; logout.onclick = () => ILives.logout(); document.getElementById('accountMenu').append(logout);
+search.addEventListener('input', renderJobs);
+for (const id of ['largeText', 'contrast', 'reduceMotion', 'written']) { const el = document.getElementById(id); if (el) el.onchange = () => { document.body.classList.toggle('preference-' + id, el.checked) } }
+document.getElementById('candidateAccountForm').onsubmit=async e=>{e.preventDefault();try{await api('/candidato/conta','PUT',Object.fromEntries(new FormData(e.target)));e.target.elements.atual.value='';e.target.elements.nova.value='';notify('Dados de acesso atualizados!')}catch(err){notify(err.message)}};
+ILives.auth('candidato').then(async () => { const [p, jobs, formacoes, habs] = await Promise.all([api('/perfil'), api('/vagas'), api('/formacoes'), api('/habilidades')]); fillResume(p); document.getElementById('candidateAccountForm').elements.email.value=p.EMAIL||''; const nomeUsuario = p.NOME || 'Usuário'; document.querySelector('#accountBtn span:nth-child(2)').textContent = nomeUsuario; document.querySelector('#painel h1').textContent = 'Olá, ' + (p.NOME || '') + '!'; document.querySelector('#painel .hero-grid .next').hidden = true; document.querySelector('#painel .applications').hidden = true; document.querySelector('#painel .update').hidden = true; allJobs = jobs; resume.elements.formacao.value = formacoes.map(f => f.curso).filter(Boolean).join(', '); resume.elements.habilidades.value = habs.map(h => h.nome).join(', '); renderJobs(); renderApplications(); renderSaved(); }).catch(() => location.replace('/login/login.html'));
 
-// Abre a janela e recupera as opções salvas neste navegador.
-document.getElementById("recursoBtn").onclick = () => {
-  const salvos = (localStorage.getItem("ilives_recurso") ?? "").split("; ");
-
-  recursoForm.querySelectorAll('input[name="recurso"]').forEach((caixa) => {
-    caixa.checked = salvos.includes(caixa.value);
-  });
-
-  recursoErro.textContent = "";
-  recursoDialog.showModal();
-};
-
-// Fecha sem salvar alterações.
-document.getElementById("cancelarRecurso").onclick = () => {
-  recursoDialog.close();
-};
-
-recursoForm.addEventListener("submit", (event) => {
-  // Evita recarregar a página e pega todas as opções marcadas.
-  event.preventDefault();
-  const recursos = new FormData(recursoForm).getAll("recurso");
-
-  if (recursos.length === 0) {
-    recursoErro.textContent = "Marque pelo menos um recurso para salvar.";
-    return;
-  }
-
-  // Nesta versão, a seleção fica salva só neste navegador.
-  localStorage.setItem("ilives_recurso", recursos.join("; "));
-  recursoDialog.close();
-  notify("Seleção salva neste navegador. Ela ainda não foi enviada à empresa.");
-});
-
-const resume = document.getElementById("resumeForm");
-
-try {
-  const data = JSON.parse(localStorage.getItem("ilives_curriculo") || "null");
-  if (data)
-    Object.entries(data).forEach(([k, v]) => {
-      if (resume.elements.namedItem(k)) resume.elements.namedItem(k).value = v;
-    });
-} catch {}
-resume.addEventListener("submit", (e) => {
-  e.preventDefault();
-  localStorage.setItem(
-    "ilives_curriculo",
-    JSON.stringify(Object.fromEntries(new FormData(resume))),
-  );
-  notify("Currículo salvo neste navegador!");
-});
-[
-  ["largeText", "large-text"],
-  ["contrast", "high-contrast"],
-  ["reduceMotion", "reduce-motion"],
-]
-
-.forEach(([id, cls]) => {
-  const el = document.getElementById(id);
-  el.checked = localStorage.getItem("ilives_" + id) === "true";
-  document.body.classList.toggle(cls, el.checked);
-  
-  el.onchange = () => {
-    document.body.classList.toggle(cls, el.checked);
-    localStorage.setItem("ilives_" + id, String(el.checked));
-  };
-});
-
-const written = document.getElementById("written");
-
-written.checked = localStorage.getItem("ilives_written") === "true";
-
-written.onchange = () =>
-  localStorage.setItem("ilives_written", String(written.checked));
-const search = document.getElementById("jobSearch"),
-  results = document.getElementById("jobResults");
-
-function renderJobs() {
-  const state = ILives.getState();
-
-  const q = search.value.toLocaleLowerCase("pt-BR");
-
-  const jobs = (state?.jobs || []).filter(
-    (j) =>
-      j.status === "Publicada" &&
-      [j.title, j.city, state.company?.name]
-        .join(" ")
-        .toLocaleLowerCase("pt-BR")
-        .includes(q),
-  );
-
-  results.replaceChildren();
-  if (!state) {
-    results.textContent =
-      "Abra o painel da empresa uma vez para inicializar as vagas demonstrativas.";
-    return;
-  }
-  if (!jobs.length) {
-    results.textContent = "Nenhuma vaga publicada encontrada.";
-    return;
-  }
-  jobs.forEach((j) => {
-    const d = document.createElement("div");
-    d.className = "job";
-    const h = document.createElement("h3");
-    h.textContent = j.title;
-    const info = document.createElement("p");
-    info.textContent = [state.company?.name, j.city, j.model]
-      .filter(Boolean)
-      .join(" • ");
-    const desc = document.createElement("p");
-    desc.textContent = j.description || "";
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "primary";
-    btn.textContent = "Candidatar-se";
-    btn.addEventListener("click", () => {
-      const r = ILives.apply(j.id);
-      notify(r.message);
-      renderApplications();
-    });
-    d.append(h, info, desc, btn);
-    results.append(d);
-  });
+let candidateChat=null;
+async function renderMessages(openId){
+ const target=document.getElementById('candidateMessages');if(!target)return;
+ const convs=await api('/conversas');
+ target.innerHTML=`<div class="chat-layout"><div class="chat-list"><h3>Conversas</h3>${convs.length?convs.map(c=>`<button type="button" data-chat="${c.id}"><strong>${esc(c.empresa)}</strong><small>${esc(c.vaga)}</small>${Number(c.naoLidas)?`<span class="unread-count">${Number(c.naoLidas)}</span>`:''}</button>`).join(''):'<p>Você ainda não possui conversas. Após se candidatar a uma vaga, poderá conversar com a empresa.</p>'}</div><div class="chat-content" id="candidateChat"><p>Selecione uma conversa.</p></div></div>`;
+ target.querySelectorAll('[data-chat]').forEach(b=>b.onclick=()=>openCandidateChat(Number(b.dataset.chat)));
+ const selected=openId||candidateChat;
+ if(selected&&convs.some(c=>Number(c.id)===Number(selected)))await openCandidateChat(Number(selected));
 }
-
-function renderApplications() {
-  const section = document.getElementById("candidaturas");
-
-  if (!section) return;
-
-  let target = document.getElementById("integratedApplications");
-
-  if (!target) {
-    target = document.createElement("div");
-    target.id = "integratedApplications";
-    target.className = "card listcard";
-    section.append(target);
-  }
-  
-  const state = ILives.getState();
-  target.replaceChildren();
-  const title = document.createElement("h3");
-  title.textContent = "Minhas candidaturas demonstrativas";
-  target.append(title);
-  const apps = ILives.getApplications();
-  if (!apps.length) {
-    const p = document.createElement("p");
-    p.textContent = "Você ainda não se candidatou pelo protótipo.";
-    target.append(p);
-  }
-
-  apps.forEach((a) => {
-    const item = document.createElement("p");
-    const job = state?.jobs?.find((j) => j.id === a.jobId);
-
-    const companyCandidate = state?.candidates?.find(
-      (c) => c.demoApplicationId === a.id,
-    );
-    item.textContent = `${job?.title || "Vaga removida"} — ${companyCandidate?.stage || a.stage} (${a.date})`;
-    target.append(item);
-  });
+async function openCandidateChat(id){
+ candidateChat=id;const convs=await api('/conversas');const item=convs.find(c=>Number(c.id)===id);if(!item)return;
+ const msgs=await api('/conversas/'+id+'/mensagens');const el=document.getElementById('candidateChat');if(!el)return;
+ el.innerHTML=`<div class="chat-heading"><div><h3>${esc(item.empresa)}</h3><p>${esc(item.vaga)}</p></div><button type="button" class="outline" id="candidateDeleteConversation">Excluir conversa</button></div><div class="chat-history" role="log" aria-label="Histórico de mensagens">${msgs.length?msgs.map(m=>`<div class="chat-bubble ${m.remetente==='candidato'?'mine':'theirs'}">${esc(m.texto)}</div>`).join(''):'<p>Nenhuma mensagem ainda.</p>'}</div><form id="candidateChatForm"><label for="candidateChatText">Mensagem</label><textarea id="candidateChatText" maxlength="2000" rows="2" required placeholder="Digite sua mensagem..."></textarea><button class="primary">Enviar</button></form>`;
+ el.querySelector('#candidateDeleteConversation').onclick=async()=>{if(!confirm('Ocultar esta conversa da sua lista? O histórico continuará disponível para a empresa.'))return;try{await api('/conversas/'+id,'DELETE');candidateChat=null;await renderMessages();notify('Conversa removida da sua lista.')}catch(e){notify(e.message)}};const history=el.querySelector('.chat-history');history.scrollTop=history.scrollHeight;
+ await api('/conversas/'+id+'/lidas','PUT');
+ el.querySelector('form').onsubmit=async e=>{e.preventDefault();try{await api('/conversas/'+id+'/mensagens','POST',{texto:el.querySelector('textarea').value});await renderMessages(id)}catch(err){notify(err.message)}};
 }
-
-search.addEventListener("input", renderJobs);
-
-window.addEventListener("storage", () => {
-  renderJobs();
-  renderApplications();
-});
-
-renderJobs();
-renderApplications();
-
-// Ao abrir o painel, mostra o início da página e o cabeçalho.
-window.addEventListener('load', () => {
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'instant'
-    });
-});
-
-// O mesmo botão do usuário terá funções diferentes:
-// mobile: abre a navegação completa;
-// desktop: abre as opções da conta.
-const accountBtn = document.getElementById("accountBtn");
-const accountMenu = document.getElementById("accountMenu");
-const candidateMenu = document.getElementById("candidateMenu");
-
-// Usa o mesmo limite de largura definido no CSS.
-const mobileMenu = window.matchMedia("(max-width: 850px)");
-
-// Mostra ou esconde a navegação completa no celular.
-function setCandidateMenuOpen(open) {
-  candidateMenu.classList.toggle("is-open", open);
-
-  // Informa aos leitores de tela se o menu está aberto.
-  accountBtn.setAttribute("aria-expanded", String(open));
-  accountBtn.setAttribute(
-    "aria-label",
-    open ? "Fechar menu do candidato" : "Abrir menu do candidato"
-  );
-}
-
-// Clique no ícone do usuário.
-accountBtn.onclick = () => {
-  if (mobileMenu.matches) {
-    // No celular, fecha o menu pequeno e alterna o menu completo.
-    accountMenu.hidden = true;
-
-    setCandidateMenuOpen(
-      !candidateMenu.classList.contains("is-open")
-    );
-  } else {
-    // No desktop, mantém as opções atuais da conta.
-    accountMenu.hidden = !accountMenu.hidden;
-
-    accountBtn.setAttribute(
-      "aria-expanded",
-      String(!accountMenu.hidden)
-    );
-  }
-};
-
-// Fecha a navegação depois de escolher uma seção.
-candidateMenu.querySelectorAll(".side-link").forEach((button) => {
-  button.addEventListener("click", () => {
-    if (mobileMenu.matches) {
-      setCandidateMenuOpen(false);
-    }
-  });
-});
-
-// Atualiza o botão quando a tela muda entre mobile e desktop.
-function updateAccountButton() {
-  candidateMenu.classList.remove("is-open");
-  accountMenu.hidden = true;
-
-  accountBtn.setAttribute("aria-expanded", "false");
-  accountBtn.setAttribute(
-    "aria-controls",
-    mobileMenu.matches ? "candidateMenu" : "accountMenu"
-  );
-  accountBtn.setAttribute(
-    "aria-label",
-    mobileMenu.matches
-      ? "Abrir menu do candidato"
-      : "Abrir opções da conta"
-  );
-}
-
-// Configura ao carregar e ao redimensionar a tela.
-updateAccountButton();
-mobileMenu.addEventListener("change", updateAccountButton);
-
-  // Cada toque alterna entre abrir e fechar.
-  menuToggle.addEventListener("click", () => {
-    setMenuOpen(!candidateMenu.classList.contains("is-open"));
-  });
-
-  // Fecha o menu após selecionar uma seção.
-  candidateMenu.querySelectorAll(".side-link").forEach((button) => {
-    button.addEventListener("click", () => setMenuOpen(false));
-  });

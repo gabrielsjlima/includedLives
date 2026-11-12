@@ -807,23 +807,15 @@ tbody tr:last-child td {
 }
 
 @media (max-width: 780px) {
-    /* Mantém o cabeçalho visível durante a rolagem. Continua ocupando seu espaço, sem cobrir o início do conteúdo. */
+    /* No mobile, o cabeçalho passa a ocupar espaço na página.
+       Assim, não encobre o menu nem o título do conteúdo. */
     .topbar {
-        position: sticky;
-        top: 0;
+        position: relative;
     }
 
-    /* A imagem tem margens transparentes. Aumenta sua exibição sem deformar a logo. */
-    .brand img {
-        width: 100px;
-        height: auto;
-        flex-shrink: 0;
-    }
-
-    /* A navegação agora é aberta pelo icone de usuario.  Esconde apenas o botão hambúrguer. */
+    /* Exibe o botão com uma área de toque de 44px. */
     .menu-toggle {
-        display: none;
-       /* display: inline-flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 44px;
@@ -834,10 +826,11 @@ tbody tr:last-child td {
         background: #efd4f5;
         color: var(--purple);
         font-size: 22px;
-        cursor: pointer;*/
+        cursor: pointer;
     }
 
-    /* Remove o formato de faixa horizontal. Quando fechado, o menu não ocupa espaço. */
+    /* Remove o formato de faixa horizontal.
+       Quando fechado, o menu não ocupa espaço. */
     .sidebar {
         display: none;
         position: static;
@@ -854,7 +847,8 @@ tbody tr:last-child td {
         display: block;
     }
 
-    /* Organiza as opções uma abaixo da outra, sem exigir uma largura maior que a tela. */
+    /* Organiza as opções uma abaixo da outra,
+       sem exigir uma largura maior que a tela. */
     .sidebar nav {
         display: grid;
         min-width: 0;

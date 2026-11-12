@@ -12,15 +12,15 @@
     <link rel="stylesheet" href="css/responsivo.css">
     <link rel="stylesheet" href="css/sidebar.css">
     <title>Meu painel | Included Lives</title>
+    <link rel="stylesheet" href="css/mensagens.css">
   <script src="../shared/integration.js" defer></script>
+  <link rel="stylesheet" href="css/ajustes-conta.css">
 </head>
 <body>
     <!-- Cabeçalho -->
     <header class="topbar">
         <!-- Logo -->
-        <a class="brand" href="#painel" aria-label="Included Lives, meu painel">
-            <img src="assets/logo.png"alt="iLives">
-        </a>
+        <img src="assets/logo.png" alt="logo da Included Lives">
 
         <!-- Abre e fecha a navegação do candidato no celular. -->
         <button type="button" class="menu-toggle" id="menuToggle"
@@ -32,7 +32,7 @@
         <!-- Navegação das vagas e mensagens -->
         <nav class="topnav">
             <a href="#vagas" data-view="vagas"><i class="fa-solid fa-briefcase"></i> Vagas</a>
-            <a href="#mensagens" data-view="mensagens"><i class="fa-regular fa-envelope"></i> Mensagens <span class="dot"></span></a>
+            <a href="#mensagens" data-view="mensagens"><i class="fa-regular fa-envelope"></i> Mensagens</a>
         </nav>
 
         <!-- Perfil do candidato -->
@@ -72,6 +72,11 @@
                     Vagas salvas
                 </button>
                 
+                <button class="side-link" data-view="conta">
+                    <i class="fa-solid fa-user-gear"></i>
+                    Minha conta
+                </button>
+
                 <button class="side-link" data-view="preferencias">
                     <i class="fa-solid fa-sliders"></i> 
                     Preferências
@@ -143,9 +148,9 @@
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
                         
-                        <button data-view="preferencias">
-                            <i class="fa-solid fa-lock"></i> 
-                            Comunicação e privacidade 
+                        <button data-view="salvas">
+                            <i class="fa-regular fa-bookmark"></i> 
+                            Vagas salvas 
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </article>
@@ -240,13 +245,15 @@
                 <div class="card formcard">
                     <form id="resumeForm">
                         <label>Nome completo
-                            <input name="nome" value="Ana Souza" required>
+                            <input name="nome"  required>
                         </label>
                         
                         <label>E-mail
                             <input name="email" type="email" placeholder="ana@exemplo.com" required>
                         </label>
                             
+                        <div class="resume-photo"><img id="candidatePhoto" alt="Foto de perfil" hidden><div><label for="photoUpload" class="photo-upload">Escolher foto de perfil</label><input type="file" id="photoUpload" accept="image/jpeg,image/png,image/webp"><p class="muted">Opcional. JPG, PNG ou WebP, até 2 MB.</p></div></div>
+                        <div class="resume-address-grid"><label>Telefone<input name="contato" type="tel" maxlength="20" placeholder="(11) 99999-9999"></label><label>CEP<input name="cep" inputmode="numeric" maxlength="9" placeholder="00000-000"></label><label>Rua / Avenida<input name="logradouro" maxlength="150"></label><label>Número<input name="numero" maxlength="10"></label><label>Bairro<input name="bairro" maxlength="100"></label><label>Cidade<input name="cidade" maxlength="100"></label><label>UF<input name="uf" maxlength="2" placeholder="SP"></label><label>Complemento<input name="complemento" maxlength="100"></label></div>
                         <label>Resumo profissional
                             <textarea name="resumo" rows="4" placeholder="Conte um pouco sobre suas experiências e habilidades..."></textarea>
                         </label>
@@ -266,25 +273,9 @@
 
             <!-- Seção de candidaturas -->
             <section id="candidaturas" class="view">
-                <!-- Titulo -->
                 <h1>Minhas candidaturas</h1>
                 <p class="lead">Acompanhe cada etapa dos processos seletivos.</p>
-                
-                <!-- Card 1 / Candidatura -->
-                <div class="card listcard">
-                    <h3>Assistente administrativo</h3>
-                    <p>Transportadora Porto Ferreira</p>
-                    <span class="pill green">Entrevista agendada</span>
-                    <p class="detail">Entrevista online — 24 de outubro, às 14h. Comunicação por escrito confirmada.</p>
-                </div>
-
-                <!-- Card 2 / Candidatura -->
-                <div class="card listcard">
-                    <h3>Atendimento ao cliente</h3>
-                    <p>Conecta Serviços</p>
-                    <span class="pill yellow">Em análise</span>
-                    <p class="detail">A empresa ainda não informou uma previsão de retorno.</p>
-                </div>
+                <div id="integratedApplications" class="candidate-cards"></div>
             </section>
 
             <!-- Seção de vagas salvas -->
@@ -294,13 +285,23 @@
                 <p class="lead">Oportunidades para consultar mais tarde.</p>
 
                 <!-- Lista das vagas salvas -->
-                <div class="card listcard">
-                    <p>Você ainda não salvou nenhuma vaga neste painel demonstrativo.</p>
-                    <button class="primary" data-view="vagas">Buscar vagas</button>
-                </div>
+                <div id="savedLive" class="candidate-cards"></div>
             </section>
 
             <!-- Seção de preferências -->
+            <section id="conta" class="view">
+                <h1>Minha conta</h1>
+                <p>Atualize seu e-mail de acesso e proteja sua conta.</p>
+                <form id="candidateAccountForm" class="card account-form">
+                    <h2>Dados de acesso</h2>
+                    <label>E-mail de login<input name="email" type="email" required autocomplete="email" maxlength="150"></label>
+                    <label>Senha atual<input name="atual" type="password" required autocomplete="current-password"></label>
+                    <label>Nova senha (opcional)<input name="nova" type="password" minlength="8" maxlength="128" autocomplete="new-password" placeholder="Deixe em branco para manter a atual"></label>
+                    <p class="account-hint">Por segurança, confirme sua senha atual para salvar.</p>
+                    <button type="submit" class="primary">Salvar alterações</button>
+                </form>
+            </section>
+
             <section id="preferencias" class="view">
                 <!-- Titulo -->
                 <h1>Preferências</h1>
@@ -355,12 +356,12 @@
             <section id="vagas" class="view">
                 <h1>Buscar vagas</h1>
                 <p class="lead">Encontre uma oportunidade para você.</p>
-                <div class="card formcard">
+                <div class="card formcard jobs-search">
                     <label>Pesquisar vaga
                         <input id="jobSearch" placeholder="Cargo ou empresa">
                     </label>
                     
-                    <div id="jobResults"></div>
+                    <div id="jobResults" class="candidate-cards"></div>
                 </div>
             </section>
             
@@ -368,12 +369,8 @@
             <section id="mensagens" class="view">
                 <h1>Mensagens</h1>
                 <p class="lead">Suas conversas com empresas.</p>
-                
-                <div class="card listcard">
-                    <h3>Transportadora Porto Ferreira</h3>
-                    <p>Seu recurso de comunicação por escrito foi confirmado para a entrevista.</p>
-                    <small>Mensagem demonstrativa</small>
-                </div>
+
+                <div id="candidateMessages" class="card listcard"><p>Carregando conversas...</p></div>
             </section>
         </main>
     </div>
@@ -417,6 +414,7 @@
     </dialog>
     
     <div id="toast" role="status" aria-live="polite"></div>
+    <link rel="stylesheet" href="css/candidato-atualizado.css">
     <script src="js/painel.js" defer></script>
 
 <div class="ilives-links" style="position:fixed;left:12px;bottom:12px;z-index:200;background:#fff;border:1px solid #ddd;border-radius:8px;padding:6px 10px;font:12px Arial"><a href="../pagina_principal/index.html">Início</a> · <a href="../recuperacao_conta/login.html">Sair da prévia</a></div>

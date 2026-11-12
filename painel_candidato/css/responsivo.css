@@ -1,187 +1,176 @@
-@media (max-width: 1200px) {
-  .app-row {
-    flex-wrap: wrap;
-  }
+@media(max-width:1200px) {
+    .app-row {
+        flex-wrap: wrap
+    }
 
-  .app-name {
-    flex: 1;
-  }
+    .app-name {
+        flex: 1
+    }
 
-  .next-step {
-    flex: 1;
-    min-width: 180px;
-  }
+    .next-step {
+        flex: 1;
+        min-width: 180px
+    }
 
-  .hero-grid {
-    /* Permite que a coluna encolha até a largura disponível no celular. */
-    grid-template-columns: minmax(0, 1fr);
-  }
+    .hero-grid {
+        grid-template-columns: 1.4fr 1fr
+    }
 
-  /* Permite que os cartões e seus textos encolham e quebrem linha,
-   sem empurrar o conteúdo para fora da tela. */
-  .hero-grid > *,
-  .interview > div,
-  .success > span,
-  .update > div {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-
-  .buttons > button {
-    min-width: 0;
-  }
+    .buttons>button {
+        min-width: 0
+    }
 }
 
-@media (max-width: 850px) {
-  .shell {
-    grid-template-columns: 80px minmax(0, 1fr);
-  }
+@media(max-width:850px) {
+    .shell {
+        grid-template-columns: 80px minmax(0, 1fr)
+    }
 
-  .sidebar {
-    padding: 20px 8px;
-  }
+    .sidebar {
+        padding: 20px 8px
+    }
 
-  .side-link {
-    font-size: 0;
-    justify-content: center;
-    padding: 17px 8px;
-  }
+    .side-link {
+        font-size: 0;
+        justify-content: center;
+        padding: 17px 8px
+    }
 
-  .side-link i {
-    font-size: 22px;
-  }
+    .side-link i {
+        font-size: 22px
+    }
 
-  .brand {
-    width: auto;
-  }
+    .brand {
+        width: auto
+    }
 
-  .topbar {
-    padding: 0 12px;
-  }
+    .topbar {
+        padding: 0 12px
+    }
 
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
+    .hero-grid {
+        grid-template-columns: 1fr
+    }
 
-  .main {
-    padding: 24px 16px;
-  }
+    .main {
+        padding: 24px 16px
+    }
 
-  .topnav {
-    gap: 12px;
-  }
+    .topnav {
+        gap: 12px
+    }
 }
 
-@media (max-width: 550px) {
-  .topbar {
-    height: 68px;
-    gap: 12px;
-  }
+@media(max-width:550px) {
+    .topbar {
+        height: 68px;
+        gap: 12px
+    }
 
-  .brand {
-    font-size: 21px;
-  }
+    .brand {
+        font-size: 21px
+    }
 
-  .brand-icon {
-    font-size: 20px;
-  }
+    .brand-icon {
+        font-size: 20px
+    }
 
-  .topnav a {
-    font-size: 0;
-  }
+    .topnav a {
+        font-size: 0
+    }
 
-  .topnav i {
-    font-size: 20px;
-    margin: 0;
-  }
+    .topnav i {
+        font-size: 20px;
+        margin: 0
+    }
 
-  .account span:not(.avatar) {
-    display: none;
-  }
+    .account span:not(.avatar) {
+        display: none
+    }
 
-  .account {
-    gap: 5px;
-  }
+    .account {
+        gap: 5px
+    }
 
-  .shell {
-    grid-template-columns: 57px minmax(0, 1fr);
-  }
+    .shell {
+        grid-template-columns: 57px minmax(0, 1fr)
+    }
 
-  .side-link i {
-    font-size: 18px;
-  }
+    .side-link i {
+        font-size: 18px
+    }
 
-  .sidebar {
-    padding: 12px 4px;
-  }
+    .sidebar {
+        padding: 12px 4px
+    }
 
-  .main {
-    padding: 22px 12px;
-  }
+    .main {
+        padding: 22px 12px
+    }
 
-  h1 {
-    font-size: 34px;
-  }
+    h1 {
+        font-size: 34px
+    }
 
-  h2 {
-    font-size: 23px;
-  }
+    h2 {
+        font-size: 23px
+    }
 
-  .lead {
-    font-size: 16px;
-  }
+    .lead {
+        font-size: 16px
+    }
 
-  .next,
-  .profile {
-    padding: 18px;
-  }
+    .next,
+    .profile {
+        padding: 18px
+    }
 
-  .interview {
-    gap: 12px;
-  }
+    .interview {
+        gap: 12px
+    }
 
-  .round-icon {
-    flex-basis: 55px;
-    height: 55px;
-    font-size: 24px;
-  }
+    .round-icon {
+        flex-basis: 55px;
+        height: 55px;
+        font-size: 24px
+    }
 
-  .interview h3 {
-    font-size: 16px;
-  }
+    .interview h3 {
+        font-size: 16px
+    }
 
-  .interview p {
-    font-size: 14px;
-  }
+    .interview p {
+        font-size: 14px
+    }
 
-  .buttons {
-    flex-direction: column;
-  }
+    .buttons {
+        flex-direction: column
+    }
 
-  .app-row {
-    gap: 10px;
-  }
+    .app-row {
+        gap: 10px
+    }
 
-  .app-name {
-    min-width: 140px;
-  }
+    .app-name {
+        min-width: 140px
+    }
 
-  .next-step {
-    border: 0;
-    padding-left: 0;
-  }
+    .next-step {
+        border: 0;
+        padding-left: 0
+    }
 
-  .update {
-    flex-wrap: wrap;
-    padding: 16px;
-  }
+    .update {
+        flex-wrap: wrap;
+        padding: 16px
+    }
 
-  .update .primary {
-    margin-left: 0;
-    width: 100%;
-  }
+    .update .primary {
+        margin-left: 0;
+        width: 100%
+    }
 
-  .section-title h2 {
-    font-size: 20px;
-  }
+    .section-title h2 {
+        font-size: 20px
+    }
 }

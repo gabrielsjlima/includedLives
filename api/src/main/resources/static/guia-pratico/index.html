@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Guia Prático | Included Lives</title>
+
+    <!-- Usa a mesma fonte e os mesmos ícones da página inicial. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+    <!-- ../ volta uma pasta para encontrar o CSS e o JS que vocês já usam. -->
+    <link rel="stylesheet" href="../pagina_principal/css/base.css" />
+    <link rel="stylesheet" href="../pagina_principal/css/responsivo.css" />
+    <link rel="stylesheet" href="../pagina_principal/css/header-footer.css" />
+    <script src="../pagina_principal/js/script.js" defer></script>
+    <script src="../shared/integration.js" defer></script>
+
+    <!-- Este CSS é exclusivo do Guia Prático. -->
+    <link rel="stylesheet" href="css/guia-pratico.css" />
+  </head>
+
+  <body>
+    <!-- Mesmo cabeçalho da home. Os links voltam às seções da página inicial. -->
+    <header class="header">
+      <div class="header-inner">
+        <a class="brand" href="../pagina_principal/index.html#inicio">
+          <img src="../pagina_principal/assets/logo.png" alt="Included Lives" />
+        </a>
+
+        <!-- O JavaScript da home abre e fecha esse menu no celular. -->
+        <button type="button" class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+
+        <nav id="nav" class="nav" aria-label="Menu principal">
+          <a href="../pagina_principal/index.html#inicio">INÍCIO</a>
+          <a href="index.html" aria-current="page">GUIA PRÁTICO</a>
+          <a href="../pagina_principal/index.html#empresas">EMPRESAS</a>
+          <a href="../pagina_principal/index.html#vagas">VAGAS</a>
+          <a href="../pagina_principal/index.html#faq">FAQ</a>
+        </nav>
+
+        <a class="login-link" href="../login/login.html">
+          <i class="fa-regular fa-user" aria-hidden="true"></i> LOGIN
+        </a>
+      </div>
+    </header>
+
+    <main class="guia-pagina" id="guia-inicio">
+      <!-- O livro e os quatro ícones ao redor estão no mesmo PNG. -->
+      <section class="guia-topo" aria-labelledby="guia-titulo">
+        <div>
+          <h1 id="guia-titulo">Trabalho com acessibilidade e direitos</h1>
+        </div>
+        <img
+          class="guia-arte"
+          src="assets/guia-topo.png"
+          alt=""
+          width="1774"
+          height="887"
+        />
+      </section>
+
+      <!-- summary é a parte clicável. details abre o conteúdo sem precisar de JS. -->
+      <div class="guia-cartoes">
+        <!-- Primeiro cartão: dicas para candidatos. -->
+        <details class="guia-cartao">
+          <summary>
+            <img src="assets/guia-candidato.png" alt="" />
+            <span class="guia-titulo-cartao">Sou candidato</span>
+            <span class="guia-acao" aria-hidden="true">
+              <span class="guia-abrir">Ver dicas ↓</span>
+              <span class="guia-fechar">Recolher ↑</span>
+            </span>
+          </summary>
+
+          <!-- Conteúdo que aparece ao abrir “Sou candidato”. -->
+          <div class="guia-conteudo">
+            <details>
+              <summary>Prepare seu currículo</summary>
+              <div class="guia-texto">
+                <h3>Mostre o que você sabe fazer</h3>
+                <p>
+                  Comece com seu nome, cidade e um contato atualizado. Indique a
+                  área em que quer trabalhar e destaque o que tem relação com a
+                  vaga.
+                </p>
+                <ul>
+                  <li>
+                    Inclua cursos, projetos, trabalhos voluntários e
+                    experiências informais relevantes.
+                  </li>
+                  <li>
+                    Conte o que fez com exemplos: “Organizei o estoque e conferi
+                    entregas”.
+                  </li>
+                  <li>
+                    Revise o texto e salve com um nome fácil de identificar,
+                    como <strong>Curriculo-Seu-Nome.pdf</strong>.
+                  </li>
+                </ul>
+                <p>
+                  Evite colocar documentos, endereço completo ou informações
+                  médicas no currículo. Se pedirem esses dados, confirme o
+                  motivo e o canal antes de enviar.
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>Encontre uma vaga</summary>
+              <div class="guia-texto">
+                <h3>Veja se a oportunidade faz sentido para você</h3>
+                <p>
+                  Confira as atividades, os requisitos, a cidade, o horário e a
+                  modalidade de trabalho. Veja quais recursos de acessibilidade
+                  foram anunciados e pergunte à empresa sobre o que ficou em
+                  dúvida.
+                </p>
+                <p>
+                  Guarde o nome da vaga, o da empresa e a data da inscrição para
+                  acompanhar o retorno.
+                </p>
+                <p>
+                  <a href="../pagina_principal/index.html#vagas">Ver vagas no Included Lives</a
+                  >
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>Prepare a entrevista</summary>
+              <div class="guia-texto">
+                <h3>Organize-se para a conversa</h3>
+                <p>
+                  Confirme a data, o horário e o formato. Se for presencial,
+                  planeje o trajeto e confirme o acesso ao local. Se for online,
+                  teste o link, o áudio e os recursos que pretende usar.
+                </p>
+                <ul>
+                  <li>
+                    Prepare um exemplo de algo que aprendeu ou de um problema
+                    que resolveu.
+                  </li>
+                  <li>
+                    Anote perguntas sobre as tarefas, a equipe e as próximas
+                    etapas.
+                  </li>
+                  <li>
+                    Se uma pergunta não ficar clara, peça para a pessoa repetir
+                    ou explicar de outro jeito.
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>Converse sobre acessibilidade</summary>
+              <div class="guia-texto">
+                <h3>Explique o que ajuda você a participar</h3>
+                <p>
+                  Se precisar de legendas, intérprete de Libras, comunicação por
+                  escrito, materiais compatíveis com leitor de tela ou acesso
+                  sem degraus, combine com a empresa quem vai confirmar o
+                  recurso e quando.
+                </p>
+                <p>
+                  <strong>Exemplo de mensagem:</strong> Olá! Para participar da
+                  entrevista, preciso receber as instruções da atividade por
+                  escrito. Vocês conseguem enviá-las com antecedência?
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>Checklist antes de se candidatar</summary>
+              <div class="guia-texto">
+                <p>
+                  Marque o que já está pronto. As marcações não são enviadas à
+                  plataforma.
+                </p>
+
+                <!-- O fieldset agrupa as caixas de seleção sob o mesmo título. -->
+                <fieldset class="guia-checklist">
+                  <legend>Minha preparação</legend>
+                  <label><input type="checkbox" /> Revisei meu currículo e atualizei meu contato.</label>
+                  <label><input type="checkbox" /> Li as atividades e os requisitos da vaga.</label>
+                  <label><input type="checkbox" /> Anotei minhas dúvidas sobre a oportunidade.</label>
+                  <label><input type="checkbox" /> Sei quais recursos posso solicitar, se precisar.</label>
+                </fieldset>
+              </div>
+            </details>
+          </div>
+        </details>
+
+        <!-- Segundo cartão: orientações para empresas. -->
+        <details class="guia-cartao">
+          <summary>
+            <img src="assets/guia-empresa.png" alt="" />
+            <span class="guia-titulo-cartao">Represento uma empresa</span>
+            <span class="guia-acao" aria-hidden="true">
+              <span class="guia-abrir">Ver orientações ↓</span>
+              <span class="guia-fechar">Recolher ↑</span>
+            </span>
+          </summary>
+
+          <!-- Orientações organizadas na ordem do processo de contratação. -->
+          <div class="guia-conteudo">
+            <details>
+              <summary>Divulgue uma vaga inclusiva</summary>
+              <div class="guia-texto">
+                <p>
+                  Informe o cargo, as atividades essenciais, a cidade, a jornada
+                  e a modalidade de trabalho. Descreva os recursos de
+                  acessibilidade disponíveis e indique um canal para conversar
+                  sobre adaptações.
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>Prepare um processo seletivo acessível</summary>
+              <div class="guia-texto">
+                <p>
+                  Explique como será cada etapa e pergunte a todas as pessoas
+                  candidatas se precisam de algum recurso. Combine o formato e
+                  confirme o que será oferecido. Na avaliação, use critérios
+                  ligados às atividades do cargo.
+                </p>
+                <p>
+                  <strong>Exemplo de anúncio:</strong> A entrevista presencial
+                  será em um local com entrada sem degraus e banheiro acessível.
+                  Se precisar de outro recurso para participar, fale com o
+                  recrutamento ao agendar.
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>Organize a chegada à equipe</summary>
+              <div class="guia-texto">
+                <p>
+                  Converse com a pessoa contratada sobre possíveis barreiras no
+                  local, nos sistemas e nos treinamentos. Combine quem fará cada
+                  ajuste e marque uma conversa depois dos primeiros dias para
+                  verificar se os recursos estão funcionando.
+                </p>
+              </div>
+            </details>
+          </div>
+        </details>
+
+        <!-- Terceiro cartão: consulta aos textos oficiais das leis. -->
+        <details class="guia-cartao">
+          <summary>
+            <img src="assets/guia-direitos.png" alt="" />
+            <span class="guia-titulo-cartao">Direitos e legislação</span>
+            <span class="guia-acao" aria-hidden="true">
+              <span class="guia-abrir">Ver leis ↓</span>
+              <span class="guia-fechar">Recolher ↑</span>
+            </span>
+          </summary>
+
+          <!-- Cada lei abre separadamente e traz o link para o texto legal. -->
+          <div class="guia-conteudo">
+            <details>
+              <summary>Lei Brasileira de Inclusão</summary>
+              <div class="guia-texto">
+                <h3>Igualdade na seleção e no trabalho</h3>
+                <p>
+                  A Lei Brasileira de Inclusão garante à pessoa com deficiência
+                  o direito ao trabalho em ambiente acessível e inclusivo, em
+                  igualdade de oportunidades. A discriminação por deficiência é
+                  proibida no recrutamento, na seleção, na contratação e durante
+                  a vida profissional. O direito também abrange acesso a
+                  treinamentos e oportunidades de crescimento.
+                </p>
+
+                <h3>Adaptação razoável</h3>
+                <p>
+                  É um ajuste necessário e adequado para remover uma barreira em
+                  uma situação concreta, sem impor ônus desproporcional ou
+                  indevido. Por exemplo, a empresa pode fornecer as instruções
+                  da entrevista por escrito ou adaptar um sistema para funcionar
+                  com leitor de tela.
+                </p>
+
+                <p>
+                  <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm">
+                    Ler a Lei nº 13.146/2015 — arts. 3º, 4º, 34 e 37
+                  </a>
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>Lei de Cotas</summary>
+              <div class="guia-texto">
+                <h3>A quem se aplica?</h3>
+                <p>
+                  O art. 93 da Lei nº 8.213/1991 prevê que empresas com 100 ou
+                  mais empregados reservem parte dos cargos a pessoas com
+                  deficiência habilitadas ou a beneficiários reabilitados pela
+                  Previdência Social.
+                </p>
+
+                <ul>
+                  <li>De 100 a 200 empregados: <strong>2%</strong>.</li>
+                  <li>De 201 a 500 empregados: <strong>3%</strong>.</li>
+                  <li>De 501 a 1.000 empregados: <strong>4%</strong>.</li>
+                  <li>A partir de 1.001 empregados: <strong>5%</strong>.</li>
+                </ul>
+
+                <p>
+                  O limite de 100 empregados vale para a reserva de cargos. O
+                  direito a um ambiente de trabalho acessível e inclusivo
+                  continua valendo em empresas menores.
+                </p>
+
+                <p>
+                  <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm#art93">
+                    Ler o art. 93 da Lei nº 8.213/1991
+                  </a>
+                </p>
+              </div>
+            </details>
+          </div>
+        </details>
+      </div>
+    </main>
+
+    <!-- Reaproveita o estilo do rodapé da home. -->
+    <footer class="footer">
+      <div class="container">
+        <img src="../pagina_principal/assets/logo.png" alt="Included Lives" />
+        <p>Inclusão que conecta pessoas e oportunidades.</p>
+        <a href="#guia-inicio">
+          Voltar ao topo <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>

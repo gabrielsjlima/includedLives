@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="css/painel-empresa.css">
   <link rel="stylesheet" href="css/modulos.css">
+  <link rel="stylesheet" href="css/melhorias.css">
+  <script src="../shared/integration.js" defer></script>
   <script src="js/painel-empresa.js" defer></script>
   <title>Painel da empresa | Included Lives</title>
-  <script src="../shared/integration.js" defer></script>
+  <link rel="stylesheet" href="css/ajustes-finais.css">
 </head>
 <body>
   <div class="app">
@@ -29,20 +31,19 @@
       
       <div class="company-label">
         <i class="fa-regular fa-building"></i>
-        <span>Transportadora Porto Ferreira</span>
+        <span>Minha Empresa</span>
       </div>
 
       <div class="top-actions">
         <button class="top-message" data-page="mensagens">
-          <i class="fa-regular fa-comment-dots"></i><span>Mensagens</span><b class="notification-dot"></b>
+          <i class="fa-regular fa-comment-dots"></i><span>Mensagens</span>
         </button>
         
         <div class="account">
-          <!-- Coloca o avatar dentro do botão: tocar no círculo ou na seta executa a mesma ação. -->
-          <button type="button" id="accountButton" aria-label="Abrir opções da empresa" aria-expanded="false" aria-controls="accountMenu">
-            <span class="avatar" aria-hidden="true">TP</span>
-            Minha conta
-            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          <span class="avatar">--</span>
+          <button id="accountButton" aria-expanded="false" aria-controls="accountMenu">
+            Minha conta 
+            <i class="fa-solid fa-chevron-down"></i>
           </button>
           
           <div id="accountMenu" class="account-menu" hidden>
@@ -63,11 +64,6 @@
         <button class="nav-link" data-page="vagas">
           <i class="fa-solid fa-briefcase"></i>
           <span>Minhas vagas</span>
-        </button>
-
-        <button class="nav-link" data-page="candidaturas">
-          <i class="fa-solid fa-users"></i>
-          <span>Candidaturas</span>
         </button>
 
         <button class="nav-link" data-page="talentos">
