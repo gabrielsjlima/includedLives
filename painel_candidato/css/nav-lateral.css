@@ -1,0 +1,310 @@
+/* Meu painel */
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.94fr 1fr;
+    gap: 16px
+}
+
+.next,
+.profile {
+    padding: 25px
+}
+
+.interview {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    margin-bottom: 20px
+}
+
+.interview p {
+    font-size: 18px
+}
+
+.interview .small {
+    font-size: 15px;
+    margin-top: 6px
+}
+
+.accent {
+    color: var(--purple);
+    margin-right: 12px
+}
+
+.sep {
+    margin: 0 8px
+}
+
+.round-icon {
+    background: #f6e5fb;
+    color: var(--purple);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: 0 0 88px;
+    height: 88px;
+    font-size: 35px
+}
+
+.success {
+    background: #e2f8ed;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 15px
+}
+
+.success i {
+    color: #138350;
+    font-size: 24px
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 18px
+}
+
+.buttons>button {
+    min-width: 210px
+}
+
+.profile>p {
+    font-size: 18px;
+    margin: -8px 0 13px
+}
+
+.profile>button {
+    border: 0;
+    border-bottom: 1px solid #e6e0e8;
+    background: white;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    gap: 26px;
+    color: var(--deep);
+    padding: 17px 0;
+    font-size: 16px
+}
+
+.profile>button:last-child {
+    border-bottom: 0
+}
+
+.profile>button i:first-child {
+    font-size: 22px;
+    width: 30px
+}
+
+.profile>button i:last-child {
+    margin-left: auto
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 3px 10px
+}
+
+.section-title h2 {
+    margin: 0
+}
+
+.round-icon.mini {
+    flex-basis: 58px;
+    height: 58px;
+    font-size: 22px
+}
+
+.update {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 18px 26px;
+    margin-top: 18px
+}
+
+.update .round-icon {
+    flex-basis: 70px;
+    height: 70px;
+    font-size: 28px
+}
+
+.update h3 {
+    color: var(--deep)
+}
+
+.update small {
+    color: var(--muted)
+}
+
+.update .primary {
+    margin-left: auto
+}
+
+/* Meu curriculo */
+
+.formcard {
+    max-width: 850px;
+    padding: 25px
+}
+
+.formcard form {
+    display: grid;
+    gap: 17px
+}
+
+.formcard label {
+    display: grid;
+    gap: 7px;
+    font-weight: 600
+}
+
+.formcard input:not([type=checkbox]),
+.formcard textarea {
+    border: 1px solid #d8cbdd;
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+    background: #fff
+}
+
+.formcard .primary {
+    justify-self: start
+}
+
+/* Minhas candidaturas */
+
+.applications {
+    padding: 0 17px
+}
+
+.app-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 9px
+}
+
+.app-row+.app-row {
+    border-top: 1px solid #dedce2
+}
+
+.app-name {
+    min-width: 210px;
+    flex: 1
+}
+
+.app-name h3 {
+    font-size: 18px;
+    margin: 0
+}
+
+.app-name p {
+    font-size: 15px
+}
+
+.pill {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    padding: 11px 15px;
+    font-weight: 700;
+    font-size: 13px
+}
+
+.green {
+    background: #dff8e9;
+    color: #12643c
+}
+
+.yellow {
+    background: #fff0d3;
+    color: #674016
+}
+
+.next-step {
+    border-left: 1px solid #d7d4dc;
+    padding-left: 25px;
+    flex: 1.15;
+    font-size: 14px
+}
+
+.next-step small {
+    font-size: 13px
+}
+
+.smallbtn {
+    min-width: 160px;
+    padding: 11px 12px
+}
+
+/* Vagas salvas */
+
+#jobResults {
+    margin-top: 20px
+}
+
+#jobResults .job {
+    padding: 15px;
+    border-top: 1px solid var(--line)
+}
+
+/* Preferências */
+
+/* Nas preferências, mantém a caixinha ao lado do texto.
+   O seletor mais específico prevalece sobre .formcard label,
+   que organiza os campos do currículo em coluna. */
+.formcard label.toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+}
+
+/* Impede que a caixinha encolha quando o texto ocupar mais espaço. */
+.toggle input {
+    flex-shrink: 0;
+}
+
+.toggle input {
+    accent-color: var(--purple);
+    width: 20px;
+    height: 20px
+}
+
+.large-text {
+    font-size: 115%
+}
+
+.high-contrast {
+    --bg: #fff;
+    --ink: #090909;
+    --deep: #31003e;
+    --muted: #222;
+    --line: #555
+}
+
+/* Ajuda */
+
+details {
+    padding: 15px;
+    border-bottom: 1px solid var(--line)
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 600
+}
+
+details p {
+    padding: 12px 0
+}
+
