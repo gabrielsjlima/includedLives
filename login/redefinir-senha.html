@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>Redefinir senha | Included Lives</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/recuperacao.css">
+  <script src="js/redefinir-senha.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="../pagina_principal/index.html" aria-label="Included Lives - início"><img src="assets/logo.png" alt="Included Lives"></a>
+      <a class="top-link" href="login.html">← Voltar para entrar</a>
+    </header>
+    <main class="content">
+      <aside class="illustration">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <p class="eyebrow">INCLUDED LIVES</p>
+        <h2>Seu próximo passo continua aqui.</h2>
+        <p>Recupere o acesso à sua conta e continue conectado a novas oportunidades.</p>
+        <div class="feature"><span aria-hidden="true">✓</span> Recuperação segura</div>
+        <div class="feature"><span aria-hidden="true">✓</span> Link individual e temporário</div>
+        <p class="intro-footer">Inclusão que transforma possibilidades.</p>
+      </aside>
+      <section class="recovery-card" aria-labelledby="title">
+        <p class="eyebrow">NOVA SENHA</p>
+        <h1 id="title">Crie uma nova senha</h1>
+        <p class="subtitle">Use pelo menos 8 caracteres.</p>
+        <form id="reset-form">
+<label for="senha">Nova senha</label><input id="senha" placeholder="Mínimo de 8 caracteres" type="password" autocomplete="new-password" minlength="8" required>
+<label for="confirmar">Confirmar senha</label><input id="confirmar" placeholder="Repita sua nova senha" type="password" autocomplete="new-password" minlength="8" required>
+<label class="show-password"><input type="checkbox" id="mostrar"> Mostrar senhas</label>
+<button class="submit" type="submit">Redefinir senha</button><p id="feedback" class="feedback" role="status" aria-live="polite"></p></form>
+        <section id="reset-success" class="success-state" hidden aria-live="polite"><div class="success-icon" aria-hidden="true">✓</div><h2 tabindex="-1">Senha redefinida com sucesso!</h2><p>Você já pode entrar com sua nova senha. Redirecionando para o login...</p><a class="submit success-link" href="login.html?status=senha-redefinida">Ir para o login</a></section>
+        <p class="explanation">O link é válido por 30 minutos.</p>
+        <div class="back-divider"><span></span><a href="login.html">Voltar para entrar</a><span></span></div>
+        <p class="help">Não tem mais acesso ao e-mail? <a href="../pagina_principal/index.html#faq">Pedir ajuda</a></p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

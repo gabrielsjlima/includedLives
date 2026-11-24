@@ -1,0 +1,216 @@
+/* Limita a largura do conteúdo sem mexer no cabeçalho compartilhado. */
+.guia-pagina {
+    width: min(1200px, calc(100% - 32px));
+    margin-inline: auto;
+    padding-block: 24px 48px;
+    color: #211342;
+}
+
+/* No desktop, o texto fica à esquerda e a imagem à direita. */
+.guia-topo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    align-items: center;
+    gap: 24px;
+    padding: clamp(16px, 4vw, 44px);
+    border-radius: 24px;
+    background: linear-gradient(140deg, #fdf8ff, #f0dff6);
+    margin-bottom: 16px;
+}
+
+.guia-marca {
+    margin: 0 0 6px;
+    color: #7f2381;
+    font-size: .8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* A etiqueta do topo e as ações dos cartões têm o mesmo visual. */
+.guia-etiqueta,
+.guia-acao {
+    display: inline-block;
+    margin: 0;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #7f2381;
+    color: #fff;
+    font-size: .84rem;
+    font-weight: 700;
+}
+
+.guia-topo h1 {
+    margin: 10px 0 0;
+    font-size: clamp(1.85rem, 4.5vw, 3.7rem);
+    line-height: 1.08;
+    letter-spacing: -.035em;
+}
+
+/* A arte do topo redimensiona sem distorcer o livro e os ícones. */
+.guia-arte {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Mantém os três cartões um abaixo do outro. */
+.guia-cartoes {
+    display: grid;
+    gap: 12px;
+}
+
+.guia-cartao {
+    border: 1px solid #e8d2ee;
+    border-radius: 16px;
+    background: #f7eafa;
+}
+
+/* Cada cabeçalho tem três colunas: imagem, título e ação. */
+.guia-cartao > summary {
+    display: grid;
+    grid-template-columns: clamp(58px, 12vw, 142px) minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    min-height: 64px;
+    padding: 10px 16px;
+    border-radius: inherit;
+}
+
+/* Esconde a seta padrão apenas no cartão principal. */
+.guia-cartao > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Desktop: a imagem ocupa quase toda a largura da primeira coluna. */
+.guia-cartao > summary img {
+    width: 100%;
+    height: clamp(88px, 11vw, 144px);
+    object-fit: contain; /* Mantém a proporção e não corta a arte. */
+}
+
+.guia-titulo-cartao {
+    font-size: clamp(1rem, 2.4vw, 1.55rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.guia-pagina summary {
+    cursor: pointer;
+}
+
+/* Mostra onde o foco está quando a pessoa navega com Tab. */
+.guia-pagina summary:focus-visible,
+.guia-pagina a:focus-visible {
+    outline: 3px solid #7f2381;
+    outline-offset: 2px;
+}
+
+/* O navegador coloca [open] no details quando ele é aberto. */
+.guia-fechar,
+.guia-cartao[open] > summary .guia-abrir {
+    display: none;
+}
+
+.guia-cartao[open] > summary .guia-fechar {
+    display: inline;
+}
+
+/* Estilo dos tópicos menores, que aparecem dentro do cartão. */
+.guia-conteudo {
+    display: grid;
+    gap: 8px;
+    padding: 0 16px 14px;
+}
+
+.guia-conteudo details {
+    border: 1px solid #ead9ee;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.guia-conteudo summary {
+    min-height: 44px;
+    padding: 12px;
+    font-weight: 700;
+}
+
+.guia-conteudo p {
+    margin: 0;
+    padding: 0 12px 12px;
+    line-height: 1.55;
+}
+
+.guia-conteudo a {
+    color: #7f2381;
+    text-decoration: underline;
+}
+
+/* No celular, a arte vai abaixo do título.
+   Nos cartões, a ação fica abaixo do título, ao lado da imagem. */
+@media (max-width: 600px) {
+    .guia-topo {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    /* Celular: reserva 84 px para a arte e deixa o restante para o texto. */
+    .guia-cartao > summary {
+        grid-template-columns: 84px minmax(0, 1fr);
+        gap: 6px 10px;
+    }
+
+    /* A imagem fica ao lado do título e do botão, ocupando as duas linhas. */
+    .guia-cartao > summary img {
+        height: 84px;
+        grid-row: span 2;
+    }
+
+    .guia-acao {
+        grid-column: 2;
+        justify-self: start;
+    }
+}
+
+/* Estiliza apenas o texto que aparece dentro dos tópicos abertos. */
+.guia-conteudo .guia-texto {
+    padding: 4px 16px 16px;
+    line-height: 1.6;
+}
+
+.guia-conteudo .guia-texto h3 {
+    margin: 12px 0 6px;
+    font-size: 1.05rem;
+}
+
+/* O bloco já tem margem interna; evita somar o recuo dos parágrafos antigos. */
+.guia-conteudo .guia-texto p {
+    margin: 0 0 12px;
+    padding: 0;
+}
+
+.guia-conteudo .guia-texto ul {
+    margin: 0 0 12px;
+    padding-inline-start: 22px;
+}
+
+/* No checklist, cada frase inteira pode ser clicada para marcar a caixa. */
+.guia-checklist {
+    min-width: 0;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid #ead9ee;
+    border-radius: 10px;
+}
+
+.guia-checklist label {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-block: 6px;
+    cursor: pointer;
+}
+
+.guia-checklist input {
+    flex-shrink: 0;
+    accent-color: #7f2381;
+}
